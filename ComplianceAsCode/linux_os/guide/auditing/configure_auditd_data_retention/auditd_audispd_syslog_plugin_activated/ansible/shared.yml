@@ -1,0 +1,12 @@
+# platform = multi_platform_all
+# reboot = false
+# strategy = configure
+# complexity = low
+# disruption = low
+
+- name: Enable syslog plugin
+  lineinfile:
+    dest: {{{ audisp_conf_path }}}/plugins.d/syslog.conf
+    regexp: "^active"
+    line: active = yes
+    create: yes

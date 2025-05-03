@@ -1,0 +1,15 @@
+*.pyc
+**/.DS_Store
+*~$*
+.git*
+.pytest*
+.idea*
+.venv
+.dockerignore
+Dockerfile
+db
+**/__pycache__/
+**/.pytest_cache/
+**/.ruff_cache/
+static/
+pytest-report.html

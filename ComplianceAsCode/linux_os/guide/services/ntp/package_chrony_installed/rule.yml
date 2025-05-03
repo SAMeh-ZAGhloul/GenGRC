@@ -1,0 +1,59 @@
+documentation_complete: true
+
+title: 'The Chrony package is installed'
+
+description: |-
+    System time should be synchronized between all systems in an environment. This is
+    typically done by establishing an authoritative time server or set of servers and having all
+    systems synchronize their clocks to them.
+    {{{ describe_package_install(package="chrony") }}}
+
+rationale: |-
+    Time synchronization is important to support time sensitive security mechanisms like
+    Kerberos and also ensures log files have consistent time records across the enterprise,
+    which aids in forensic investigations.
+
+severity: medium
+
+identifiers:
+    cce@rhel8: CCE-82874-9
+    cce@rhel9: CCE-84215-3
+    cce@rhel10: CCE-89591-2
+    cce@sle12: CCE-91594-2
+    cce@sle15: CCE-91229-5
+    cce@slmicro5: CCE-93909-0
+
+references:
+    cis@sle12: 2.2.1.1
+    cis@sle15: 2.2.1.1
+    cis@slmicro5: 2.2.1.1
+    cis@ubuntu2004: 2.2.1.1
+    cis@ubuntu2204: 2.1.1.1
+    ism: 0988,1405
+    ospp: FMT_SMF_EXT.1
+    pcidss: Req-10.4
+    srg: SRG-OS-000355-GPOS-00143
+    stigid@ubuntu2004: UBTU-20-010435
+    stigid@ubuntu2204: UBTU-22-215015
+
+ocil_clause: 'the package is not installed'
+
+ocil: '{{{ ocil_package(package="chrony") }}}'
+
+fixtext: '{{{ describe_package_install(package="chrony") }}}'
+
+srg_requirement: '{{{ srg_requirement_package_installed("chrony") }}}'
+
+{{%- if product in [ "ubuntu2404" ] %}}
+template:
+    name: package_installed_guard_var
+    vars:
+        pkgname: chrony
+        variable: var_timesync_service
+        value: chronyd
+{{%- else %}}
+template:
+    name: package_installed
+    vars:
+        pkgname: chrony
+{{%- endif %}}

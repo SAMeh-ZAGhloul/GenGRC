@@ -1,0 +1,13 @@
+# platform = multi_platform_all
+# reboot = false
+# strategy = configure
+# complexity = low
+# disruption = medium
+- name: Ensure GPG check is globally activated
+  community.general.ini_file:
+    dest: {{{ pkg_manager_config_file }}}
+    section: main
+    option: gpgcheck
+    value: 1
+    no_extra_spaces: yes
+    create: False

@@ -1,0 +1,19 @@
+-r requirements-base.txt
+cmakelint
+types-openpyxl
+types-PyYAML
+openpyxl-stubs
+openpyxl
+json2html
+ruamel.yaml
+pandas
+mypy
+lxml
+lxml-stubs
+pycompliance
+# used in utils/controleval_metrics.py
+prometheus_client
+# used in utils/oscal
+requests
+compliance-trestle==3.8.1
+pyopenssl>=23.2.0

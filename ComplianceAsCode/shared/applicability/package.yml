@@ -1,0 +1,150 @@
+name: "cpe:/a:{arg}:{ver_specs_cpe}"
+title: "Package {pkgname} is installed"
+versioned: true
+template:
+  name: platform_package
+args:
+  aide:
+    pkgname: aide
+  apparmor:
+    {{% if product in ["sle12", "sle15"] %}}
+      pkgname: apparmor-profiles
+    {{% else %}}
+      pkgname: apparmor
+    {{% endif %}}
+  apport:
+    pkgname: apport
+  audit:
+    {{% if pkg_system == "rpm" %}}
+    pkgname: audit
+    {{% else %}}
+    pkgname: auditd
+    {{% endif %}}
+  autofs:
+    pkgname: autofs
+  avahi:
+    {{% if 'ubuntu' in product %}}
+    pkgname: avahi-daemon
+    {{% else %}}
+    pkgname: avahi
+    {{% endif %}}
+  bash:
+    pkgname: bash
+  bind:
+    pkgname: bind
+  chrony:
+    pkgname: chrony
+  dnf:
+    pkgname: dnf
+  firewalld:
+    pkgname: firewalld
+  gdm:
+    {{% if pkg_system == "rpm" %}}
+    pkgname: gdm
+    {{% else %}}
+    pkgname: gdm3
+    {{% endif %}}
+  iptables:
+    pkgname: iptables
+  libpwquality:
+    {{% if 'ubuntu' in product %}}
+    pkgname: libpwquality1
+    {{% else %}}
+    pkgname: libpwquality
+    {{% endif %}}
+  libreswan:
+    pkgname: libreswan
+  libuser:
+    pkgname: libuser
+  logrotate:
+    pkgname: logrotate
+  net-snmp:
+    {{% if pkg_system == "rpm" %}}
+      pkgname: net-snmp
+    {{% else %}}
+      pkgname: snmp
+    {{% endif %}}
+  networkmanager:
+    pkgname: NetworkManager
+  nftables:
+      pkgname: nftables
+  nss-pam-ldapd:
+    {{% if pkg_system == "rpm" %}}
+      pkgname: nss-pam-ldapd
+    {{% else %}}
+      pkgname: libpam-ldapd
+    {{% endif %}}
+  ntp:
+    pkgname: ntp
+    title: NTP daemon and utilities
+  openssh:
+    pkgname: openssh
+  pam:
+    {{% if pkg_system == "rpm" %}}
+      pkgname: pam
+    {{% else %}}
+      pkgname: libpam-runtime
+    {{% endif %}}
+  pam_apparmor:
+    pkgname: pam_apparmor
+  polkit:
+    pkgname: polkit
+  postfix:
+    pkgname: postfix
+  rsh-server:
+    pkgname: rsh-server
+  shadow-utils:
+    {{% if pkg_system == "rpm" %}}
+    {{% if product in ["kylinserver10", "openeuler2203", "sle12", "sle15", "slmicro5"] %}}
+      pkgname: shadow
+    {{% else %}}
+      pkgname: shadow-utils
+    {{% endif %}}
+    {{% if product in ["openembedded"] %}}
+      pkgname: shadow-base
+    {{% endif %}}
+    {{% else %}}
+      pkgname: login
+    {{% endif %}}
+  snmpd:
+    {{% if 'debian' in product %}}
+    pkgname: snmpd
+    {{% else %}}
+    pkgname: net-snmp
+    {{% endif %}}
+  squid:
+    pkgname: squid
+  sssd:
+    {{% if product in ["sle12", "sle15"] or 'ubuntu' in product %}}
+      pkgname: sssd
+    {{% else %}}
+      pkgname: sssd-common
+    {{% endif %}}
+  sudo:
+    pkgname: sudo
+  systemd:
+    pkgname: systemd
+  systemd-journal-remote:
+    pkgname: systemd-journal-remote
+  systemd-timesyncd:
+    pkgname: systemd-timesyncd
+  telnet-server:
+    pkgname: telnet-server
+  tftp-server:
+    pkgname: tftp-server
+  tmux:
+    pkgname: tmux
+  ufw:
+    pkgname: ufw
+  usbguard:
+    pkgname: usbguard
+  yum:
+    pkgname: yum
+  zypper:
+    pkgname: zypper
+  apt_get:
+    pkgname: apt
+  rsyslog:
+    pkgname: rsyslog
+  rootfiles:
+    pkgname: rootfiles

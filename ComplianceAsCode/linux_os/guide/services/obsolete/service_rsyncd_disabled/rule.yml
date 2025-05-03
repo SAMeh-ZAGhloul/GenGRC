@@ -1,0 +1,44 @@
+documentation_complete: true
+
+
+title: 'Ensure rsyncd service is disabled'
+
+description: |-
+    {{{ describe_service_disable("rsyncd") }}}
+
+rationale: |-
+    The rsyncd service presents a security risk as it uses unencrypted protocols for
+    communication.
+
+severity: medium
+
+platform: system_with_kernel
+
+identifiers:
+    cce@rhel8: CCE-83335-0
+    cce@rhel9: CCE-84140-3
+    cce@rhel10: CCE-88179-7
+    cce@sle12: CCE-91673-4
+    cce@sle15: CCE-91305-3
+
+references:
+    cis@sle12: 2.2.17
+    cis@sle15: 2.2.17
+
+ocil_clause: |-
+    {{{ ocil_clause_service_disabled(service="rsyncd") }}}
+
+ocil: |-
+    {{{ ocil_service_disabled(service="rsyncd") }}}
+
+template:
+    name: service_disabled
+    vars:
+        servicename: rsyncd
+        packagename: rsync-daemon
+        packagename@ol7: rsync
+        packagename@sle12: rsync
+        packagename@sle15: rsync
+        packagename@openeuler2203: rsync
+        servicename@ubuntu2404: rsync
+        packagename@ubuntu2404: rsync

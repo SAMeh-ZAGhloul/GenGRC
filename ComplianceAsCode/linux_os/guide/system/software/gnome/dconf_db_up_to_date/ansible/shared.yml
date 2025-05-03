@@ -1,0 +1,8 @@
+# platform = multi_platform_all
+# reboot = false
+# strategy = unknown
+# complexity = low
+# disruption = medium
+- name: "Run dconf update"
+  ansible.builtin.command:
+    cmd: dconf update

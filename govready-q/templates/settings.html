@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+
+{% block title %}
+GovReady-Q Setup
+{% endblock %}
+
+{% block contextbar %}
+  {# kill it on this page #}
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+  <h1 class="">Settings</h1>
+
+  {% if is_django_staff %}
+  <p class="small">You are a Django Administrator. You have extra permissions on this page and can visit the <a href="{{django_admin_url}}">Django Admin homepage</a>.</p>
+  {% endif %}
+
+  {% if can_edit_org_settings %}
+  <h2 style="margin-top: 2em;">Organization Administrators</h2>
+
+  <p class="small help-block">There {%if org_admins|length == 1 %}is{% else %}are{% endif %} {{org_admins|length}} Organization Administrator{{org_admins|length|pluralize}} with permissions to manage organization settings and team membership.</p>
+
+  {% include "settings_usertable.html" with users=org_admins listid="org-admins" listname="Organization Admins" %}
+  {% endif %}
+
+  {# Edit organization name, help squad, reviewers. #}
+  {% if can_edit_org_settings %}
+  <h2 style="margin-top: 3em;">Discussion Help Squad</h2>
+
+  <p class="small help-block">There {%if help_squad|length == 1 %}is{% else %}are{% endif %} {{help_squad|length}} user{{help_squad|length|pluralize}} on the Discussion Help Squad automatically receiving all discussion comments.</p>
+
+  {% include "settings_usertable.html" with users=help_squad listid="help-squad" listname="Help Squad" %}
+
+  <h2 style="margin-top: 3em;">Reviewers</h2>
+
+  <p class="small help-block">There {%if reviewers|length == 1 %}is{% else %}are{% endif %} {{reviewers|length}} user{{reviewers|length|pluralize}} with permissions to change the "review" status of answers.</p>
+
+  {% include "settings_usertable.html" with users=reviewers listid="reviewers" listname="Reviewers" %}
+
+
+  {% endif %}
+
+  {# Link to the Django Admin if the user is permitted to go there. #}
+  {% if is_django_staff %}
+  <h2 style="margin-top: 3em;">Database Records Administration</h2>
+
+  <p>
+    <a href="{{django_admin_url}}">
+      Django Admin homepage &raquo;
+    </a>
+  </p>
+
+  {% if can_visit_org_in_django_admin %}
+  <p>
+    <a href="{{django_admin_url}}/siteapp/organization/{{request.organization.id}}">
+      Django Admin for this Organization &raquo;
+    </a>
+  </p>
+  {% endif %}
+  {% endif %}
+
+  <h2>Environment Settings</h2>
+
+  Database in use: {{db_type}}
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+  $(function() {
+    // Initialize the autocompletes.
+    $('#org-admins-select-user, #help-squad-select-user, #reviewers-select-user').each(function() {
+      var input = $(this);
+      var submit_btn = $('#' + input.attr('id') + "-submit");
+      var textcomplete = new Textcomplete(new Textcomplete.editors.Textarea(this));
+      textcomplete.register([{
+        match: new RegExp(/^(.*\S)$/), // see replace() for why \S
+        search: function (term, callback, match) {
+          // Clear any time a new search is performed.
+          submit_btn.attr('data-user-id', '');
+          submit_btn.prop('disabled', true);
+
+          // Search for matching users.
+          $.ajax({
+              url: "/settings/_save",
+              method: "POST",
+              data: {
+                action: "search-users",
+                query: match[0]
+              },
+              success: function(res) {
+                callback(res.users);
+              }
+          });
+        },
+        template: function(value) {
+          var node = $("<span></span>");
+          node.text(value.username + " " + value.name_and_email);
+          return node.html();
+        },
+        replace: function(value, event) {
+          // Store the chosen user, enable the button, and
+          // replace the user input with the full user display
+          // string (for display only) plus a space, which
+          // blocks a match on the match regex, forcing the
+          // autocomplete to close.
+          submit_btn.attr('data-user-id', value.id);
+          submit_btn.prop('disabled', false);
+          return value.name_and_email + " ";
+        }
+      }], {
+        style: {
+          zIndex: 10000
+        }
+      });
+    });
+
+  })
+
+  function org_user_list_remove(list_id, user_id, user_name) {
+    var prompts = {
+      "org-admins": "Remove " + user_name + " from the organization's administrators?",
+      "help-squad": "Remove " + user_name + " from the organization's help squad?",
+      "reviewers": "Remove " + user_name + " from the organization's reviewers?",
+    }
+    show_modal_confirm(
+      "Remove User",
+      prompts[list_id],
+      "Remove",
+      function() {
+        ajax_with_indicator({
+            url: "/settings/_save",
+            method: "POST",
+            data: {
+              action: "remove-from-" + list_id,
+              user: user_id
+            },
+            keep_indicator_forever: true, // keep the ajax indicator up forever --- it'll go away when we issue the redirect
+            success: function(res) {
+              window.location.reload();
+            }
+        });
+      });
+  }
+
+  function org_user_list_add(elem) {
+    var list_id = elem.getAttribute('id').substring(0, elem.getAttribute('id').length-19);
+    var user_id = elem.getAttribute('data-user-id');
+    ajax_with_indicator({
+        url: "/settings/_save",
+        method: "POST",
+        data: {
+          action: "add-to-" + list_id,
+          user: user_id
+        },
+        keep_indicator_forever: true, // keep the ajax indicator up forever --- it'll go away when we issue the redirect
+        success: function(res) {
+          window.location.reload();
+        }
+    });
+  }
+
+  function import_poam_xlsx_form(argument) {
+    $('#import_poam_authoring_tool').modal();
+  }
+
+  function import_poam_xlsx() {
+    // Use FormData to serialize form object including uploaded file
+    var data = new FormData($('#import_poam_authoring_tool form')[0]);
+    console.log("data is: "+JSON.stringify(data));
+    ajax_with_indicator({
+        url: "/systems/import-poams",
+        method: "POST",
+        data: data,
+        keep_indicator_forever: true, // keep the ajax indicator up forever --- it'll go away when we issue the redirect
+        success: function(res) {
+          // Modal can stay up until the redirect finishes.
+          window.location = res.redirect;
+          if (window.location.hash.length > 1)
+            window.location.reload(); // if there is a # in the URL, the browser won't actually reload
+        }
+    });
+  }
+
+</script>
+{% endblock %}

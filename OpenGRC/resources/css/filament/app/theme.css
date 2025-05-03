@@ -1,0 +1,130 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@config 'tailwind.config.js';
+
+
+@font-face {
+    font-family: 'Bruno Ace SC';
+    src: url('/public/fonts/BrunoAceSC-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@layer components {
+
+    .text-grcblue-800 {
+        color: #374151 !important;
+    }
+
+    .text-grcblue-400 {
+        color: #1375a0 !important;
+    }
+
+    .bg-grcblue-800 {
+        background-color: #374151 !important;
+    }
+
+    .bg-grcblue-400 {
+        background-color: #1375a0 !important;
+    }
+
+    .bg-grcblue-200 {
+        background-color: #d4e7ef !important;
+    }
+
+    .bg-grcblue-500 {
+        background-color: #1375a0 !important;
+    }
+
+    .control-description-text ul {
+        /* Force bullet styling */
+        list-style-type: disc !important; /* or circle, square, etc. */
+        list-style-position: outside; /* or 'inside' depending on your preference */
+        margin-left: 1.5rem; /* ensures the bullet is visible and not clipped */
+        padding-left: 1.5rem;
+    }
+
+    .control-description-text ol {
+        /* Force numbering styling */
+        list-style-type: decimal !important; /* or lower-alpha, upper-roman, etc. */
+        list-style-position: outside; /* or 'inside' depending on your preference */
+        margin-left: 1.5rem; /* ensures the number is visible and not clipped */
+        padding-left: 1.5rem;
+    }
+
+    .control-description-text p {
+        margin-bottom: 1rem;
+    }
+
+}
+
+
+
+
+/* Sidebar Styles */
+.fi-sidebar {
+    @apply bg-grcblue-800 dark:bg-gray-900 !important;
+}
+
+.fi-sidebar-item-label {
+    @apply text-gray-100 !important;
+}
+
+li.fi-sidebar-item.fi-active > a {
+    @apply bg-grcblue-400 !important;
+}
+
+.fi-sidebar-item > a:hover {
+    @apply bg-primary-600 text-black transition-colors duration-200;
+}
+
+.fi-sidebar-group-label {
+    @apply text-gray-300 !important;
+}
+
+/* Form Label */
+div.flex.items-center.gap-x-3.justify-between > dt > span {
+    @apply text-grcblue-800 dark:text-grcblue-400 !important;
+    font-weight: bold;
+}
+
+a.fi-logo {
+    font-family: 'Bruno Ace SC', sans-serif;
+}
+
+
+/* Custom Risk Colors */
+.fi-color-bg-red-200 { @apply bg-red-200; }
+.fi-color-bg-red-400 { @apply bg-red-400; }
+.fi-color-bg-orange-200 { @apply bg-orange-200; }
+.fi-color-bg-orange-400 { @apply bg-orange-500; }
+.fi-color-bg-yellow-200 { @apply bg-yellow-200; }
+.fi-color-bg-yellow-400 { @apply bg-yellow-500; }
+.fi-color-bg-green-200 { @apply bg-green-200; }
+.fi-color-bg-green-400 { @apply bg-green-500; }
+
+
+.fi-btn-color-very-high { @apply bg-red-200 hover:bg-red-400; }
+.fi-btn-color-very-high-active { @apply bg-red-500; }
+
+
+.fi-btn-color-very-low {@apply bg-green-200 hover:bg-green-400 !important; }
+.fi-btn-color-low {@apply bg-blue-200 hover:bg-blue-400 !important; }
+.fi-btn-color-medium {@apply bg-yellow-200 hover:bg-yellow-400 !important; }
+.fi-btn-color-high {@apply bg-orange-200 hover:bg-orange-400 !important; }
+.fi-btn-color-very-high {@apply bg-red-200 hover:bg-red-400 !important; }
+
+
+
+.fi-color-grcblue {
+    background-color: #1375a0 !important;
+    color: #ffffff;
+}
+.fi-color-grcblue:hover {
+    background-color: #a8d4ea !important;
+    color: #ffffff;
+}
+.fi-color-bg-grcblue-200 {
+    background-color: #d4e7ef !important;
+    color: #000000;
+}

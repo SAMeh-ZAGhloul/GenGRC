@@ -1,0 +1,33 @@
+/* @import '~@trussworks/react-uswds/lib/uswds.css';
+@import '~@trussworks/react-uswds/lib/index.css';
+ */
+
+ @import 'react-pro-sidebar/dist/css/styles.css';
+
+
+ body{
+    overflow-x: hidden;
+ }
+
+ .sticky{     
+   height: 200vh;
+   position: sticky;
+   top: 0; 
+ }
+ /* .react-modal.modal-dialog{
+    min-width: 90%;
+  } */
+
+.sys-owner-request-modal{
+  min-width: 40%;
+}
+.poam-edit-modal{
+  width: 950px;
+  min-height: 70%;
+  margin-top: 10rem;
+}
+.roles-list-modal{
+  left: 500px;
+  width: 300px;
+  min-height: 90%;
+}

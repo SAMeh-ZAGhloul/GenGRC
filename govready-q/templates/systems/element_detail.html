@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load guardian_tags %}
+{% load static %}
+{% load q %}
+
+{% block title %}
+{{ portfolio.title }} Controls Selected
+{% endblock %}
+
+{% block head %}
+{% include "controls/_style-controls.html" %}
+{% endblock %}
+
+{% block contextbar %}{% endblock %}
+
+{% block body %}
+
+<div class="systems-top">
+  <div class="container">
+
+  <div class="row">
+    <div id="above-tab-content" class="row">
+      <!-- Page Title-->
+      <div class="systems-title">
+          <h2 class="control-heading">
+            <a href="{{ project.get_absolute_url }}" class="systems-link">{{ system.root_element.name }}</a> &gt; <a href={% url 'components_selected' system_id=system.id %}class="systems-link">Selected Components</a> &gt; {{ element.name }}
+          </h2>
+      </div>
+      <!-- Control Lookup-->
+      <div class="systems-control-lookup">
+          <!-- <form id="control-lookup" method="get" action="/controls/" onsubmit="show_control_by_id(); return false;">
+            <input type="text" name="id" placeholder="Enter control id" value="{% if control %}{{ control.id_display|upper }}{% endif %}">
+                <button type="submit" class="btn btn-success">Look up</button>
+          </form> -->
+      </div>
+    </div>
+  </div><!--/row-->
+    <p>&nbsp;</p>
+
+    <div id="tab-content" class="row rows-header">
+        <div id=""><span class="systems-element-name">{{ element.name }}</span></div>
+    </div>
+    <div id="tab-content" class="row row-control">
+      <div>
+        <h3>Description</h3>
+        {{ element.description }}
+      </div>
+      <div>
+        <h3>{{ impl_smts|length }} Implementation Statement{{ impl_smts|length|pluralize }} associated with "{{ system.root_element.name }}"</h3>
+        {% for smt in impl_smts %}
+          <div class="row">
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+              <a href="/systems/{{ system.id }}/controls/catalogs/{{ smt.sid_class }}/control/{{ smt.sid }}">{{ smt.sid|upper }}</a>
+            </div>
+            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 col-xl-10">{{ smt.body }}</div>
+          </div>
+          <div>&nbsp;</div>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{{ block.super }}
+{% endblock %}
+
+{% block scripts %}
+<script>
+  function show_control_by_id() {
+    var control_id = $('#control-lookup').find('input[name="id"]').val();
+    var url = "/systems/{{ system.id }}/controls/catalogs/{{ control_id.oscal_catalog_key }}/control/" + control_id;
+    window.location.href = url;
+  }
+</script>
+{% endblock %}

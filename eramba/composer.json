@@ -1,0 +1,33 @@
+{
+    "name": "eramba/docker",
+    "description": "Docker helper files for running eramba software",
+    "keywords": [
+        "eramba",
+        "docker"
+    ],
+    "type": "library",
+    "homepage": "https://eramba.org",
+    "authors": [
+        {
+            "name": "Martin Horvath",
+            "email": "support@eramba.org"
+        }
+    ],
+    "require": {
+    },
+    "require-dev": {
+    },
+    "autoload": {
+    },
+    "autoload-dev": {
+    },
+    "scripts": {
+    },
+    "repositories": {
+        "satis": {
+            "type": "composer",
+            "url": "https://plugins.eramba.org/"
+        }
+    }
+}
+

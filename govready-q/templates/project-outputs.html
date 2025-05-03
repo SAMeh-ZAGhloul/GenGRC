@@ -1,0 +1,34 @@
+{% extends "project-base.html" %}
+
+{% block title %}
+Control Text: {{project.title}}
+{% endblock %}
+
+{% block head %}
+{{block.super}}
+<style>
+  h2 { margin-top: 1.5em; }
+
+  .doc {
+    border: 1px solid #999;
+    margin-top: 12px;
+    padding: 20px;
+  }
+</style>
+{% endblock %}
+
+{% block title_suffix_text %}
+Control Text
+{% endblock %}
+
+{% block body_content %}
+  <ul>
+    {% for anchor, title in toc %}
+      <li><a href="#{{anchor}}">{{title}}</a></li>
+    {% endfor %}
+  </ul>
+
+  {{combined_output|safe}}
+
+
+{% endblock %}

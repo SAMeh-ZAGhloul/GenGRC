@@ -1,0 +1,49 @@
+# platform = multi_platform_ol,multi_platform_rhel,multi_platform_sle,multi_platform_slmicro,multi_platform_ubuntu,multi_platform_almalinux
+# reboot = false
+# strategy = restrict
+# complexity = low
+# disruption = low
+- name: "{{{ rule_title }}} - Gather List of Packages"
+  tags:
+  - aide_check_audit_tools
+  ansible.builtin.package_facts:
+    manager: auto
+
+
+- name: Ensure aide is installed
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - aide
+
+
+- name: Set audit_tools fact
+  set_fact:
+    audit_tools:
+      {{% if aide_also_checks_audispd == "yes" -%}}
+      - /usr/sbin/audispd
+      {{%- endif %}}
+      - /usr/sbin/auditctl
+      - /usr/sbin/auditd
+      - /usr/sbin/augenrules
+      - /usr/sbin/aureport
+      - /usr/sbin/ausearch
+      - /usr/sbin/autrace
+      {{% if aide_also_checks_rsyslog == "yes" -%}}
+      - /usr/sbin/rsyslogd
+      {{%- endif %}}
+
+- name: Ensure existing AIDE configuration for audit tools are correct
+  lineinfile:
+    path: {{{ aide_conf_path }}}
+    regexp: ^{{ item }}\s
+    line: "{{ item }} {{{ aide_string() }}}"
+  with_items: "{{ audit_tools }}"
+
+
+- name: Configure AIDE to properly protect audit tools
+  lineinfile:
+    path: {{{ aide_conf_path }}}
+    line: "{{ item }} {{{ aide_string() }}}"
+  with_items: "{{ audit_tools }}"

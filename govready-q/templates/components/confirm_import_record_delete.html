@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load guardian_tags %}
+{% load static %}
+{% load q %}
+
+{% block title %}
+{{ portfolio.title }} Confirm Import Delete
+{% endblock %}
+
+{% block head %}
+{% include "controls/_style-controls.html" %}
+
+{% endblock %}
+
+{% block contextbar %}{% endblock %}
+
+{% block body %}
+
+    <h2 class="">Confirm Import Delete: Import Record {{ import_record.id }}</h2>
+    <h3>{{ import_record.created }}</h3>
+
+    <p>This import includes:
+        <ul>
+            {% if project_count > 0 %}<li>{{ project_count }} project{{ project_count|pluralize }}</li>{% endif %}
+            {% if element_count > 0 %}<li>{{ element_count }} system{{ element_count|pluralize }} (e.g., system root element){{ element_count|pluralize }}</li>{% endif %}
+            {% if component_count > 0 %}<li>{{ component_count }} component{{ component_count|pluralize }}</li>{% endif %}
+            {% if statement_count > 0 %}<li>{{ statement_count }} component statement{{ statement_count|pluralize }}</li>{% endif %}
+            {% if statement_prototype_count > 0 %}<li>{{ statement_prototype_count }} library component statement{{ statement_prototype_count|pluralize }}</li>{% endif %}
+        </ul>
+    </p>
+
+  <a id="cancel-import-delete" class="btn btn-default" href="{% url 'component_library' %}">Cancel</a>
+  <a id="confirm-import-delete" class="btn btn-danger" href="{% url 'import_record_delete' import_record.id %}">Delete</a>
+
+  {{ block.super }}
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

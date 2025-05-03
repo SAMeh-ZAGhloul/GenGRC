@@ -1,0 +1,10 @@
+# platform = multi_platform_all
+# reboot = false
+# strategy = configure
+# complexity = low
+# disruption = low
+
+{{{ ansible_set_config_file_dir(msg, "/etc/rsyslog.conf", "/etc/rsyslog.d", "/etc/rsyslog.conf",
+                                parameter="$DefaultNetstreamDriver", value="gtls", create=true,
+                                separator=" ", separator_regex=" ")
+}}}

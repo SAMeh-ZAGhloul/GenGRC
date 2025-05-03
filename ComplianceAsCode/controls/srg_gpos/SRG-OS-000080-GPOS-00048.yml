@@ -1,0 +1,13 @@
+controls:
+    -   id: SRG-OS-000080-GPOS-00048
+        levels:
+            - medium
+        title: {{{ full_name }}} must enforce approved authorizations for logical access
+            to information and system resources in accordance with applicable access control
+            policies.
+        rules:
+            - account_temp_expire_date
+            - require_singleuser_auth
+            - grub2_admin_username
+            - grub2_password
+        status: automated

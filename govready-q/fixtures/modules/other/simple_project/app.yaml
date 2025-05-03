@@ -1,0 +1,54 @@
+id: app
+type: project
+title: I want to answer some questions on Q.
+short_description: A simple project.
+version: 1.0.1
+catalog:
+  category: Testing
+  vendor: GovReady PBC
+  vendor_url: http://www.govready.com
+  status: published
+  version: 1.0.1
+  source_url: https://github.com/GovReady/GovReady-Q
+  description:
+    short: |
+      A simple project used for testing
+introduction:
+  format: markdown
+  template: |
+    A simple project used for testing
+questions:
+
+  - id: simple_module
+    title: Simple Module
+    type: module
+    module-id: simple
+  - id: simple_module_two
+    title: Another Simple Module (for invitation test)
+    type: module
+    module-id: simple
+
+  - id: question_types_text
+    title: Test The Text Input Question Types
+    type: module
+    module-id: question_types_text
+  - id: question_types_choice
+    title: Test The Choice Question Types
+    type: module
+    module-id: question_types_choice
+  - id: question_types_numeric
+    title: Test The Numeric Question Types
+    type: module
+    module-id: question_types_numeric
+  - id: question_types_media
+    title: Test The Media Question Types
+    type: module
+    module-id: question_types_media
+  - id: question_types_module
+    title: Test The Module Question Types
+    type: module
+    module-id: question_types_module
+  - id: impute_conditions
+    title: Test Impute Conditions
+    type: module
+    module-id: impute_conditions

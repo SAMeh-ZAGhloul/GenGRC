@@ -1,0 +1,40 @@
+# platform = multi_platform_all
+# reboot = false
+# strategy = restrict
+# complexity = low
+# disruption = low
+- name: "Ensure AIDE is installed"
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - aide
+
+- name: Set cron package name - RedHat
+  set_fact:
+    cron_pkg_name: cronie
+  when: ansible_os_family == "RedHat" or ansible_os_family == "Suse"
+
+- name: Set cron package name - Debian
+  set_fact:
+    cron_pkg_name: cron
+  when: ansible_os_family == "Debian"
+
+- name: Install cron
+  package:
+    name: "{{ cron_pkg_name }}"
+    state: present
+
+- name: "{{{ rule_title }}}"
+  cron:
+{{% if product in ["sle12", "sle15"] %}}
+    name: "{{{ rule_title }}}"
+    cron_file: /etc/crontab
+{{% else %}}
+    name: "run AIDE check"
+{{% endif %}}
+    minute: 05
+    hour: 04
+    weekday: 0
+    user: root
+    job: "{{{ aide_bin_path }}} --check"

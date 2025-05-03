@@ -1,0 +1,78 @@
+name: API Tests
+
+on:
+  pull_request:
+    branches: [main, develop]
+    types: [opened, synchronize]
+    paths:
+      - "backend/**"
+      - ".github/workflows/backend-api-tests.yml"
+    workflow_dispatch:
+
+env:
+  GITHUB_WORKFLOW: github_actions
+  PYTHON_VERSION: "3.12"
+  UBUNTU_VERSION: "ubuntu-24.04"
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    env:
+      backend-directory: ./backend
+
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: ["3.12"]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: false
+          installer-parallel: true
+      - name: Install backend requirements
+        working-directory: ${{ env.backend-directory }}
+        run: poetry install
+      - name: Create environment variables file
+        working-directory: ${{env.backend-directory}}
+        run: |
+          touch .env
+          echo DJANGO_DEBUG='True' >> .env
+          echo DB_HOST=localhost >> .env
+          echo EMAIL_HOST=localhost >> .env
+          echo EMAIL_PORT=1025 >> .env
+          echo EMAIL_HOST_USER='' >> .env
+          echo EMAIL_HOST_PASSWORD='' >> .env
+          #echo EMAIL_USE_TLS=False >> .env
+          echo DEFAULT_FROM_EMAIL='ciso-assistant@alsigo.net' >> .env
+          echo CISO_ASSISTANT_SUPERUSER_EMAIL='' >> .env
+          echo CISO_ASSISTANT_URL=http://127.0.0.1:5173 >> .env
+      - name: Run migrations
+        working-directory: ${{env.backend-directory}}
+        run: |
+          export $(grep -v '^#' .env | xargs)
+          poetry run python manage.py migrate
+      - name: Run API tests
+        working-directory: ${{env.backend-directory}}
+        run: |
+          export $(grep -v '^#' .env | xargs)
+          poetry run pytest app_tests/api --html=pytest-report.html --self-contained-html
+      - name: Set current date as env variable
+        if: ${{ !cancelled() }}
+        run: echo "NOW=$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_ENV
+      - name: Sanitize branch name
+        if: ${{ !cancelled() }}
+        run: echo "BRANCH_SANITIZED=$(echo "${{ env.BRANCH_NAME }}" | tr "/()" "_")" >> $GITHUB_ENV
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: ${{ env.BRANCH_SANITIZED }}-${{ env.NOW }}-${{ github.job }}-report-${{ matrix.python-version }}
+          path: ${{ env.backend-directory }}/pytest-report.html
+          retention-days: 5

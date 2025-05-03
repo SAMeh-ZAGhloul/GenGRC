@@ -1,0 +1,205 @@
+{% extends "base.html" %}
+{% load guardian_tags %}
+{% load q %}
+{% load humanize %}
+
+{% block title %}
+Your Compliance Systems
+{% endblock %}
+
+{% block head %}
+<style>
+  .btn .glyphicon { margin-right: 6px; }
+  .btn.btn-success .glyphicon { color: #FFF; }
+
+  .lifecycle {
+    margin-bottom: 30px;
+  }
+
+  .lifecycle h2 {
+    margin: 0 0 1em 0;
+  }
+
+  .lifecycle .stage {
+    margin: 0 -10px;
+    padding: 10px;
+    background-color: rgb(247,247,247);
+    border-radius: 5px;
+    max-width: 530px; /* so individual cards don't stretch across whole page */
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .1), 0 2px 3px rgba(0, 0, 0, .2);
+  }
+
+  .lifecycle .stage h3 {
+    color: black;
+    margin: 5px 0 0 0;
+    text-align: center;
+  }
+
+  .lifecycle .stage .stage-subhead {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+
+  .project {
+    background-color: white;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 3px;
+    border-bottom: 1px solid rgb(204, 204, 204);
+  }
+
+  .project-image {
+    width: 20px;
+    float: left;
+    margin: 4px 0 5px 8px;
+  }
+
+  .project-text {
+  }
+
+  .project-text h4 {
+    margin: 0;
+    font-weight: bold;
+    font-size: inherit;
+  }
+
+  .project-text > * {
+    margin: .5em 0 0 0;
+    font-size: 13px;
+  }
+
+  h1.mini {
+    font-size: 16px;
+    font-family: Hind, sans-serif;
+    line-height: 22px;
+    color: rgba(51, 51, 51, .8);
+    padding: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+  }
+
+  .luna-container {
+    background: rgb(255,255,255, 0.6);
+    border-radius: 4px;}
+
+  .luna-box {
+    border: 1px solid rgb(210, 210, 210);
+    min-height: 160px;
+    margin-top: 30px;
+    font-size: .8em;
+    border-radius: 4px;
+    padding: 20px 20px 0px 0px;
+    background: transparent;
+  }
+
+  .luna-box div.glyphicon {
+    font-size:3em;
+
+    margin:30px 0px 0px 40px;
+  }
+
+</style>
+{% endblock %}
+
+<!-- Remove context bar from top of page -->
+{% block contextbar %}{% endblock %}
+
+{% block body %}
+<body class="splash-bg">
+<div class="projects-top">
+
+<div class="container">
+
+<div class="project-main hidden">
+  <a id="new-project-button" href="{% url 'store' %}" class=" btn btn-success">Start a project</a>
+</div>
+{% if isInternetExplorer %}
+  <div class="alert alert-warning" role="alert">
+    <strong>WARNING</strong>: Internet Explorer is not supported. Please use Microsoft Edge, Google Chrome, or Mozilla FireFox.
+  </div>
+{% endif %}
+<h2>Welcome to {% if sitename %}{{sitename}}{% else %}GovReady-Q{% endif %}</h2>
+
+<p>Assess, test, and authorize together</p>
+
+<!-- Display grid of options -->
+  <div class="row">
+
+    <div class="col-sm-6">
+      <div class="luna-container">
+      <div class="luna-box">
+        <div class="col-md-3">
+          <div class="glyphicon glyphicon-list-alt"></div>
+        </div>
+        <div class="col-md-9">
+          {% if projects_access|length > 0 %}
+            <h3><a id="new-project-link" href="/projects">View my {{ projects_access|length }} existing System{{ projects_access|pluralize }}</a></h3>
+          {% else %}
+            <h3><a id="new-project-link" href="/projects">You don't have any Systems</a></h3>
+          {% endif %}
+          <p>List your IT systems getting or having ATOs.</p>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="luna-container">
+      <div class="luna-box">
+        <div class="col-md-3">
+          <div class="glyphicon glyphicon-lock"></div>
+        </div>
+        <div class="col-md-9">
+          <h3><a href="/controls/components">Browse security components</a></h3>
+          <p>Components are the building blocks of IT systems and provide security controls.</p>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="luna-container">
+      <div class="luna-box">
+        <div class="col-md-3">
+          <div class="glyphicon glyphicon-duplicate"></div>
+        </div>
+        <div class="col-md-9">
+          <h3><a id="new-system" href="{% url 'create_new_system' %}">Add System</a></h3>
+          <div>Add a new system by name or URL.</div>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="luna-container">
+      <div class="luna-box">
+        <div class="col-md-3">
+          <div class="glyphicon glyphicon-duplicate"></div>
+        </div>
+        <div class="col-md-9">
+          <h3><a id="new-project" href="{% url 'store' %}">Start Project via template</a></h3>
+          <div>Add a new system via a project template.</div>
+        </div>
+      </div>
+      </div>
+    </div>
+
+<!--     <div class="col-sm-6">
+        <div class="luna-container">
+      <div class="luna-box">
+        <div class="col-md-3">
+          <div class="glyphicon glyphicon-search"></div>
+        </div>
+        <div class="col-md-9">
+          <h3><a href="/controls/">Search security controls</a></h3>
+          <p>
+            View control catalogs.
+          </p>
+        </div>
+      </div>
+      </div>
+    </div> -->
+
+</div>
+
+{% endblock %}

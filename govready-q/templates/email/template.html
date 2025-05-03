@@ -1,0 +1,33 @@
+{% extends "htmlemailer/boilerplate.html" %}
+
+{% block head %}
+<style>
+#backgroundTable {
+	background-color: white;
+	color: black;
+	font-family: sans-serif;
+}
+#content-area {
+	padding: .5em;
+}
+a {
+	color: #23A;
+}
+</style>
+{% block extra_head %}
+{% endblock %}
+{% endblock %}
+
+{% block body %}
+
+{% block content %}
+{% endblock %}
+
+<strong>GovReady </strong>Q</b></p>
+
+<div style="margin-top: 1em; font-size: 85%; color: #555">
+{% block after_signature_note %}
+{% endblock %}
+</div>
+
+{% endblock %}

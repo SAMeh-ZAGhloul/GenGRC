@@ -1,0 +1,30 @@
+id: organization_profile
+title: Organization Profile
+introduction:
+  format: markdown
+  template: |
+    Customize your organization on GovReady Q.
+questions:
+  - id: logo
+    title: Logo
+    prompt: Upload a logo.
+    type: file
+    file-type: image
+    image:
+      max-size:
+        width: 640
+        height: 640
+
+
+output:
+  - title: Your Answers
+    format: markdown
+    template: |
+      Organization Profile
+      --------------------
+
+      {% if logo %}
+      Logo:
+
+      ![Logo]({{logo.url}})
+      {% endif %}

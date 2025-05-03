@@ -1,0 +1,28 @@
+# platform = multi_platform_all
+# reboot = false
+# strategy = restrict
+# complexity = low
+# disruption = low
+
+{{{ bash_instantiate_variables("var_password_pam_" ~ VARIABLE) }}}
+
+{{% if product == "ol8" or 'rhel' in product %}}
+if grep -sq {{{ VARIABLE }}} /etc/security/pwquality.conf.d/*.conf ; then
+    sed -i "/{{{ VARIABLE }}}/d" /etc/security/pwquality.conf.d/*.conf
+fi
+{{% endif %}}
+
+{{% if "ol" in product %}}
+{{{ bash_remove_pam_module_option_configuration('/etc/pam.d/system-auth',
+                                  'password',
+                                  '',
+                                  'pam_pwquality.so',
+                                  VARIABLE)
+}}}
+{{% endif %}}
+
+{{% if product == "ubuntu2404" %}}
+{{{ bash_pam_pwquality_enable() }}}
+{{% endif %}}
+
+{{{ bash_replace_or_append('/etc/security/pwquality.conf', '^' ~ VARIABLE , '$var_password_pam_' ~ VARIABLE , '%s = %s') }}}

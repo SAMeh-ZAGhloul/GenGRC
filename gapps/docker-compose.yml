@@ -1,0 +1,71 @@
+version: '3'
+services:
+  gapps:
+    container_name: gapps
+    image: bmarsh13/gapps:3.5.3
+    depends_on:
+      - postgres
+    networks:
+      - db_nw
+      - web_nw
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+    environment:
+      - SQLALCHEMY_DATABASE_URI=postgresql://${POSTGRES_USER:-db1}:${POSTGRES_PASSWORD:-db1}@${POSTGRES_HOST:-postgres}/${POSTGRES_DB:-db1}
+      - DEFAULT_EMAIL=${DEFAULT_EMAIL:-admin@example.com}
+      - DEFAULT_PASSWORD=${DEFAULT_PASSWORD:-admin}
+      - RESET_DB=${RESET_DB:-no}
+      - DOC_LINK=https://github.com/bmarsh9/gapps
+      - VERSION=${VERSION:-3.5.3}
+      - APP_NAME=Gapps
+      - POSTGRES_USER=${POSTGRES_USER:-db1}
+      - POSTGRES_HOST=${POSTGRES_HOST:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-db1}
+      - POSTGRES_DB=${POSTGRES_DB:-db1}
+      - GUNICORN_WORKERS=2
+  gapps-worker:
+    container_name: gapps-worker
+    image: bmarsh13/gapps:3.5.3
+    depends_on:
+      - postgres
+    networks:
+      - db_nw
+      - web_nw
+    #ports:
+    #  - "5000:5000"
+    restart: unless-stopped
+    environment:
+      - SQLALCHEMY_DATABASE_URI=postgresql://${POSTGRES_USER:-db1}:${POSTGRES_PASSWORD:-db1}@${POSTGRES_HOST:-postgres}/${POSTGRES_DB:-db1}
+      - VERSION=${VERSION:-3.5.3}
+      - APP_NAME=Gapps
+      - AS_WORKER=yes
+      - POSTGRES_USER=${POSTGRES_USER:-db1}
+      - POSTGRES_HOST=${POSTGRES_HOST:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-db1}
+      - POSTGRES_DB=${POSTGRES_DB:-db1}
+      - WORKER_CONCURRENCY=${WORKER_CONCURRENCY:-1}
+      - WORKER_LOG_LEVEL=DEBUG
+  postgres:
+    container_name: postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-db1}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-db1}
+      POSTGRES_DB: ${POSTGRES_DB:-db1}
+      PGDATA: /data/postgres
+    #volumes:
+    #   - postgres:/data/postgres
+    #ports:
+    #  - "5432:5432"
+    networks:
+      - db_nw
+    restart: unless-stopped
+
+networks:
+  db_nw:
+    driver: bridge
+  web_nw:
+    driver: bridge
+volumes:
+  dbdata:

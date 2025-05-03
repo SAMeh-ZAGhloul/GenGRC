@@ -1,0 +1,89 @@
+id: organization_classification
+title: Organization Classification
+introduction:
+  format: markdown
+  template: |
+    Let's gather information your organization so that we can tailor the questions in later modules.
+questions:
+  - id: organization_type
+    title: What type of organization is it?
+    prompt: What type of organization is it?
+    type: choice
+    choices:
+      - key: startup
+        text: Startup
+      - key: individual
+        text: Individual / Sole Proprietorship
+      - key: smbiz
+        text: Small Business
+      - key: smresearch
+        text: Research Organization
+      - key: localagency
+        text: Local/State Government Agency
+      - key: federalagency
+        text: Federal Government Agency
+
+  - id: organization_size
+    title: What is the size of your organization?
+    prompt: What is the size of your organization?
+    type: choice
+    choices:
+      - key: single-person
+        text: "1"
+      - key: micro
+        text: 2 - 5
+      - key: small
+        text: 6 - 25
+      - key: medium
+        text: 26 to 100
+      - key: large
+        text: 100+
+
+  - id: it_staff_size
+    title: What is the size of your information technology staff?
+    prompt: How many employees are dedicated information technology-related staff?
+    type: choice
+    help: "Count anyone whose primary job is to support web sites, software/application administrators, and computer networks."
+    choices:
+      - key: none
+        text: None
+      - key: micro
+        text: 1 - 5
+      - key: small
+        text: 5 - 15
+      - key: medium
+        text: 15 - 50
+      - key: large
+        text: 50+
+
+  - id: it_systems_size
+    title: How many information technology systems does your organization run?
+    prompt: "How many systems (web properties, major applications, and general IT systems) are in your organization's system catalog?"
+    type: choice
+    choices:
+      - key: none
+        text: None
+      - key: one
+        text: "1"
+      - key: micro
+        text: 2 - 5
+      - key: small
+        text: 5 - 15
+      - key: medium
+        text: 15 - 50
+      - key: large
+        text: 50+
+
+output:
+  - title: Your Answers
+    format: markdown
+    template: |
+      Organization Profile
+      --------------------
+
+      {{organization}} is a {{organization_type.text}} of {{organization_size.text}} employees.
+
+      {{organization}}'s technology portfolio consists of {{it_systems_size.text}} systems.
+
+      {{organization}}'s technology portfolio is supported by {{it_staff_size.text}} dedicated staff.
+

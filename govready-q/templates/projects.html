@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+{% load guardian_tags %}
+{% load q %}
+{% load humanize %}
+
+{% block title %}
+Systems
+{% endblock %}
+
+{% block head %}
+<style>
+  .btn .glyphicon { margin-right: 6px; }
+  .btn.btn-success .glyphicon { color: #FFF; }
+
+  .lifecycle {
+    margin-bottom: 30px;
+  }
+
+  .lifecycle h2 {
+    margin: 0 0 1em 0;
+  }
+
+  .lifecycle .stage {
+    margin: 0 -10px;
+    padding: 10px;
+    background-color: rgb(247,247,247);
+    border-radius: 5px;
+    max-width: 530px; /* so individual cards don't stretch across whole page */
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .1), 0 2px 3px rgba(0, 0, 0, .2);
+  }
+
+  .lifecycle .stage h3 {
+    color: black;
+    margin: 5px 0 0 0;
+    text-align: center;
+  }
+
+  .lifecycle .stage .stage-subhead {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+
+  .project {
+    background-color: white;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 3px;
+    border-bottom: 1px solid rgb(204, 204, 204);
+  }
+
+  .project-image {
+    width: 20px;
+    float: left;
+    margin: 4px 0 5px 8px;
+  }
+
+  .project-text {
+  }
+
+  .project-text h4 {
+    margin: 0;
+    font-weight: bold;
+    font-size: inherit;
+  }
+
+  .project-text > * {
+    margin: .5em 0 0 0;
+    font-size: 13px;
+  }
+
+  h1.mini {
+    font-size: 16px;
+    font-family: Hind, sans-serif;
+    line-height: 22px;
+    color: rgba(51, 51, 51, .8);
+    padding: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+  }
+
+  .luna-box {
+    border: 1px solid rgb(210, 210, 210);
+    min-height: 160px;
+    margin-top: 30px;
+    font-size: .8em;
+    border-radius: 4px;
+    padding: 20px 20px 0px 0px;
+  }
+
+  .luna-box div.glyphicon {
+    font-size:3em;
+
+    margin:30px 0px 0px 40px;
+  }
+
+</style>
+{% endblock %}
+
+<!-- Remove context bar from top of page -->
+{% block contextbar %}{% endblock %}
+
+{% block body %}
+
+<div class="projects-top">
+
+<div class="container">
+
+<div class="project-main">
+  <a id="new-project-link-from-projects" href="{% url 'create_new_system' %}" class=" btn btn-success">New system</a>
+</div>
+
+<h2 class="">Systems</h2>
+
+<form action="{% url 'projects' %}" method="GET" role="search">
+    <div class="form-inline pull-right create-nav">
+        <div class="form-group">
+            <div class="input-group" id="searchbox-input">
+                <input id="searchbox" name="search" value="{{ request.GET.search }}" type="text" placeholder="search projects" spellcheck="false" aria-labelledby="searchbox-input" />
+                <span id="searchicon" class="glyphicon glyphicon-search" href="{% url 'projects' %}"></span>
+                {% if request.GET.search %}
+                    <a id="searchclear" class="glyphicon glyphicon-remove" href="{% url 'projects' %}"></a>
+                {% endif %}
+             </div>
+        </div>
+    </div>
+</form>
+
+{% if projects_access|length < 1 %}
+<p>You do not currently have access to any systems.</p>
+{% else %}
+  {% if user.is_superuser %}
+    <p>You are a Superuser and have access to all {{ projects_access|length }} system{{ projects_access|pluralize }}.</p>
+  {% else %}
+    <p>You have access to {{ projects_access|length }} system{{ projects_access|pluralize }}.</p>
+  {% endif %}
+  <p>&nbsp;</p>
+  <div class="container">
+  <div class="row">
+    <div class="col-xs-10 col-md-5"><strong>System</strong></div>
+    <div class="col-xs-6 col-sm-1"><strong>ID</strong></div>
+    <div class="col-xs-6 col-sm-4"><strong>Portfolio</strong></div>
+    <div class="col-xs-12 col-md-2"><strong>Updated</strong></div>
+  </div>
+{% endif %}
+
+{% for project in projects %}
+<div class="row projects-row">
+  <div class="col-xs-10 col-md-5">
+    <!-- <span class="project-image">
+      {% if project.root_task.get_app_icon_url %}
+        <img src="{{project.root_task.get_app_icon_url}}" class="img-responsive" alt="App Icon">
+      {% endif %}
+    </span>
+    &nbsp;&nbsp;&nbsp; -->
+    <a href="{{project.get_absolute_url}}" class="projects-link">{{project.title}}</a>
+    <!-- <a href="{% url 'system_summary' system_id=project.system.id %}" class="projects-link">{{project.title}}</a> -->
+    
+  </div>
+  <div class="col-xs-6 col-sm-1">{{project.id}}</div>
+  <div class="col-xs-6 col-sm-4">{{project.portfolio.title}}</div>
+  <div class="col-xs-12 col-md-2 left-text">{{project.root_task.updated|naturaltime}}</div>
+</div>
+
+{% endfor %}
+
+
+{% include 'components/paginate_comp.html' with projects=page_obj %}
+
+
+{% if projects|length < 1 %}
+<!-- Display grid of options -->
+  <div class="row" style="height: 600px;">
+    &nbsp;
+  </div>
+{% endif %}
+
+{% endblock %}

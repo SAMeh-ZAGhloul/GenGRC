@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+{% load static %}
+{% load q %}
+
+{% block head %}
+    <style>
+
+        #project-icon {
+            float: left;
+            margin: 0 1.5em 1em 0;
+        {% if title == project.root_task.module.spec.title %}
+            /* if there's no subhead, match icon size to font size */
+            width: 50px;
+            height: 50px;
+        {% else %}
+            width: 80px;
+            height: 80px;
+        {% endif %}
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        div.subtitle {
+            margin: .2em 0 .75em 0;
+            font-weight: bold;
+        }
+
+        .breadcrumb {
+            font-size: 1.0em;
+        }
+
+        #focus-area-wrapper {
+            padding: 2em 2em 3em 2em;
+        }
+
+        .link-black {
+            color: black;
+        }
+
+        .link-black:hover {
+            color: black;
+        }
+
+        .btn-action {
+            text-align: left;
+            padding-left: 25px;
+        }
+
+        #action-buttons, .action-button-box {
+            width: 150px;
+        }
+
+        body {
+            border-bottom: 0px !important;
+            padding-bottom: 0px !important;
+            height: 100vh;
+            width: 100vw;
+        }
+
+
+
+
+/* style changes for the react sidebar to comply with 508 by showing outline for screen readers */
+
+      .pro-sidebar .pro-menu .pro-menu-item > .pro-inner-item:focus-visible { outline: 2px dashed #60BF60;}
+      .pro-sidebar > .pro-sidebar-inner > .pro-sidebar-layout .pro-sidebar-header { border-bottom: 0;}
+      .pro-sidebar .pro-menu { padding-right:1em;}
+
+    </style>
+{% endblock %}
+
+{% block contextbar %}{% endblock %}
+
+{% block body %}
+    {{ block.super }}
+    <div class="row" style="height:100%;">
+
+        <div class="col-md-3" style="margin:0px;padding:0px 0px 0px 0px;height:100%;">
+            <div id="focus-area-wrapper" style="padding:0px; margin-top:0px;height:100%;">
+                {% block above_title %}
+                {% endblock %}
+
+                {# if is_project_page #}
+
+                <div id="menu" style="height: 100%;"></div><!-- links for vertical nav in siteapp.views_helper.project_context -->
+
+                {% block action_buttons %}
+                    {% if action_buttons %}
+                        {% for q in action_buttons %}
+                            <div class="action-button-box">
+                                <div class="action-button-app-title">{{ project.root_task.module.spec.title }}</div>
+                                {# Display for started tasks #}
+                                {% if can_start_task and q.can_start_new_task %}
+                                    <form id="question-{{ q.question.key }}" class="start-task" method="post"
+                                          action="/tasks/start" style="display:inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="project" value="{{ project.id }}"/>
+                                        <input type="hidden" name="question" value="{{ q.question.key }}"/>
+                                        <input type="hidden" name="previous" value="project"/>
+                                        <a class="btn btn-sm btn-default" class="action-button"
+                                           href="#" onclick="$(this).parent('form').submit(); return false;">
+                                            {{ q.question.spec.title }} &raquo;
+                                        </a>
+                                    </form>
+                                {% else %}
+                                    {# Display for not yet started tasks #}
+                                    <a id="question-{{ q.question.key }}"
+                                       class="btn btn-sm btn-default" class="action-button"
+                                       href="{{ q.task.get_absolute_url }}?previous=project">
+                                        {{ q.question.spec.title }} &raquo;
+                                        {# use a stable title - dont make it depend on the task #}
+                                    </a>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endblock %}
+            </div> <!-- /focus-area-wrapper -->
+        </div> <!-- /col -->
+
+
+        <div class="col-md-8 project-body-block" style="margin-top: 60px;">
+            {% block body_content %}
+            {% endblock %}
+
+
+
+
+        </div>
+    </div> <!-- /row -->
+
+    {% include "edit-project-modal.html" %}
+    {% include "edit-project-security-impact-levels-modal.html" %}
+    {% include "move-project-modal.html" %}
+
+    {% block scripts %}
+        <script>
+            window.projectMenu({{ display_urls | json }});
+            function show_import_project_modal(id, callback) {
+                var m = $('#import_project_modal');
+                $("#import_loading_spinner").hide();
+                m.modal();
+            }
+
+            function fillJSONContent(file) {
+                filecontents = $('#{{import_project_form.file.auto_id}}').prop('files')[0];
+                var reader = new FileReader();
+                reader.readAsText(filecontents);
+                reader.onload = function (e) {
+                    $('#{{import_project_form.json_content.auto_id}}').val(e.target.result);
+                };
+            }
+
+            function show_spinner() {
+                $("#import_loading_spinner").show();
+            }
+
+        </script>
+
+    {% endblock %}
+    {% block footer %}{% endblock %}
+    {% include "controls/import_project_modal.html" %}
+
+    {% block modals %}
+    {% endblock %}
+{% endblock %}

@@ -1,0 +1,24 @@
+documentation_complete: true
+
+
+title: 'Install vim Package'
+
+description: |-
+    {{{ describe_package_install(package="vim-enhanced") }}}
+
+rationale: |-
+    Vim (Vi IMproved) is an almost compatible version of the UNIX editor <tt>vi</tt>. 
+
+severity: low
+
+identifiers:
+    cce@rhel8: CCE-82956-4
+
+ocil_clause: 'the package is not installed'
+
+ocil: '{{{ ocil_package(package="vim-enhanced") }}}'
+
+template:
+    name: package_installed
+    vars:
+        pkgname: vim-enhanced

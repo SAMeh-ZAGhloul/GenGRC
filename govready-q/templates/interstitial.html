@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+
+{% block title %}
+{{title}}
+{% endblock %}
+
+{% block head %}
+<style>
+{% include "focus-area-styles.css" %}
+h1 { margin-top: 0; }
+</style>
+{% endblock %}
+
+{% block breadcrumbs %}
+  {% for item in breadcrumbs_links %}
+    <li>{% if item.link %}<a href="{{item.link}}">{% endif %}{{item.title}}{% if item.link %}</a>{% endif %}</li>
+  {% endfor %}
+  <li class="active">{{breadcrumbs_last}}</li>
+{% endblock %}
+
+{% block body %}
+<div class="row">
+  <div class="col-md-push-2 col-md-8">
+    <div id="focus-area-wrapper">
+        {{body|safe}}
+
+        <div class="interstitial-success">
+          {% if alt_url %}
+            <a id="alt-btn" class="btn btn-success" class="interstitial-link"
+              href="{{alt_url}}">{{alt_text}} &raquo;</a>
+          {% endif %}
+
+          <a id="continue-btn" class="btn btn-success" class="interstitial-link "
+            href="{{continue_url}}">{{continue_text}} &raquo;</a>
+        </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(function() {
+  $('#id_title').focus();
+})
+</script>
+{% endblock %}

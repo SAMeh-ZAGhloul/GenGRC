@@ -1,0 +1,769 @@
+﻿Family,Basic/Derived Security Requirement,Identifier,Sort-As,"Security Requirement",Description,References
+,Basic,PO.1.1,PO.1.1,"Identify and document all security requirements for the organization’s software development infrastructures and processes, and maintain the requirements over time.","<ul>
+<li><b>Example 1:</b> Define policies for securing software development infrastructures and their components, including development endpoints, throughout the SDLC and maintaining that security.</li>
+<li><b>Example 2:</b> Define policies for securing software development processes throughout the SDLC and maintaining that security, including for open-source and other third-party software components utilized by software being developed.</li>
+<li><b>Example 3:</b> Review and update security requirements at least annually, or sooner if there are new requirements from internal or external sources, or a major security incident targeting software development infrastructure has occurred. </li>
+<li><b>Example 4:</b> Educate affected individuals on impending changes to requirements.
+</ul>","BSAFSS: SM.3, DE.1, IA.1, IA.2 <br>
+BSIMM: CP1.1, CP1.3, SR1.1, SR2.2, SE1.2, SE2.6<br>
+EO14028: 4e(ix)<br>
+IEC62443: SM-7, SM-9<br>
+NISTCSF: ID.GV-3<br>
+OWASPASVS: 1.1.1<br>
+OWASPMASVS: 1.10<br>
+OWASPSAMM: PC1-A, PC1-B, PC2-A<br>
+PCISSLC: 2.1, 2.2<br>
+SCFPSSD: Planning the Implementation and Deployment of Secure Development Practices<br>
+SP80053: SA-1, SA-8, SA-15, SR-3<br>
+SP800160: 3.1.2, 3.2.1, 3.2.2, 3.3.1, 3.4.2, 3.4.3<br>
+SP800161: SA-1, SA-8, SA-15, SR-3<br>
+SP800181: T0414; K0003, K0039, K0044, K0157, K0168, K0177, K0211, K0260, K0261, K0262, K0524; S0010, S0357, S0368; A0033, A0123, A0151"
+,Basic,PO.1.2,PO.1.2,"Identify and document all security requirements for organization-developed software to meet, and maintain the requirements over time.","<ul>
+<li><b>Example 1:</b> Define policies that specify risk-based software architecture and design requirements, such as making code modular to facilitate code reuse and updates; isolating security components from other components during execution; avoiding undocumented commands and settings; and providing features that will aid software acquirers with the secure deployment, operation, and maintenance of the software.</li>
+<li><b>Example 2:</b> Define policies that specify the security requirements for the organization’s software, and verify compliance at key points in the SDLC (e.g., classes of software flaws verified by gates, responses to vulnerabilities discovered in released software).</li>
+<li><b>Example 3:</b> Analyze the risk of applicable technology stacks (e.g., languages, environments, deployment models), and recommend or require the use of stacks that will reduce risk compared to others.</li>
+<li><b>Example 4:</b> Define policies that specify what needs to be archived for each software release (e.g., code, package files, third-party libraries, documentation, data inventory) and how long it needs to be retained based on the SDLC model, software end-of-life, and other factors. </li>
+<li><b>Example 5:</b> Ensure that policies cover the entire software life cycle, including notifying users of the impending end of software support and the date of software end-of-life.</li>
+<li><b>Example 6:</b> Review all security requirements at least annually, or sooner if there are new requirements from internal or external sources, a major vulnerability is discovered in released software, or a major security incident targeting organization-developed software has occurred. </li>
+<li><b>Example 7:</b> Establish and follow processes for handling requirement exception requests, including periodic reviews of all approved exceptions.
+</ul>","BSAFSS: SC.1-1, SC.2, PD.1-1, PD.1-2, PD.1-3, PD.2-2, SI, PA, CS, AA, LO, EE<br>
+BSIMM: SM1.1, SM1.4, SM2.2, CP1.1, CP1.2, CP1.3, CP2.1, CP2.3, AM1.2, SFD1.1, SFD2.1, SFD3.2, SR1.1, SR1.3, SR2.2, SR3.3, SR3.4<br>
+EO14028: 4e(ix)<br>
+IEC62443: SR-3, SR-4, SR-5, SD-4<br>
+ISO27034: 7.3.2<br>
+MSSDL: 2, 5<br>
+NISTCSF: ID.GV-3<br>
+OWASPMASVS: 1.12<br>
+OWASPSAMM: PC1-A, PC1-B, PC2-A, PC3-A, SR1-A, SR1-B, SR2-B, SA1-B, IR1-A<br>
+PCISSLC: 2.1, 2.2, 2.3, 3.3<br>
+SCFPSSD: Establish Coding Standards and Conventions<br>
+SP80053: SA-8, SA-8(3), SA-15, SR-3<br>
+SP800160: 3.1.2, 3.2.1, 3.3.1<br>
+SP800161: SA-8, SA-15, SR-3<br>
+SP800181: T0414; K0003, K0039, K0044, K0157, K0168, K0177, K0211, K0260, K0261, K0262, K0524; S0010, S0357, S0368; A0033, A0123, A0151"
+,Basic,PO.1.3,PO.1.3,Communicate requirements to all third parties who will provide commercial software components to the organization for reuse by the organization’s own software. [Formerly PW.3.1],"<ul>
+<li><b>Example 1:</b> Define a core set of security requirements for software components, and include it in acquisition documents, software contracts, and other agreements with third parties.</li>
+<li><b>Example 2:</b> Define security-related criteria for selecting software; the criteria can include the third party’s vulnerability disclosure program and product security incident response capabilities or the third party’s adherence to organization-defined practices.</li>
+<li><b>Example 3:</b> Require third parties to attest that their software complies with the organization’s security requirements.</li>
+<li><b>Example 4:</b> Require third parties to provide provenance data and integrity verification mechanisms for all components of their software.</li>
+<li><b>Example 5:</b> Establish and follow processes to address risk when there are security requirements that third-party software components to be acquired do not meet; this should include periodic reviews of all approved exceptions to requirements.
+</ul>","BSAFSS: SM.1, SM.2, SM.2-1, SM.2-4<br>
+BSIMM: CP2.4, CP3.2, SR2.5, SR3.2<br>
+EO14028: 4e(vi), 4e(ix)<br>
+IDASOAR: 19, 21<br>
+IEC62443: SM-9, SM-10<br>
+MSSDL: 7<br>
+NISTCSF: ID.SC-3<br>
+OWASPSAMM: SR3-A<br>
+SCAGILE: Tasks Requiring the Help of Security Experts 8<br>
+SCFPSSD: Manage Security Risk Inherent in the Use of Third-Party Components<br>
+SCSIC: Vendor Sourcing Integrity Controls<br>
+SP80053: SA-4, SA-9, SA-10, SA-10(1), SA-15, SR-3, SR-4, SR-5<br>
+SP800160: 3.1.1, 3.1.2<br>
+SP800161: SA-4, SA-9, SA-9(1), SA-9(3), SA-10, SA-10(1), SA-15, SR-3, SR-4, SR-5<br>
+SP800181: T0203, T0415; K0039; S0374; A0056, A0161"
+,Basic,PO.2.1,PO.2.1,"Create new roles and alter responsibilities for existing roles as needed to encompass all parts of the SDLC. Periodically review and maintain the defined roles and responsibilities, updating them as needed.","<ul>
+<li><b>Example 1:</b> Define SDLC-related roles and responsibilities for all members of the software development team.</li>
+<li><b>Example 2:</b> Integrate the security roles into the software development team.</li>
+<li><b>Example 3:</b> Define roles and responsibilities for cybersecurity staff, security champions, project managers and leads, senior management, software developers, software testers, software assurance leads and staff, product owners, operations and platform engineers, and others involved in the SDLC.</li>
+<li><b>Example 4:</b> Conduct an annual review of all roles and responsibilities.</li>
+<li><b>Example 5:</b> Educate affected individuals on impending changes to roles and responsibilities, and confirm that the individuals understand the changes and agree to follow them.</li>
+<li><b>Example 6:</b> Implement and use tools and processes to promote communication and engagement among individuals with SDLC-related roles and responsibilities, such as creating messaging channels for team discussions.</li>
+<li><b>Example 7:</b> Designate a group of individuals or a team as the code owner for each project.
+</ul>","BSAFSS: PD.2-1, PD.2-2<br>
+BSIMM: SM1.1, SM2.3, SM2.7, CR1.7<br>
+EO14028: 4e(ix)<br>
+IEC62443: SM-2, SM-13<br>
+NISTCSF: ID.AM-6, ID.GV-2<br>
+PCISSLC: 1.2<br>
+SCSIC: Vendor Software Development Integrity Controls<br>
+SP80053: SA-3<br>
+SP800160: 3.2.1, 3.2.4, 3.3.1<br>
+SP800161: SA-3<br>
+SP800181: K0233"
+,Basic,PO.2.2,PO.2.2,"Provide role-based training for all personnel with responsibilities that contribute to secure development. Periodically review personnel proficiency and role-based training, and update the training as needed.","<ul>
+<li><b>Example 1:</b> Document the desired outcomes of training for each role.</li>
+<li><b>Example 2:</b> Define the type of training or curriculum required to achieve the desired outcome for each role.</li>
+<li><b>Example 3:</b> Create a training plan for each role.</li>
+<li><b>Example 4:</b> Acquire or create training for each role; acquired training may need to be customized for the organization.</li>
+<li><b>Example 5:</b> Measure outcome performance to identify areas where changes to training may be beneficial.
+</ul>","BSAFSS: PD.2-2<br>
+BSIMM: T1.1, T1.7, T1.8, T2.5, T2.8, T2.9, T3.1, T3.2, T3.4<br>
+EO14028: 4e(ix)<br>
+IEC62443: SM-4<br>
+MSSDL: 1<br>
+NISTCSF: PR.AT<br>
+OWASPSAMM: EG1-A, EG2-A<br>
+PCISSLC: 1.3<br>
+SCAGILE: Operational Security Tasks 14, 15; Tasks Requiring the Help of Security Experts 1<br>
+SCFPSSD: Planning the Implementation and Deployment of Secure Development Practices<br>
+SCSIC: Vendor Software Development Integrity Controls<br>
+SP80053: SA-8<br>
+SP800160: 3.2.4, 3.2.6<br>
+SP800161: SA-8<br>
+SP800181: OV-TEA-001, OV-TEA-002; T0030, T0073, T0320; K0204, K0208, K0220, K0226, K0243, K0245, K0252; S0100, S0101; A0004, A0057"
+,Basic,PO.2.3,PO.2.3,"Obtain upper management or authorizing official commitment to secure development, and convey that commitment to all with development-related roles and responsibilities.","<ul>
+<li><b>Example 1:</b> Appoint a single leader or leadership team to be responsible for the entire secure software development process, including being accountable for releasing software to production and delegating responsibilities as appropriate.</li>
+<li><b>Example 2:</b> Increase authorizing officials’ awareness of the risks of developing software without integrating security throughout the development life cycle and the risk mitigation provided by secure development practices.</li>
+<li><b>Example 3:</b> Assist upper management in incorporating secure development support into their communications with personnel with development-related roles and responsibilities.</li>
+<li><b>Example 4:</b> Educate all personnel with development-related roles and responsibilities on upper management’s commitment to secure development and the importance of secure development to the organization.
+</ul>","BSIMM: SM1.3, SM2.7, CP2.5<br>
+EO14028: 4e(ix)<br>
+NISTCSF: ID.RM-1, ID.SC-1<br>
+OWASPSAMM: SM1.A<br>
+PCISSLC: 1.1<br>
+SP800181: T0001, T0004"
+,Basic,PO.3.1,PO.3.1,"Specify which tools or tool types must or should be included in each toolchain to mitigate identified risks, as well as how the toolchain components are to be integrated with each other.","<ul>
+<li><b>Example 1:</b> Define categories of toolchains, and specify the mandatory tools or tool types to be used for each category.</li>
+<li><b>Example 2:</b> Identify security tools to integrate into the developer toolchain.</li>
+<li><b>Example 3:</b> Define what information is to be passed between tools and what data formats are to be used.</li>
+<li><b>Example 4:</b> Evaluate tools’ signing capabilities to create immutable records/logs for auditability within the toolchain.</li>
+<li><b>Example 5:</b> Use automated technology for toolchain management and orchestration.
+</ul>","BSIMM: CR1.4, ST1.4, ST2.5, SE2.7<br>
+CNCFSSCP: Securing Materials—Verification; Securing Build Pipelines—Verification, Automation, Secure Authentication/Access; Securing Artefacts—Verification; Securing Deployments—Verification <br>
+EO14028: 4e(iii), 4e(ix)<br>
+MSSDL: 8<br>
+OWASPSAMM: IR2-B, ST2-B<br>
+SCAGILE: Tasks Requiring the Help of Security Experts 9<br>
+SCSIC: Vendor Software Delivery Integrity Controls<br>
+SP80053: SA-15<br>
+SP800161: SA-15<br>
+SP800181: K0013, K0178"
+,Basic,PO.3.2,PO.3.2,"Follow recommended security practices to deploy, operate, and maintain tools and toolchains.","<ul>
+<li><b>Example 1:</b> Evaluate, select, and acquire tools, and assess the security of each tool.</li>
+<li><b>Example 2:</b> Integrate tools with other tools and existing software development processes and workflows.</li>
+<li><b>Example 3:</b> Use code-based configuration for toolchains (e.g., pipelines-as-code, toolchains-as-code).</li>
+<li><b>Example 4:</b> Implement the technologies and processes needed for reproducible builds.</li>
+<li><b>Example 5:</b> Update, upgrade, or replace tools as needed to address tool vulnerabilities or add new tool capabilities.</li>
+<li><b>Example 6:</b> Continuously monitor tools and tool logs for potential operational and security issues, including policy violations and anomalous behavior.</li>
+<li><b>Example 7:</b> Regularly verify the integrity and check the provenance of each tool to identify potential problems.</li>
+<li><b>Example 8:</b> See PW.6 regarding compiler, interpreter, and build tools.</li>
+<li><b>Example 9:</b> See PO.5 regarding implementing and maintaining secure environments.
+</ul>","BSAFSS: DE.2<br>
+BSIMM: SR1.1, SR1.3, SR3.4<br>
+CNCFSSCP: Securing Build Pipelines—Verification, Automation, Controlled Environments, Secure Authentication/Access; Securing Artefacts—Verification, Automation, Controlled Environments, Encryption; Securing Deployments—Verification, Automation<br>
+EO14028: 4e(i)(F), 4e(ii), 4e(iii), 4e(v), 4e(vi), 4e(ix)<br>
+IEC62443: SM-7<br>
+IR8397: 2.2<br>
+OWASPASVS: 1.14.3, 1.14.4, 14.1, 14.2<br>
+OWASPMASVS: 7.9<br>
+OWASPSCVS: 3, 5<br>
+SCAGILE: Tasks Requiring the Help of Security Experts 9<br>
+SCFPSSD: Use Current Compiler and Toolchain Versions and Secure Compiler Options<br>
+SCSIC: Vendor Software Delivery Integrity Controls<br>
+SP80053: SA-15<br>
+SP800161: SA-15<br>
+SP800181: K0013, K0178"
+,Basic,PO.3.3,PO.3.3,Configure tools to generate artifacts  of their support of secure software development practices as defined by the organization.,"<ul>
+<li><b>Example 1:</b> Use existing tooling (e.g., workflow tracking, issue tracking, value stream mapping) to create an audit trail of the secure development-related actions that are performed for continuous improvement purposes.</li>
+<li><b>Example 2:</b> Determine how often the collected information should be audited, and implement the necessary processes.</li>
+<li><b>Example 3:</b> Establish and enforce security and retention policies for artifact data.</li>
+<li><b>Example 4:</b> Assign responsibility for creating any needed artifacts that tools cannot generate.
+</ul>","BSAFSS: PD.1-5<br>
+BSIMM: SM1.4, SM3.4, SR1.3<br>
+CNCFSSCP: Securing Build Pipelines—Verification, Automation, Controlled Environments; Securing Artefacts—Verification<br>
+EO14028: 4e(i)(F), 4e(ii), 4e(v), 4e(ix)<br>
+IEC62443: SM-12, SI-2<br>
+MSSDL: 8<br>
+OWASPSAMM: PC3-B<br>
+OWASPSCVS: 3.13, 3.14<br>
+PCISSLC: 2.5<br>
+SCAGILE: Tasks Requiring the Help of Security Experts 9<br>
+SCSIC: Vendor Software Delivery Integrity Controls<br>
+SP80053: SA-15<br>
+SP800161: SA-15<br>
+SP800181: K0013; T0024"
+,Basic,PO.4.1,PO.4.1,Define criteria for software security checks and track throughout the SDLC.,"<ul>
+<li><b>Example 1:</b> Ensure that the criteria adequately indicate how effectively security risk is being managed.</li>
+<li><b>Example 2:</b> Define key performance indicators (KPIs), key risk indicators (KRIs), vulnerability severity scores, and other measures for software security.</li>
+<li><b>Example 3:</b> Add software security criteria to existing checks (e.g., the Definition of Done in agile SDLC methodologies).</li>
+<li><b>Example 4:</b> Review the artifacts generated as part of the software development workflow system to determine if they meet the criteria. </li>
+<li><b>Example 5:</b> Record security check approvals, rejections, and exception requests as part of the workflow and tracking system.</li>
+<li><b>Example 6:</b> Analyze collected data in the context of the security successes and failures of each development project, and use the results to improve the SDLC.
+</ul>","BSAFSS: TV.2-1, TV.5-1<br>
+BSIMM: SM1.4, SM2.1, SM2.2, SM2.6, SM3.3, CP2.2<br>
+EO14028: 4e(iv), 4e(v), 4e(ix)<br>
+IEC62443: SI-1, SI-2, SVV-3<br>
+ISO27034: 7.3.5<br>
+MSSDL: 3<br>
+OWASPSAMM: PC3-A, DR3-B, IR3-B, ST3-B<br>
+PCISSLC: 3.3<br>
+SP80053: SA-15, SA-15(1)<br>
+SP800160: 3.2.1, 3.2.5, 3.3.1<br>
+SP800161: SA-15, SA-15(1)<br>
+SP800181: K0153, K0165"
+,Basic,PO.4.2,PO.4.2,"Implement processes, mechanisms, etc. to gather and safeguard the necessary information in support of the criteria.","<ul>
+<li><b>Example 1:</b> Use the toolchain to automatically gather information that informs security decision-making.</li>
+<li><b>Example 2:</b> Deploy additional tools if needed to support the generation and collection of information supporting the criteria.</li>
+<li><b>Example 3:</b> Automate decision-making processes utilizing the criteria, and periodically review these processes.</li>
+<li><b>Example 4:</b> Only allow authorized personnel to access the gathered information, and prevent any alteration or deletion of the information.
+</ul>","BSAFSS: PD.1-4, PD.1-5<br>
+BSIMM: SM1.4, SM2.1, SM2.2, SM3.4<br>
+EO14028: 4e(iv), 4e(v), 4e(ix)<br>
+IEC62443: SI-1, SVV-1, SVV-2, SVV-3, SVV-4<br>
+OWASPSAMM: PC3-B<br>
+PCISSLC: 2.5<br>
+SCSIC: Vendor Software Delivery Integrity Controls<br>
+SP80053: SA-15, SA-15(1), SA-15(11)<br>
+SP800160: 3.2.5, 3.3.7<br>
+SP800161: SA-15, SA-15(1), SA-15(11)<br>
+SP800181: T0349; K0153"
+,Basic,PO.5.1,PO.5.1,Separate and protect each environment involved in software development.,"<ul>
+<li><b>Example 1:</b> Use multi-factor, risk-based authentication and conditional access for each environment.</li>
+<li><b>Example 2:</b> Use network segmentation and access controls to separate the environments from each other and from production environments, and to separate components from each other within each non-production environment, in order to reduce attack surfaces and attackers’ lateral movement and privilege/access escalation.</li>
+<li><b>Example 3:</b> Enforce authentication and tightly restrict connections entering and exiting each software development environment, including minimizing access to the internet to only what is necessary.</li>
+<li><b>Example 4:</b> Minimize direct human access to toolchain systems, such as build services. Continuously monitor and audit all access attempts and all use of privileged access.</li>
+<li><b>Example 5:</b> Minimize the use of production-environment software and services from non-production environments.</li>
+<li><b>Example 6:</b> Regularly log, monitor, and audit trust relationships for authorization and access between the environments and between the components within each environment.</li>
+<li><b>Example 7:</b> Continuously log and monitor operations and alerts across all components of the development environment to detect, respond, and recover from attempted and actual cyber incidents.</li>
+<li><b>Example 8:</b> Configure security controls and other tools involved in separating and protecting the environments to generate artifacts for their activities.</li>
+<li><b>Example 9:</b> Continuously monitor all software deployed in each environment for new vulnerabilities, and respond to vulnerabilities appropriately following a risk-based approach.</li>
+<li><b>Example 10:</b> Configure and implement measures to secure the environments’ hosting infrastructures following a zero trust architecture.
+</ul>","BSAFSS: DE.1, IA.1, IA.2<br>
+CNCFSSCP: Securing Build Pipelines—Controlled Environments<br>
+EO14028: 4e(i)(A), 4e(i)(B), 4e(i)(C), 4e(i)(D), 4e(i)(F), 4e(ii), 4e(iii), 4e(v), 4e(vi), 4e(ix)<br>
+IEC62443: SM-7<br>
+NISTCSF: PR.AC-5, PR.DS-7<br>
+SCAGILE: Tasks Requiring the Help of Security Experts 11<br>
+SCSIC: Vendor Software Delivery Integrity Controls<br>
+SP80053: SA-3(1), SA-8, SA-15<br>
+SP800161: SA-3, SA-8, SA-15<br>
+SP800181: OM-NET-001, SP-SYS-001; T0019, T0023, T0144, T0160, T0262, T0438, T0484, T0485, T0553; K0001, K0005, K0007, K0033, K0049, K0056, K0061, K0071, K0104, K0112, K0179, K0326, K0487; S0007, S0084, S0121; A0048"
+,Basic,PO.5.2,PO.5.2,"Secure and harden development endpoints (i.e., endpoints for software designers, developers, testers, builders, etc.) to perform development-related tasks using a risk-based approach.","<ul>
+<li><b>Example 1:</b> Configure each development endpoint based on approved hardening guides, checklists, etc.; for example, enable FIPS-compliant encryption of all sensitive data at rest and in transit.</li>
+<li><b>Example 2:</b> Configure each development endpoint and the development resources to provide the least functionality needed by users and services and to enforce the principle of least privilege.</li>
+<li><b>Example 3:</b> Continuously monitor the security posture of all development endpoints, including monitoring and auditing all use of privileged access.</li>
+<li><b>Example 4:</b> Configure security controls and other tools involved in securing and hardening development endpoints to generate artifacts for their activities.</li>
+<li><b>Example 5:</b> Require multi-factor authentication for all access to development endpoints and development resources.</li>
+<li><b>Example 6:</b> Provide dedicated development endpoints on non-production networks for performing all development-related tasks. Provide separate endpoints on production networks for all other tasks.</li>
+<li><b>Example 7:</b> Configure each development endpoint following a zero trust architecture.
+</ul>","BSAFSS: DE.1-1, IA.1, IA.2<br>
+EO14028: 4e(i)(C), 4e(i)(E), 4e(i)(F), 4e(ii), 4e(iii), 4e(v), 4e(vi), 4e(ix)<br>
+IEC62443: SM-7<br>
+NISTCSF: PR.AC-4, PR.AC-7, PR.IP-1, PR.IP-3, PR.IP-12, PR.PT-1, PR.PT-3, DE.CM<br>
+SCAGILE: Tasks Requiring the Help of Security Experts 11<br>
+SCSIC: Vendor Software Delivery Integrity Controls<br>
+SP80053: SA-15<br>
+SP800161: SA-15<br>
+SP800181: OM-ADM-001, SP-SYS-001; T0484, T0485, T0489, T0553; K0005, K0007, K0077, K0088, K0130, K0167, K0205, K0275; S0076, S0097, S0121, S0158; A0155"
+,Basic,PS.1.1,PS.1.1,"Store all forms of code – including source code, executable code, and configuration-as-code –  based on the principle of least privilege so that only authorized personnel, tools, services, etc. have access.","<ul>
+<li><b>Example 1:</b> Store all source code and configuration-as-code in a code repository, and restrict access to it based on the nature of the code. For example, open-source code intended for public access may need its integrity and availability protected; other code may also need its confidentiality protected.</li>
+<li><b>Example 2:</b> Use version control features of the repository to track all changes made to the code with accountability to the individual account.</li>
+<li><b>Example 3:</b> Use commit signing for code repositories.</li>
+<li><b>Example 4:</b> Have the code owner review and approve all changes made to the code by others.</li>
+<li><b>Example 5:</b> Use code signing  to help protect the integrity of executables.</li>
+<li><b>Example 6:</b> Use cryptography (e.g., cryptographic hashes) to help protect file integrity.
+</ul>","BSAFSS: IA.1, IA.2, SM.4-1, DE.1-2<br>
+BSIMM: SE2.4<br>
+CNCFSSCP: Securing the Source Code—Verification, Automation, Controlled Environments, Secure Authentication; Securing Materials—Automation<br>
+EO14028: 4e(iii), 4e(iv), 4e(ix)<br>
+IDASOAR: Fact Sheet 25<br>
+IEC62443: SM-6, SM-7, SM-8<br>
+NISTCSF: PR.AC-4, PR.DS-6, PR.IP-3<br>
+OWASPASVS: 1.10, 10.3.2<br>
+OWASPMASVS: 7.1<br>
+OWASPSAMM: OE3-B<br>
+PCISSLC: 5.1, 6.1<br>
+SCSIC: Vendor Software Delivery Integrity Controls, Vendor Software Development Integrity Controls<br>
+SP80053: SA-10<br>
+SP800161: SA-8, SA-10"
+,Basic,PS.2.1,PS.2.1,Make software integrity verification information available to software acquirers.,"<ul>
+<li><b>Example 1:</b> Post cryptographic hashes for release files on a well-secured website.</li>
+<li><b>Example 2:</b> Use an established certificate authority for code signing so that consumers’ operating systems or other tools and services can confirm the validity of signatures before use.</li>
+<li><b>Example 3:</b> Periodically review the code signing processes, including certificate renewal, rotation, revocation, and protection.
+</ul>","BSAFSS: SM.4, SM.5, SM.6<br>
+BSIMM: SE2.4<br>
+CNCFSSCP: Securing Deployments—Verification<br>
+EO14028: 4e(iii), 4e(ix), 4e(x)<br>
+IEC62443: SM-6, SM-8, SUM-4<br>
+NISTCSF: PR.DS-6<br>
+NISTLABEL: 2.2.2.4<br>
+OWASPSAMM: OE3-B<br>
+OWASPSCVS: 4<br>
+PCISSLC: 6.1, 6.2<br>
+SCSIC: Vendor Software Delivery Integrity Controls<br>
+SP80053: SA-8<br>
+SP800161: SA-8<br>
+SP800181: K0178"
+,Basic,PS.3.1,PS.3.1,"Securely archive the necessary files and supporting data (e.g., integrity verification information, provenance data) to be retained for each software release.","<ul>
+<li><b>Example 1:</b> Store the release files, associated images, etc. in repositories following the organization’s established policy. Allow read-only access to them by necessary personnel and no access by anyone else.</li>
+<li><b>Example 2:</b> Store and protect release integrity verification information and provenance data, such as by keeping it in a separate location from the release files or by signing the data.
+</ul>","BSAFSS: PD.1-5, DE.1-2, IA.2<br>
+CNCFSSCP: Securing Artefacts—Automation, Controlled Environments, Encryption; Securing Deployments—Verification <br>
+EO14028: 4e(iii), 4e(vi), 4e(ix), 4e(x)<br>
+IDASOAR: 25<br>
+IEC62443: SM-6, SM-7<br>
+NISTCSF: PR.IP-4<br>
+OWASPSCVS: 1, 3.18, 3.19, 6.3<br>
+PCISSLC: 5.2, 6.1, 6.2<br>
+SCSIC: Vendor Software Delivery Integrity Controls<br>
+SP80053: SA-10, SA-15, SA-15(11), SR-4<br>
+SP800161: SA-8, SA-10, SA-15(11), SR-4"
+,Basic,PS.3.2,PS.3.2,"Collect, safeguard, maintain, and share provenance data for all components of each software release (e.g., in a software bill of materials [SBOM]).","<ul>
+<li><b>Example 1:</b> Make the provenance data available to software acquirers in accordance with the organization’s policies, preferably using standards-based formats.</li>
+<li><b>Example 2:</b> Make the provenance data available to the organization’s operations and response teams to aid them in mitigating software vulnerabilities.</li>
+<li><b>Example 3:</b> Protect the integrity of provenance data, and provide a way for recipients to verify provenance data integrity.</li>
+<li><b>Example 4:</b> Update the provenance data every time any of the software’s components are updated.
+</ul>","BSAFSS: SM.2<br>
+BSIMM: SE3.6<br>
+CNCFSSCP: Securing Materials—Verification, Automation<br>
+EO14028: 4e(vi), 4e(vii), 4e(ix), 4e(x)<br>
+NTIASBOM: All<br>
+OWASPSCVS: 1.4, 2<br>
+SCSIC: Vendor Software Delivery Integrity Controls<br>
+SCTPC: MAINTAIN3<br>
+SP80053: SA-8, SR-3, SR-4<br>
+SP800161: SA-8, SR-3, SR-4"
+,Basic,PW.1.1,PW.1.1,"Use forms of risk modeling – such as threat modeling, attack modeling, or attack surface mapping – to help assess the security risk for the software.","<ul>
+<li><b>Example 1:</b> Train the development team (security champions, in particular) or collaborate with a risk modeling expert to create models and analyze how to use a risk-based approach to communicate the risks and determine how to address them, including implementing mitigations.</li>
+<li><b>Example 2:</b> Perform more rigorous assessments for high-risk areas, such as protecting sensitive data and safeguarding identification, authentication, and access control, including credential management.</li>
+<li><b>Example 3:</b> Review vulnerability reports and statistics for previous software to inform the security risk assessment.</li>
+<li><b>Example 4:</b> Use data classification methods to identify and characterize each type of data that the software will interact with.
+</ul>","BSAFSS: SC.1<br>
+BSIMM: AM1.2, AM1.3, AM1.5, AM2.1, AM2.2, AM2.5, AM2.6, AM2.7, SFD2.2, AA1.1, AA1.2, AA1.3, AA2.1<br>
+EO14028: 4e(ix)<br>
+IDASOAR: 1<br>
+IEC62443: SM-4, SR-1, SR-2, SD-1<br>
+IR8397: 2.1<br>
+ISO27034: 7.3.3<br>
+MSSDL: 4<br>
+NISTCSF: ID.RA<br>
+OWASPASVS: 1.1.2, 1.2, 1.4, 1.6, 1.8, 1.9, 1.11, 2, 3, 4, 6, 8, 9, 11, 12, 13<br>
+OWASPMASVS: 1.6, 1.8, 2, 3, 4, 5, 6<br>
+OWASPSAMM: TA1-A, TA1-B, TA3-B, DR1-A<br>
+PCISSLC: 3.2, 3.3<br>
+SCAGILE: Tasks Requiring the Help of Security Experts 3<br>
+SCFPSSD: Threat Modeling<br>
+SCTTM: Entire guide<br>
+SP80053: SA-8, SA-11(2), SA-11(6), SA-15(5)<br>
+SP800160: 3.3.4, 3.4.5<br>
+SP800161: SA-8, SA-11(2), SA-11(6), SA-15(5)<br>
+SP800181: T0038, T0062; K0005, K0009, K0038, K0039, K0070, K0080, K0119, K0147, K0149, K0151, K0152, K0160, K0161, K0162, K0165, K0297, K0310, K0344, K0362, K0487, K0624; S0006, S0009, S0022, S0078, S0171, S0229, S0248; A0092, A0093, A0107"
+,Basic,PW.1.2,PW.1.2,"Track and maintain the software’s security requirements, risks, and design decisions.","<ul>
+<li><b>Example 1:</b> Record the response to each risk, including how mitigations are to be achieved and what the rationales are for any approved exceptions to the security requirements. Add any mitigations to the software’s security requirements.</li>
+<li><b>Example 2:</b> Maintain records of design decisions, risk responses, and approved exceptions that can be used for auditing and maintenance purposes throughout the rest of the software life cycle.</li>
+<li><b>Example 3:</b> Periodically re-evaluate all approved exceptions to the security requirements, and implement changes as needed.
+</ul>","BSAFSS: SC.1-1, PD.1-1<br>
+BSIMM: SFD3.1, SFD3.3, AA2.2, AA3.2<br>
+EO14028: 4e(v), 4e(ix)<br>
+IEC62443: SD-1<br>
+ISO27034: 7.3.3<br>
+MSSDL: 4<br>
+NISTLABEL: 2.2.2.2<br>
+OWASPASVS: 1.1.3, 1.1.4<br>
+OWASPMASVS: 1.3, 1.6<br>
+OWASPSAMM: DR1-B<br>
+PCISSLC: 3.2, 3.3<br>
+SP80053: SA-8, SA-10, SA-17<br>
+SP800161: SA-8, SA-17<br>
+SP800181: T0256; K0005, K0038, K0039, K0147, K0149, K0160, K0161, K0162, K0165, K0344, K0362, K0487; S0006, S0009, S0078, S0171, S0229, S0248; A0092, A0107"
+,Basic,PW.1.3,PW.1.3,"Where appropriate, build in support for using standardized security features and services (e.g., enabling software to integrate with existing log management, identity management, access control, and vulnerability management systems) instead of creating proprietary implementations of security features and services. [Formerly PW.4.3]","<ul>
+<li><b>Example 1:</b> Maintain one or more software repositories of modules for supporting standardized security features and services.</li>
+<li><b>Example 2:</b> Determine secure configurations for modules for supporting standardized security features and services, and make these configurations available (e.g., as configuration-as-code) so developers can readily use them.</li>
+<li><b>Example 3:</b> Define criteria for which security features and services must be supported by software to be developed.
+</ul>","BSAFSS: SI.2-1, SI.2-2, LO.1<br>
+BSIMM: SFD1.1, SFD2.1, SFD3.2, SR1.1, SR3.4<br>
+EO14028: 4e(ix)<br>
+IEC62443: SD-1, SD-4<br>
+MSSDL: 5<br>
+OWASPASVS: 1.1.6<br>
+OWASPSAMM: SA2-A<br>
+SCFPSSD: Standardize Identity and Access Management; Establish Log Requirements and Audit Practices"
+,Basic,PW.2.1,PW.2.1,Have 1) a qualified person (or people) who were not involved with the design and/or 2) automated processes instantiated in the toolchain review the software design to confirm and enforce that it meets all of the security requirements and satisfactorily addresses the identified risk information.,"<ul>
+<li><b>Example 1:</b> Review the software design to confirm that it addresses applicable security requirements.</li>
+<li><b>Example 2:</b> Review the risk models created during software design to determine if they appear to adequately identify the risks.</li>
+<li><b>Example 3:</b> Review the software design to confirm that it satisfactorily addresses the risks identified by the risk models.</li>
+<li><b>Example 4:</b> Have the software’s designer correct failures to meet the requirements.</li>
+<li><b>Example 5:</b> Change the design and/or the risk response strategy if the security requirements cannot be met.</li>
+<li><b>Example 6:</b> Record the findings of design reviews to serve as artifacts (e.g., in the software specification, in the issue tracking system, in the threat model).
+</ul>","BSAFSS: TV.3<br>
+BSIMM: AA1.1, AA1.2, AA1.3, AA2.1, AA3.1<br>
+EO14028: 4e(iv), 4e(v), 4e(ix)<br>
+IEC62443: SM-2, SR-2, SR-5, SD-3, SD-4, SI-2<br>
+ISO27034: 7.3.3<br>
+OWASPASVS: 1.1.5<br>
+OWASPSAMM: DR1-A, DR1-B<br>
+PCISSLC: 3.2<br>
+SP800181: T0328; K0038, K0039, K0070, K0080, K0119, K0152, K0153, K0161, K0165, K0172, K0297; S0006, S0009, S0022, S0036, S0141, S0171"
+,Basic,PW.4.1,PW.4.1,"Acquire and maintain well-secured software components (e.g., software libraries, modules, middleware, frameworks) from commercial, open-source, and other third-party developers for use by the organization’s software.","<ul>
+<li><b>Example 1:</b> Review and evaluate third-party software components in the context of their expected use. If a component is to be used in a substantially different way in the future, perform the review and evaluation again with that new context in mind.</li>
+<li><b>Example 2:</b> Determine secure configurations for software components, and make these available (e.g., as configuration-as-code) so developers can readily use the configurations.</li>
+<li><b>Example 3:</b> Obtain provenance information (e.g., SBOM, source composition analysis, binary software composition analysis) for each software component, and analyze that information to better assess the risk that the component may introduce.</li>
+<li><b>Example 4:</b> Establish one or more software repositories to host sanctioned and vetted open-source components.</li>
+<li><b>Example 5:</b> Maintain a list of organization-approved commercial software components and component versions along with their provenance data.</li>
+<li><b>Example 6:</b> Designate which components must be included in software to be developed.</li>
+<li><b>Example 7:</b> Implement processes to update deployed software components to newer versions, and retain older versions of software components until all transitions from those versions have been completed successfully.</li>
+<li><b>Example 8:</b> If the integrity or provenance of acquired binaries cannot be confirmed, build binaries from source code after verifying the source code’s integrity and provenance.
+</ul>","BSAFSS: SM.2<br>
+BSIMM: SFD2.1, SFD3.2, SR2.4, SR3.1, SE3.6<br>
+CNCFSSCP: Securing Materials—Verification<br>
+EO14028: 4e(iii), 4e(vi), 4e(ix), 4e(x)<br>
+IDASOAR: 19<br>
+IEC62443: SM-9, SM-10<br>
+MSSDL: 6<br>
+NISTCSF: ID.SC-2<br>
+OWASPASVS: 1.1.6<br>
+OWASPSAMM: SA1-A<br>
+OWASPSCVS: 4<br>
+SCSIC: Vendor Sourcing Integrity Controls<br>
+SCTPC: MAINTAIN<br>
+SP80053: SA-4, SA-5, SA-8(3), SA-10(6), SR-3, SR-4<br>
+SP800161: SA-4, SA-5, SA-8(3), SA-10(6), SR-3, SR-4<br>
+SP800181: K0039"
+,Basic,PW.4.2,PW.4.2,Create and maintain well-secured software components in-house following SDLC processes to meet common internal software development needs that cannot be better met by third-party software components.,"<ul>
+<li><b>Example 1:</b> Follow organization-established security practices for secure software development when creating and maintaining the components.</li>
+<li><b>Example 2:</b> Determine secure configurations for software components, and make these available (e.g., as configuration-as-code) so developers can readily use the configurations.</li>
+<li><b>Example 3:</b> Maintain one or more software repositories for these components.</li>
+<li><b>Example 4:</b> Designate which components must be included in software to be developed.</li>
+<li><b>Example 5:</b> Implement processes to update deployed software components to newer versions, and maintain older versions of software components until all transitions from those versions have been completed successfully.
+</ul>","BSIMM: SFD1.1, SFD2.1, SFD3.2, SR1.1<br>
+EO14028: 4e(ix)<br>
+IDASOAR: 19<br>
+OWASPASVS: 1.1.6<br>
+SCTPC: MAINTAIN<br>
+SP80053: SA-8(3)<br>
+SP800161: SA-8(3)<br>
+SP800181: SP-DEV-001"
+,Basic,PW.4.4,PW.4.4,"Verify that acquired commercial, open-source, and all other third-party software components comply with the requirements, as defined by the organization, throughout their life cycles.","<ul>
+<li><b>Example 1:</b> Regularly check whether there are publicly known vulnerabilities in the software modules and services that vendors have not yet fixed.</li>
+<li><b>Example 2:</b> Build into the toolchain automatic detection of known vulnerabilities in software components.</li>
+<li><b>Example 3:</b> Use existing results from commercial services for vetting the software modules and services.</li>
+<li><b>Example 4:</b> Ensure that each software component is still actively maintained and has not reached end of life; this should include new vulnerabilities found in the software being remediated.</li>
+<li><b>Example 5:</b> Determine a plan of action for each software component that is no longer being maintained or will not be available in the near future.</li>
+<li><b>Example 6:</b> Confirm the integrity of software components through digital signatures or other mechanisms.</li>
+<li><b>Example 7:</b> Review, analyze, and/or test code. See PW.7 and PW.8.
+</ul>","BSAFSS: SC.3-1, SM.2-1, SM.2-2, SM.2-3, TV.2, TV.3<br>
+BSIMM: CP3.2, SR2.4, SR3.1, SR3.2, SE2.4, SE3.6<br>
+CNCFSSCP: Securing Materials—Verification, Automation<br>
+EO14028: 4e(iii), 4e(iv), 4e(vi), 4e(ix), 4e(x)<br>
+IDASOAR: 21<br>
+IEC62443: SI-1, SM-9, SM-10, DM-1<br>
+IR8397: 2.11<br>
+MSSDL: 7<br>
+NISTCSF: ID.SC-4, PR.DS-6<br>
+NISTLABEL: 2.2.2.2<br>
+OWASPASVS: 10, 14.2<br>
+OWASPMASVS: 7.5<br>
+OWASPSAMM: TA3-A, SR3-B<br>
+OWASPSCVS: 4, 5, 6<br>
+PCISSLC: 3.2, 3.4, 4.1<br>
+SCAGILE: Tasks Requiring the Help of Security Experts 8<br>
+SCFPSSD: Manage Security Risk Inherent in the Use of Third-Party Components<br>
+SCSIC: Vendor Sourcing Integrity Controls, Peer Reviews and Security Testing<br>
+SCTPC: MAINTAIN, ASSESS<br>
+SP80053: SA-9, SR-3, SR-4, SR-4(3), SR-4(4)<br>
+SP800160: 3.1.2, 3.3.8<br>
+SP800161: SA-4, SA-8, SA-9, SA-9(3), SR-3, SR-4, SR-4(3), SR-4(4)<br>
+SP800181: SP-DEV-002; K0153, K0266; S0298"
+,Basic,PW.5.1,PW.5.1,Follow all secure coding practices that are appropriate to the development languages and environment to meet the organization’s requirements.,"<ul>
+<li><b>Example 1:</b> Validate all inputs, and validate and properly encode all outputs.</li>
+<li><b>Example 2:</b> Avoid using unsafe functions and calls.</li>
+<li><b>Example 3:</b> Detect errors, and handle them gracefully.</li>
+<li><b>Example 4:</b> Provide logging and tracing capabilities.</li>
+<li><b>Example 5:</b> Use development environments with automated features that encourage or require the use of secure coding practices with just-in-time training-in-place.</li>
+<li><b>Example 6:</b> Follow procedures for manually ensuring compliance with secure coding practices when automated methods are insufficient or unavailable.</li>
+<li><b>Example 7:</b> Use tools (e.g., linters, formatters) to standardize the style and formatting of the source code.</li>
+<li><b>Example 8:</b> Check for other vulnerabilities that are common to the development languages and environment.</li>
+<li><b>Example 9:</b> Have the developer review their own human-readable code to complement (not replace) code review performed by other people or tools. See PW.7.
+</ul>","BSAFSS: SC.2, SC.3, LO.1, EE.1<br>
+BSIMM: SR3.3, CR1.4, CR3.5<br>
+EO14028: 4e(iv), 4e(ix)<br>
+IDASOAR: 2<br>
+IEC62443: SI-1, SI-2<br>
+ISO27034: 7.3.5<br>
+MSSDL: 9<br>
+OWASPASVS: 1.1.7, 1.5, 1.7, 5, 7<br>
+OWASPMASVS: 7.6<br>
+SCFPSSD: Establish Log Requirements and Audit Practices, Use Code Analysis Tools to Find Security Issues Early, Handle Data Safely, Handle Errors, Use Safe Functions Only<br>
+SP800181: SP-DEV-001; T0013, T0077, T0176; K0009, K0016, K0039, K0070, K0140, K0624; S0019, S0060, S0149, S0172, S0266; A0036, A0047"
+,Basic,PW.6.1,PW.6.1,"Use compiler, interpreter, and build tools that offer features to improve executable security.","<ul>
+<li><b>Example 1:</b> Use up-to-date versions of compiler, interpreter, and build tools.</li>
+<li><b>Example 2:</b> Follow change management processes when deploying or updating compiler, interpreter, and build tools, and audit all unexpected changes to tools.</li>
+<li><b>Example 3:</b> Regularly validate the authenticity and integrity of compiler, interpreter, and build tools. See PO.3.
+</ul>","BSAFSS: DE.2-1<br>
+BSIMM: SE2.4<br>
+CNCFSSCP: Securing Build Pipelines—Verification, Automation<br>
+EO14028: 4e(iv), 4e(ix)<br>
+IEC62443: SI-2<br>
+MSSDL: 8<br>
+SCAGILE: Operational Security Task 3<br>
+SCFPSSD: Use Current Compiler and Toolchain Versions and Secure Compiler Options<br>
+SCSIC: Vendor Software Development Integrity Controls<br>
+SP80053: SA-15<br>
+SP800161: SA-15"
+,Basic,PW.6.2,PW.6.2,"Determine which compiler, interpreter, and build tool features should be used and how each should be configured, then implement and use the approved configurations.","<ul>
+<li><b>Example 1:</b> Enable compiler features that produce warnings for poorly secured code during the compilation process.</li>
+<li><b>Example 2:</b> Implement the “clean build” concept, where all compiler warnings are treated as errors and eliminated except those determined to be false positives or irrelevant.</li>
+<li><b>Example 3:</b> Perform all builds in a dedicated, highly controlled build environment.</li>
+<li><b>Example 4:</b> Enable compiler features that randomize or obfuscate execution characteristics, such as memory location usage, that would otherwise be predictable and thus potentially exploitable.</li>
+<li><b>Example 5:</b> Test to ensure that the features are working as expected and are not inadvertently causing any operational issues or other problems.</li>
+<li><b>Example 6:</b> Continuously verify that the approved configurations are being used.</li>
+<li><b>Example 7:</b> Make the approved tool configurations available as configuration-as-code so developers can readily use them.
+</ul>","BSAFSS: DE.2-3, DE.2-4, DE.2-5<br>
+BSIMM: SE2.4, SE3.2<br>
+CNCFSSCP: Securing Build Pipelines—Verification, Automation<br>
+EO14028: 4e(iv), 4e(ix)<br>
+IEC62443: SI-2<br>
+IR8397: 2.5<br>
+MSSDL: 8<br>
+OWASPASVS: 14.1, 14.2.1<br>
+OWASPMASVS: 7.2<br>
+PCISSLC: 3.2<br>
+SCAGILE: Operational Security Task 8<br>
+SCFPSSD: Use Current Compiler and Toolchain Versions and Secure Compiler Options<br>
+SCSIC: Vendor Software Development Integrity Controls<br>
+SP80053: SA-15, SR-9<br>
+SP800161: SA-15, SR-9<br>
+SP800181: K0039, K0070"
+,Basic,PW.7.1,PW.7.1,"Determine whether code review (a person looks directly at the code to find issues) and/or code analysis (tools are used to find issues in code, either in a fully automated way or in conjunction with a person) should be used, as defined by the organization.","<ul>
+<li><b>Example 1:</b> Follow the organization’s policies or guidelines for when code review should be performed and how it should be conducted. This may include third-party code and reusable code modules written in-house.</li>
+<li><b>Example 2:</b> Follow the organization’s policies or guidelines for when code analysis should be performed and how it should be conducted.</li>
+<li><b>Example 3:</b> Choose code review and/or analysis methods based on the stage of the software.
+</ul>","BSIMM: CR1.5<br>
+EO14028: 4e(iv), 4e(ix)<br>
+IEC62443: SM-5, SI-1, SVV-1<br>
+NISTLABEL: 2.2.2.2<br>
+SCSIC: Peer Reviews and Security Testing<br>
+SP80053: SA-11<br>
+SP800161: SA-11<br>
+SP800181: SP-DEV-002; K0013, K0039, K0070, K0153, K0165; S0174"
+,Basic,PW.7.2,PW.7.2,"Perform the code review and/or code analysis based on the organization’s secure coding standards, and record and triage all discovered issues and recommended remediations in the development team’s workflow or issue tracking system.","<ul>
+<li><b>Example 1:</b> Perform peer review of code, and review any existing code review, analysis, or testing results as part of the peer review.</li>
+<li><b>Example 2:</b> Use expert reviewers to check code for backdoors and other malicious content.</li>
+<li><b>Example 3:</b> Use peer reviewing tools that facilitate the peer review process, and document all discussions and other feedback.</li>
+<li><b>Example 4:</b> Use a static analysis tool to automatically check code for vulnerabilities and compliance with the organization’s secure coding standards with a human reviewing the issues reported by the tool and remediating them as necessary.</li>
+<li><b>Example 5:</b> Use review checklists to verify that the code complies with the requirements.</li>
+<li><b>Example 6:</b> Use automated tools to identify and remediate documented and verified unsafe software practices on a continuous basis as human-readable code is checked into the code repository.</li>
+<li><b>Example 7:</b> Identify and document the root causes of discovered issues.</li>
+<li><b>Example 8:</b> Document lessons learned from code review and analysis in a wiki that developers can access and search.
+</ul>","BSAFSS: TV.2, PD.1-4<br>
+BSIMM: CR1.2, CR1.4, CR1.6, CR2.6, CR2.7, CR3.4, CR3.5<br>
+EO14028: 4e(iv), 4e(v), 4e(ix)<br>
+IDASOAR: 3, 4, 5, 14, 15, 48<br>
+IEC62443: SI-1, SVV-1, SVV-2<br>
+IR8397: 2.3, 2.4<br>
+ISO27034: 7.3.6<br>
+MSSDL: 9, 10<br>
+NISTLABEL: 2.2.2.2<br>
+OWASPASVS: 1.1.7, 10<br>
+OWASPMASVS: 7.5<br>
+OWASPSAMM: IR1-B, IR2-A, IR2-B, IR3-A<br>
+PCISSLC: 3.2, 4.1<br>
+SCAGILE: Operational Security Tasks 4, 7; Tasks Requiring the Help of Security Experts 10<br>
+SCFPSSD: Use Code Analysis Tools to Find Security Issues Early, Use Static Analysis Security Testing Tools, Perform Manual Verification of Security Features/Mitigations<br>
+SCSIC: Peer Reviews and Security Testing<br>
+SP80053: SA-11, SA-11(1), SA-11(4), SA-15(7)<br>
+SP800161: SA-11, SA-11(1), SA-11(4), SA-15(7)<br>
+SP800181: SP-DEV-001, SP-DEV-002; T0013, T0111, T0176, T0267, T0516; K0009, K0039, K0070, K0140, K0624; S0019, S0060, S0078, S0137, S0149, S0167, S0174, S0242, S0266; A0007, A0015, A0036, A0044, A0047"
+,Basic,PW.8.1,PW.8.1,"Determine whether executable code testing should be performed to find vulnerabilities not identified by previous reviews, analysis, or testing and, if so, which types of testing should be used.","<ul>
+<li><b>Example 1:</b> Follow the organization’s policies or guidelines for when code testing should be performed and how it should be conducted (e.g., within a sandboxed environment). This may include third-party executable code and reusable executable code modules written in-house.</li>
+<li><b>Example 2:</b> Choose testing methods based on the stage of the software.
+</ul>","BSAFSS: TV.3<br>
+BSIMM: PT2.3<br>
+EO14028: 4e(ix)<br>
+IEC62443: SVV-1, SVV-2, SVV-3, SVV-4, SVV-5<br>
+NISTLABEL: 2.2.2.2<br>
+SCSIC: Peer Reviews and Security Testing<br>
+SP80053: SA-11<br>
+SP800161: SA-11<br>
+SP800181: SP-DEV-001, SP-DEV-002; T0456; K0013, K0039, K0070, K0153, K0165, K0342, K0367, K0536, K0624; S0001, S0015, S0026, S0061, S0083, S0112, S0135"
+,Basic,PW.8.2,PW.8.2,"Scope the testing, design the tests, perform the testing, and document the results, including recording and triaging all discovered issues and recommended remediations in the development team’s workflow or issue tracking system.","<ul>
+<li><b>Example 1:</b> Perform robust functional testing of security features.</li>
+<li><b>Example 2:</b> Integrate dynamic vulnerability testing into the project’s automated test suite.</li>
+<li><b>Example 3:</b> Incorporate tests for previously reported vulnerabilities into the project’s test suite to ensure that errors are not reintroduced.</li>
+<li><b>Example 4:</b> Take into consideration the infrastructures and technology stacks that the software will be used with in production when developing test plans.</li>
+<li><b>Example 5:</b> Use fuzz testing tools to find issues with input handling.</li>
+<li><b>Example 6:</b> If resources are available, use penetration testing to simulate how an attacker might attempt to compromise the software in high-risk scenarios.</li>
+<li><b>Example 7:</b> Identify and record the root causes of discovered issues.</li>
+<li><b>Example 8:</b> Document lessons learned from code testing in a wiki that developers can access and search.</li>
+<li><b>Example 9:</b> Use source code, design records, and other resources when developing test plans.
+</ul>","BSAFSS: TV.3, TV.5, PD.1-4<br>
+BSIMM: ST1.1, ST1.3, ST1.4, ST2.4, ST2.5, ST2.6, ST3.3, ST3.4, ST3.5, ST3.6, PT1.1, PT1.2, PT1.3, PT3.1<br>
+EO14028: 4e(iv), 4e(v), 4e(ix)<br>
+IDASOAR: 7, 8, 10, 11, 38, 39, 43, 44, 48, 55, 56, 57<br>
+IEC62443: SM-5, SM-13, SI-1, SVV-1, SVV-2, SVV-3, SVV-4, SVV-5<br>
+IR8397: 2.6, 2.7, 2.8, 2.9, 2.10, 2.11<br>
+ISO27034: 7.3.6<br>
+MSSDL: 10, 11<br>
+NISTLABEL: 2.2.2.2<br>
+OWASPMASVS: 7.5<br>
+OWASPSAMM: ST1-A, ST1-B, ST2-A, ST2-B, ST3-A<br>
+PCISSLC: 4.1<br>
+SCAGILE: Operational Security Tasks 10, 11; Tasks Requiring the Help of Security Experts 4, 5, 6, 7<br>
+SCFPSSD: Perform Dynamic Analysis Security Testing, Fuzz Parsers, Network Vulnerability Scanning, Perform Automated Functional Testing of Security Features/Mitigations, Perform Penetration Testing<br>
+SCSIC: Peer Reviews and Security Testing<br>
+SP80053: SA-11, SA-11(5), SA-11(8), SA-15(7)<br>
+SP800161: SA-11, SA-11(5), SA-11(8), SA-15(7)<br>
+SP800181: SP-DEV-001, SP-DEV-002; T0013, T0028, T0169, T0176, T0253, T0266, T0456, T0516; K0009, K0039, K0070, K0272, K0339, K0342, K0362, K0536, K0624; S0001, S0015, S0046, S0051, S0078, S0081, S0083, S0135, S0137, S0167, S0242; A0015"
+,Basic,PW.9.1,PW.9.1,"Define a secure baseline by determining how to configure each setting that has an effect on security or a security-related setting so that the default settings are secure and do not weaken the security functions provided by the platform, network infrastructure, or services.","<ul>
+<li><b>Example 1:</b> Conduct testing to ensure that the settings, including the default settings, are working as expected and are not inadvertently causing any security weaknesses, operational issues, or other problems.
+</ul>","BSAFSS: CF.1<br>
+BSIMM: SE2.2<br>
+EO14028: 4e(iv), 4e(ix)<br>
+IDASOAR: 23<br>
+IEC62443: SD-4, SVV-1, SG-1<br>
+ISO27034: 7.3.5<br>
+SCAGILE: Tasks Requiring the Help of Security Experts 12<br>
+SCSIC: Vendor Software Delivery Integrity Controls, Vendor Software Development Integrity Controls<br>
+SP800181: SP-DEV-002; K0009, K0039, K0073, K0153, K0165, K0275, K0531; S0167"
+,Basic,PW.9.2,PW.9.2,"Implement the default settings (or groups of default settings, if applicable), and document each setting for software administrators.","<ul>
+<li><b>Example 1:</b> Verify that the approved configuration is in place for the software.</li>
+<li><b>Example 2:</b> Document each setting’s purpose, options, default value, security relevance, potential operational impact, and relationships with other settings.</li>
+<li><b>Example 3:</b> Use authoritative programmatic technical mechanisms to record how each setting can be implemented and assessed by software administrators.</li>
+<li><b>Example 4:</b> Store the default configuration in a usable format and follow change control practices for modifying it (e.g., configuration-as-code).
+</ul>","BSAFSS: CF.1<br>
+BSIMM: SE2.2<br>
+EO14028: 4e(iv), 4e(ix)<br>
+IDASOAR: 23<br>
+IEC62443: SG-3<br>
+OWASPSAMM: OE1-A<br>
+PCISSLC: 8.1, 8.2<br>
+SCAGILE: Tasks Requiring the Help of Security Experts 12<br>
+SCFPSSD: Verify Secure Configurations and Use of Platform Mitigation<br>
+SCSIC: Vendor Software Delivery Integrity Controls, Vendor Software Development Integrity Controls<br>
+SP80053: SA-5, SA-8(23)<br>
+SP800161: SA-5, SA-8(23)<br>
+SP800181: SP-DEV-001; K0009, K0039, K0073, K0153, K0165, K0275, K0531"
+,Basic,RV.1.1,RV.1.1,"Gather information from software acquirers, users, and public sources on potential vulnerabilities in the software and third-party components that the software uses, and investigate all credible reports.","<ul>
+<li><b>Example 1:</b> Monitor vulnerability databases , security mailing lists, and other sources of vulnerability reports through manual or automated means.</li>
+<li><b>Example 2:</b> Use threat intelligence sources to better understand how vulnerabilities in general are being exploited.</li>
+<li><b>Example 3:</b> Automatically review provenance and software composition data for all software components to identify any new vulnerabilities they have.
+</ul>","BSAFSS: VM.1-3, VM.3<br>
+BSIMM: AM1.5, CMVM1.2, CMVM2.1, CMVM3.4, CMVM3.7<br>
+CNCFSSCP: Securing Materials—Verification<br>
+EO14028: 4e(iv), 4e(vi), 4e(viii), 4e(ix)<br>
+IEC62443: DM-1, DM-2, DM-3<br>
+ISO29147: 6.2.1, 6.2.2, 6.2.4, 6.3, 6.5<br>
+ISO30111: 7.1.3<br>
+OWASPSAMM: IM1-A, IM2-B, EH1-B<br>
+OWASPSCVS: 4<br>
+PCISSLC: 3.4, 4.1, 9.1<br>
+SCAGILE: Operational Security Task 5<br>
+SCFPSSD: Vulnerability Response and Disclosure<br>
+SCTPC: MONITOR1<br>
+SP80053: SA-10, SR-3, SR-4<br>
+SP800161: SA-10, SR-3, SR-4<br>
+SP800181: K0009, K0038, K0040, K0070, K0161, K0362; S0078"
+,Basic,RV.1.2,RV.1.2,"Review, analyze, and/or test the software’s code to identify or confirm the presence of previously undetected vulnerabilities.","<ul>
+<li><b>Example 1:</b> Configure the toolchain to perform automated code analysis and testing on a regular or continuous basis for all supported releases.</li>
+<li><b>Example 2:</b> See PW.7 and PW.8.
+</ul>","BSAFSS: VM.1-2, VM.2-1<br>
+BSIMM: CMVM3.1<br>
+EO14028: 4e(iv), 4e(vi), 4e(viii), 4e(ix)<br>
+IEC62443: SI-1, SVV-2, SVV-3, SVV-4, DM-1, DM-2<br>
+ISO27034: 7.3.6<br>
+ISO29147: 6.4<br>
+ISO30111: 7.1.4<br>
+PCISSLC: 3.4, 4.1<br>
+SCAGILE: Operational Security Tasks 10, 11<br>
+SP80053: SA-11<br>
+SP800161: SA-11<br>
+SP800181: SP-DEV-002; K0009, K0039, K0153"
+,Basic,RV.1.3,RV.1.3,"Have a policy that addresses vulnerability disclosure and remediation, and implement the roles, responsibilities, and processes needed to support that policy.","<ul>
+<li><b>Example 1:</b> Establish a vulnerability disclosure program, and make it easy for security researchers to learn about your program and report possible vulnerabilities.</li>
+<li><b>Example 2:</b> Have a Product Security Incident Response Team (PSIRT) and processes in place to handle the responses to vulnerability reports and incidents, including communications plans for all stakeholders.</li>
+<li><b>Example 3:</b> Have a security response playbook to handle a generic reported vulnerability, a report of zero-days, a vulnerability being exploited in the wild, and a major ongoing incident involving multiple parties and open-source software components.</li>
+<li><b>Example 4:</b> Periodically conduct exercises of the product security incident response processes.
+</ul>","BSAFSS: VM.1-1, VM.2<br>
+BSIMM: CMVM1.1, CMVM2.1, CMVM3.3, CMVM3.7<br>
+EO14028: 4e(viii), 4e(ix)<br>
+IEC62443: DM-1, DM-2, DM-3, DM-4, DM-5<br>
+ISO29147: All<br>
+ISO30111: All<br>
+MSSDL: 12<br>
+NISTLABEL: 2.2.2.3<br>
+OWASPMASVS: 1.11<br>
+OWASPSAMM: IM1-A, IM1-B, IM2-A, IM2-B<br>
+PCISSLC: 9.2, 9.3<br>
+SCFPSSD: Vulnerability Response and Disclosure<br>
+SP80053: SA-15(10)<br>
+SP800160: 3.3.8<br>
+SP800161: SA-15(10)<br>
+SP800181: K0041, K0042, K0151, K0292, K0317; S0054; A0025<br>
+SP800216: All"
+,Basic,RV.2.1,RV.2.1,Analyze each vulnerability to gather sufficient information about risk to plan its remediation or other risk response.,"<ul>
+<li><b>Example 1:</b> Use existing issue tracking software to record each vulnerability.</li>
+<li><b>Example 2:</b> Perform risk calculations for each vulnerability based on estimates of its exploitability, the potential impact if exploited, and any other relevant characteristics.
+</ul>","BSAFSS: VM.2<br>
+BSIMM: CMVM1.2, CMVM2.2<br>
+EO14028: 4e(iv), 4e(viii), 4e(ix)<br>
+IEC62443: DM-2, DM-3<br>
+ISO30111: 7.1.4<br>
+NISTLABEL: 2.2.2.2<br>
+PCISSLC: 3.4, 4.2<br>
+SCAGILE: Operational Security Task 1, Tasks Requiring the Help of Security Experts 10<br>
+SP80053: SA-10, SA-15(7)<br>
+SP800160: 3.3.8<br>
+SP800161: SA-15(7)<br>
+SP800181: K0009, K0039, K0070, K0161, K0165; S0078"
+,Basic,RV.2.2,RV.2.2,Plan and implement risk responses for vulnerabilities.,"<ul>
+<li><b>Example 1:</b> Make a risk-based decision as to whether each vulnerability will be remediated or if the risk will be addressed through other means (e.g., risk acceptance, risk transference), and prioritize any actions to be taken.</li>
+<li><b>Example 2:</b> If a permanent mitigation for a vulnerability is not yet available, determine how the vulnerability can be temporarily mitigated until the permanent solution is available, and add that temporary remediation to the plan.</li>
+<li><b>Example 3:</b> Develop and release security advisories that provide the necessary information to software acquirers, including descriptions of what the vulnerabilities are, how to find instances of the vulnerable software, and how to address them (e.g., where to get patches and what the patches change in the software; what configuration settings may need to be changed; how temporary workarounds could be implemented).</li>
+<li><b>Example 4:</b> Deliver remediations to acquirers via an automated and trusted delivery mechanism. A single remediation could address multiple vulnerabilities.</li>
+<li><b>Example 5:</b> Update records of design decisions, risk responses, and approved exceptions as needed. See PW.1.2.
+</ul>","BSAFSS: VM.1-1, VM-2<br>
+BSIMM: CMVM2.1<br>
+EO14028: 4e(iv), 4e(vi), 4e(viii), 4e(ix)<br>
+IEC62443: DM-4<br>
+ISO30111: 7.1.4, 7.1.5<br>
+NISTLABEL: 2.2.2.2<br>
+PCISSLC: 4.1, 4.2, 10.1<br>
+SCAGILE: Operational Security Task 2<br>
+SCFPSSD: Fix the Vulnerability, Identify Mitigating Factors or Workarounds<br>
+SCTPC: MITIGATE<br>
+SP80053: SA-5, SA-10, SA-11, SA-15(7)<br>
+SP800160: 3.3.8<br>
+SP800161: SA-5, SA-8, SA-10, SA-11, SA-15(7)<br>
+SP800181: T0163, T0229, T0264; K0009, K0070"
+,Basic,RV.3.1,RV.3.1,Analyze identified vulnerabilities to determine their root causes.,"<ul>
+<li><b>Example 1:</b> Record the root cause of discovered issues.</li>
+<li><b>Example 2:</b> Record lessons learned through root cause analysis in a wiki that developers can access and search.
+</ul>","BSAFSS: VM.2-1<br>
+BSIMM: CMVM3.1, CMVM3.2<br>
+EO14028: 4e(ix)<br>
+IEC62443: DM-3<br>
+ISO30111: 7.1.4<br>
+OWASPSAMM: IM3-A<br>
+PCISSLC: 4.2<br>
+SCFPSSD: Secure Development Lifecycle Feedback<br>
+SP800181: T0047, K0009, K0039, K0070, K0343"
+,Basic,RV.3.2,RV.3.2,"Analyze the root causes over time to identify patterns, such as a particular secure coding practice not being followed consistently.","<ul>
+<li><b>Example 1:</b> Record lessons learned through root cause analysis in a wiki that developers can access and search.</li>
+<li><b>Example 2:</b> Add mechanisms to the toolchain to automatically detect future instances of the root cause.</li>
+<li><b>Example 3:</b> Update manual processes to detect future instances of the root cause.
+</ul>","BSAFSS: VM.2-1, PD.1-3<br>
+BSIMM: CP3.3, CMVM3.2<br>
+EO14028: 4e(ix)<br>
+IEC62443: DM-4<br>
+ISO30111: 7.1.7<br>
+OWASPSAMM: IM3-B<br>
+PCISSLC: 2.6, 4.2<br>
+SCFPSSD: Secure Development Lifecycle Feedback<br>
+SP800160: 3.3.8<br>
+SP800181: T0111, K0009, K0039, K0070, K0343"
+,Basic,RV.3.3,RV.3.3,"Review the software for similar vulnerabilities to eradicate a class of vulnerabilities, and proactively fix them rather than waiting for external reports.","<ul>
+<li><b>Example 1:</b> See PW.7 and PW.8.
+</ul>","BSAFSS: VM.2<br>
+BSIMM: CR3.3, CMVM3.1<br>
+EO14028: 4e(iv), 4e(viii), 4e(ix)<br>
+IEC62443: SI-1, DM-3, DM-4<br>
+ISO30111: 7.1.4<br>
+PCISSLC: 4.2<br>
+SP80053: SA-11<br>
+SP800161: SA-11<br>
+SP800181: SP-DEV-001, SP-DEV-002; K0009, K0039, K0070"
+,Basic,RV.3.4,RV.3.4,"Review the SDLC process, and update it if appropriate to prevent (or reduce the likelihood of) the root cause recurring in updates to the software or in new software that is created.","<ul>
+<li><b>Example 1:</b> Record lessons learned through root cause analysis in a wiki that developers can access and search.</li>
+<li><b>Example 2:</b> Plan and implement changes to the appropriate SDLC practices.
+</ul>","BSAFSS: PD.1-3<br>
+BSIMM: CP3.3, CMVM3.2<br>
+EO14028: 4e(ix)<br>
+IEC62443: DM-6<br>
+ISO30111: 7.1.7<br>
+MSSDL: 2<br>
+PCISSLC: 2.6, 4.2<br>
+SCFPSSD: Secure Development Lifecycle Feedback<br>
+SP80053: SA-15<br>
+SP800161: SA-15<br>
+SP800181: K0009, K0039, K0070"

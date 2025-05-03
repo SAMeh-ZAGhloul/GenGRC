@@ -1,0 +1,31 @@
+# platform = multi_platform_all
+# reboot = false
+# strategy = configure
+# complexity = low
+# disruption = low
+
+-   name: "{{{ rule_title }}} - Search if cron configuration exists"
+    {{% if 'ol' in families %}}
+    ansible.builtin.command: grep -Pzo '(?m)^\s*(cron|\*)\.\*\s*(/var/log/(cron|messages)|action\(\s*.*(?i:\btype\b)="omfile"\s*.*(?i:\bfile\b)="/var/log/(cron|messages)"\s*\))\s*$' /etc/rsyslog.conf /etc/rsyslog.d/*.conf
+    {{% else %}}
+    ansible.builtin.command: grep -Pzo '(?m)^\s*cron\.\*\s*(/var/log/cron|action\(\s*.*(?i:\btype\b)="omfile"\s*.*(?i:\bfile\b)="/var/log/cron"\s*\))\s*$' /etc/rsyslog.conf /etc/rsyslog.d/*.conf
+    {{% endif %}}
+    register: cron_log_config_exists
+    failed_when: false
+
+-   name: "{{{ rule_title }}} - Ensure the /etc/rsyslog.d directory exists"
+    ansible.builtin.file:
+        path: /etc/rsyslog.d
+        state: directory
+
+-   name: "{{{ rule_title }}} - Add cron log configuration line"
+    ansible.builtin.lineinfile:
+        path: /etc/rsyslog.d/cron.conf
+        line: "cron.*  /var/log/cron"
+        create: true
+    when: cron_log_config_exists.stdout_lines | length == 0
+
+-   name: "{{{ rule_title }}} - Restart the rsyslog service now"
+    ansible.builtin.service:
+        name: rsyslog
+        state: restarted

@@ -1,0 +1,31 @@
+# platform = multi_platform_all
+# reboot = false
+# strategy = restrict
+# complexity = low
+# disruption = low
+{{{ ansible_instantiate_variables("var_accounts_user_umask") }}}
+
+- name: Check if UMASK is already set
+  ansible.builtin.lineinfile:
+    path: /etc/login.defs
+    regexp: ^(\s*)UMASK\s+.*
+    state: absent
+  check_mode: true
+  changed_when: false
+  register: result_umask_is_set
+
+- name: Replace user UMASK in /etc/login.defs
+  ansible.builtin.replace:
+    path: /etc/login.defs
+    regexp: ^(\s*)UMASK(\s+).*
+    replace: \g<1>UMASK\g<2>{{ var_accounts_user_umask }}
+  when:
+  - result_umask_is_set.found > 0
+
+- name: Ensure the Default UMASK is Appended Correctly
+  ansible.builtin.lineinfile:
+    create: true
+    path: /etc/login.defs
+    line: UMASK {{ var_accounts_user_umask }}
+  when:
+  - result_umask_is_set.found == 0

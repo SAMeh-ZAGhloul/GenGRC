@@ -1,0 +1,280 @@
+//************************* ASSESSMENT > SELF ASSESSMENTS BEGIN ************************//
+.pending-risk-form {
+    &:first-of-type, &:last-of-type {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
+}
+//************************** ASSESSMENT > SELF ASSESSMENTS END *************************//
+
+//********************** ASSESSMENT > QUESTIONNAIRE QUESTIONS BEGIN ********************//
+.answers-table {
+    .btn-group {
+        button.multiselect {
+            span.multiselect-selected-text {
+                white-space: break-spaces;
+                line-height: 24px;
+            }
+        }
+    }
+}
+// CHECK THIS LATER(LEFT THIS YET SINCE IT IS USED IN SEVERAL PARTS WITH JS LOGIC)
+#questionnaire-questions-container, 
+#questionnaire-answers-container {
+    table {
+        th, td {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+
+    .risk-assessment-table, 
+	.compliance-assessment-table, 
+	.maturity-assessment-table {
+        th, td {
+			padding-left: 20px;
+			padding-right: 20px;
+		}
+
+        tr:first-of-type {
+            th, td {
+                padding-top: 1.25rem;
+            }
+        }
+
+        tr:nth-child(2) {
+            th, td {
+                padding-bottom: 1.25rem;
+            }
+        }
+
+        tr:last-of-type {
+            th, td {
+                padding-bottom: 1.25rem;
+            }
+        }
+
+		.risk-scoring-container {
+			padding: 0 !important;
+			
+			.row {
+				flex-wrap: nowrap;
+				align-items: center;
+				padding-bottom: 0.5rem;
+				padding-top: 0.5rem;
+
+				.col-2 {
+					font-weight: bold;
+					min-width: 200px;
+					max-width: 200px;
+				    margin-bottom: 0 !important;
+				}
+
+				.col-9 {
+					width: 100%;
+					flex-shrink: 1;
+
+					p {
+						margin-bottom: 0;
+					}
+				}
+			}
+		}
+    }
+
+    .add-delete-icon {
+		width: 30px;
+		height: 30px;
+	}
+}
+//*********************** ASSESSMENT > QUESTIONNAIRE QUESTIONS END *********************//
+
+//********************** ASSESSMENT > QUESTIONNAIRE TEMPLATES BEGIN ********************//
+.questionnaire_template_form {
+    #template-tabs {
+        .nav-link {
+            display: flex;
+            align-items: center;
+
+            span.tabname {
+                max-width: 200px;
+                white-space: nowrap;
+                display: block;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+    
+            input.editable {
+                max-width: 200px !important;
+            }
+
+            .remove-tab {
+                margin-left: 5px;
+            }
+        }
+    }
+}
+//********************** ASSESSMENT > QUESTIONNAIRE TEMPLATES END **********************//
+
+//*********************** ASSESSMENT > QUESTIONNAIRE RESULTS BEGIN *********************//
+.files--wrapper-accordion-header {
+    position: relative;
+
+    .add-files {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        right: 60px;
+        z-index: 100;
+    }
+}
+
+.comments--wrapper-accordion-header {
+    position: relative;
+
+    .add-comments {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        right: 60px;
+        z-index: 100;
+    }
+}
+
+#comments--wrapper-accordion-body {
+    .comments--list {
+        .comment-block {
+            &:last-of-type {
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
+.audit-log-accordion-header {
+    position: relative;
+    
+    .refresh-audit-trail {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        right: 60px;
+        z-index: 100;
+    }
+}
+//************************ ASSESSMENT > QUESTIONNAIRE RESULTS END **********************//
+
+
+/* Automatic numbering for the questionnaire questions on the questionnaire, questionnaire results and the questionnaire result compare*/
+.questionnaire-result-container {
+
+    h4.template-name {
+        counter-reset: parentQuestionCounter;
+    }
+
+    .parent.questionnaire-question:before {
+        content: counter(parentQuestionCounter) ") ";
+        counter-increment: parentQuestionCounter;
+        float: left;
+        margin-left: 0px;
+        margin-right: 10px;
+        font-weight: bold;
+    }
+
+    .questionnaire-questions-container-by-answer {
+        counter-reset: subQuestionCounter;
+
+        &.sub {
+            padding-left: 1.5rem !important;
+        }
+
+        .sub.questionnaire-question:before {
+            content: counter(parentQuestionCounter)"-"counter(subQuestionCounter) ") ";
+            counter-increment: subQuestionCounter;
+            float: left;
+            margin-left: 0px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+    }
+}
+
+.questionnaire-compare-result-container {
+
+    .questionnaire-compare-template-name {
+        counter-reset: parentQuestionCounter1 parentQuestionCounter2;
+    }
+
+    .parent.questionnaire-question {
+
+        &:before {
+            float: left;
+            margin-left: 0px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        &.left:before {
+            content: counter(parentQuestionCounter1) ") ";
+            counter-increment: parentQuestionCounter1;
+        }
+
+        &.right:before {
+            content: counter(parentQuestionCounter2) ") ";
+            counter-increment: parentQuestionCounter2;
+        }
+    }
+
+    .questionnaire-questions-container-by-answer {
+        counter-reset: subQuestionCounter1 subQuestionCounter2;
+
+        &.sub {
+            .col-6.left, .col-6.right {
+                padding-left: 1.5rem !important;
+            }
+        }
+
+        .sub {
+            &.questionnaire-question {
+
+                &:before {
+                    float: left;
+                    margin-left: 0px;
+                    margin-right: 10px;
+                    font-weight: bold;
+                }
+
+                &.left:before {
+                    content: counter(parentQuestionCounter1)"-"counter(subQuestionCounter1) ") ";
+                    counter-increment: subQuestionCounter1;
+                }
+
+                &.right:before {
+                    content: counter(parentQuestionCounter2)"-"counter(subQuestionCounter2) ") ";
+                    counter-increment: subQuestionCounter2;
+                }
+            }
+        }
+    }
+}
+
+
+
+//********************* ASSESSMENT > QUESTIONNAIRE AUDIT TRAIL BEGIN *******************//
+.questionnaire-audit-trail-container {
+    p {
+        word-break: break-word;
+    }
+}
+//*********************** ASSESSMENT > QUESTIONNAIRE AUDIT TRAL END ********************//

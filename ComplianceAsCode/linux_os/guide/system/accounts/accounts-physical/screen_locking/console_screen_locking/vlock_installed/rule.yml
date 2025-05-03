@@ -1,0 +1,61 @@
+documentation_complete: true
+
+
+title: 'Check that vlock is installed to allow session locking'
+
+description: |-
+    The {{{ full_name }}} operating system must have vlock installed to allow for session locking.
+
+    {{% if 'ubuntu' in product %}}
+    {{{ describe_package_install(package="vlock") }}}
+    {{% else %}}
+    {{{ describe_package_install(package="kbd") }}}
+    {{% endif %}}
+
+rationale: |-
+    A session lock is a temporary action taken when a user stops work and
+    moves away from the immediate physical vicinity of the information
+    system but does not want to log out because of the temporary nature of
+    the absence.
+
+    The session lock is implemented at the point where session activity can
+    be determined.
+
+    Regardless of where the session lock is determined and implemented,
+    once invoked, the session lock must remain in place until the user
+    reauthenticates. No other activity aside from reauthentication must
+    unlock the system.
+
+severity: medium
+
+identifiers:
+    cce@sle12: CCE-83009-1
+    cce@sle15: CCE-83268-3
+    cce@slmicro5: CCE-93755-7
+
+references:
+    nist@sle12: AC-11(a),AC-11(b),AC-11(1)
+    srg: SRG-OS-000028-GPOS-00009,SRG-OS-000030-GPOS-00011
+    stigid@ol8: OL08-00-020043
+    stigid@sle12: SLES-12-010070
+    stigid@sle15: SLES-15-010110
+    stigid@ubuntu2004: UBTU-20-010005
+    stigid@ubuntu2204: UBTU-22-412025
+
+ocil_clause: 'the package is not installed'
+
+ocil: |-
+    {{% if 'ubuntu' in product %}}
+    {{{ ocil_package(package="vlock") }}}
+    {{% else %}}
+    {{{ ocil_package(package="kbd") }}}
+    {{% endif %}}
+
+template:
+    name: package_installed
+    vars:
+        pkgname: kbd
+        pkgname@ubuntu1604: vlock
+        pkgname@ubuntu1804: vlock
+        pkgname@ubuntu2004: vlock
+        pkgname@ubuntu2204: vlock

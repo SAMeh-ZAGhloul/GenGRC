@@ -1,0 +1,155 @@
+{% extends "project-base.html" %}
+{% load humanize %}
+{% load guardian_tags %}
+{% load static %}
+{% load q %}
+{% load system_tags %}
+
+{% block title %}
+  POA&Ms
+{% endblock %}
+
+{% block head %}
+{{block.super}}
+{% include "controls/_style-controls.html" %}
+{% endblock %}
+
+<!-- action buttons included from project-base.html -->
+<!-- authoring_tool_enabled included from project-base.html -->
+
+{% block body_content %}
+<div  class="systems-top">
+    <h2>POA&Ms (Plan of Actions and Milestones)</h2>
+    <!-- <h3>TEST CONTENT</h3> -->
+    <p>&nbsp;</p>
+    <!-- <div style="width:250px;font-weight: bold;">Process Monthly POA&Ms</div> -->
+
+    <div id="" class="row">
+        <div id="" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <a href={% url 'new_poam' system_id=system.id %} class="btn btn-sm btn-success systems-element-button pull-right">New POA&M</a>
+        </div>
+    </div>
+
+    {% comment %}
+    <style type="text/css">
+      .stepper-wrapper { margin-top: auto; display: flex; justify-content: space-between; margin-bottom: 20px; }
+      .stepper-item { position: relative; display: flex; flex-direction: column; align-items: center; flex: 1;
+        @media (max-width: 768px) { font-size: 12px; }
+      }
+      .stepper-item::before { position: absolute; content: ""; border-bottom: 2px solid #ccc; width: 100%; top: 15px; left: -50%; z-index: 2; }
+      .stepper-item::after { position: absolute; content: ""; border-bottom: 2px solid #ccc; width: 100%; top: 15px; left: 50%; z-index: 2; }
+      .stepper-item .step-counter { position: relative; z-index: 5; display: flex; justify-content: center; align-items: center; width: 30px; height: 30px; border-radius: 50%; background: #fff; border: 2px solid #bebebe; margin-bottom: 6px; color: #bebebe;
+        font-weight: bold; }
+      .stepper-item.active { font-weight: normal; }
+      .stepper-item.completed .step-counter { background-color: #4bb543; border: 2px solid #4bb543; }
+      .stepper-item.completed::after { position: absolute; content: ""; border-bottom: 2px solid #4bb543; width: 100%; top: 15px; left: 50%; z-index: 3; }
+      .stepper-item:first-child::before { content: none; }
+      .stepper-item:last-child::after { content: none; }
+      .step-name { text-align: center; font-size: .85em; }
+      .stepper-item.completed .step-counter { color: white; }
+      .workflow-name {text-align: center;}
+    </style>
+
+    {% if project.system.workflowinstances.all|length > 0 %}
+        <!-- <p>{{ project.system.workflowinstances.all|length }} workflows</p> -->
+        {% for wfit in project.system.workflowinstances.all %}
+
+          <div class="workflow-name">{{ wfit.name }}</div>
+          <div class="stepper-wrapper">
+            {% for key in wfit.workflow.feature_order %}
+              {% with feature=wfit.workflow.features|get_item:key %}
+                <div class="stepper-item {{ feature.status }} 
+                     {% if key == wfit.workflow.curr_feature and feature.status != 'completed'%}active{% endif %}">
+                  <div class="step-counter">{{ forloop.counter }}</div>
+                  <div class="step-name">
+                    {% if feature.status == 'completed' %}√{% endif %}
+                    {{ feature.text }} 
+                    {% if key == wfit.workflow.curr_feature and feature.status != 'completed' %}
+                      <br><a class="btn btn-success btn-small" href="/workflow/{{ wfit.id }}/set_workflowinstance_feature_completed">mark done &raquo;</a>
+                    {% else %}
+                    {% endif %}
+                  </div>
+                </div>
+              {% endwith %}
+            {% endfor %}
+          </div>
+        {%  endfor %}
+    {% endif %}
+    {% endcomment %}
+
+    <div id="system-summary-poam-datagrid"></div>
+    {% comment %} <script>
+      window.system_summary_spreadsheet({{system.id}}, {{project.id}});
+    </script> {% endcomment %}
+    <script>
+      window.system_summary({{system.id}}, {{project.id}});
+    </script>
+
+  {% comment %} 
+    <h3>POA&MS Managed Locally in GovReady-Q</h3>
+    <p>The following POA&Ms originate locally in GovReady-Q.</p>
+    <div id="tab-content" class="row rows-header">
+        <div id="" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 systems-poam"><span class="systems-selected-items">POA&Ms</span></div>
+        <div id="" class="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">&nbsp;</div>
+        <div id="" class="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
+          <a href={% url 'new_poam' system_id=system.id %} class="btn btn-sm btn-success systems-element-button">New POA&M</a>
+          <span class="glyphicon glyphicon-download-alt pull-right systems-poam-glyphicon"
+                style="cursor: pointer;"
+                onclick="download_document('{{document.id|escapejs}}', {{ system.id }})"></span>
+        </div>
+    </div>
+    {% if poam_smts|length < 1 %}
+      <div id="tab-content" class="row row-control">
+        <div id="" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <p>No POA&Ms are currently identified for this system.</p>
+        </div>
+      </div>
+    {% else %}
+      {% for poam_smt in poam_smts %}
+        <div id="tab-content" class="row row-control">
+            <div id="" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                <a href={% url 'edit_poam' system_id=system.id poam_id=poam_smt.id %}>V-{{ poam_smt.poam.poam_id }}</a>
+            </div>
+            <div id="" class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                {{ poam_smt.poam.weakness_name }}
+            </div>
+            <div id="" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+              {{ poam_smt.status }}
+            </div>
+            <div id="" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                {{ poam_smt.updated|timesince}} ago
+            </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endcomment %}
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+<script>
+  // The download button shows a modal to ask what file format to download in.
+  function download_document(document_id, system_id) {
+    var dom = $("<div><p>Select download format:</p>"
+      + "<select class=form-control>"
+      + "<option value='xlsx'>Microsoft Excel Spreadsheet</option>"
+      + "<option value='csv'>CSV Text File</option>"
+      + "</select>"
+      + "</div>");
+    show_modal_confirm("Download Document", dom, "Download", function() {
+      var format = dom.find("select").val();
+      switch(format) {
+        case "xlsx":
+          window.location = "/systems/" + system_id + "/poams/export/xlsx";
+          break;
+        case "csv":
+          window.location = "/systems/" + system_id + "/poams/export/csv";
+          break;
+      }
+    });
+  }
+</script>
+
+{% endblock %}

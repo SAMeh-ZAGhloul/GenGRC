@@ -1,0 +1,36 @@
+documentation_complete: true
+
+
+title: 'Install policycoreutils-python-utils package'
+
+description: |-
+    {{{ describe_package_install(package="policycoreutils-python-utils") }}}
+
+rationale: |-
+    This package is required to operate and manage an SELinux environment and its policies.
+    It provides utilities such as semanage, audit2allow, audit2why, chcat and sandbox.
+
+severity: medium
+
+identifiers:
+    cce@rhel8: CCE-82724-6
+    cce@rhel9: CCE-84070-2
+    cce@rhel10: CCE-87004-8
+    cce@slmicro5: CCE-94091-6
+
+references:
+    srg: SRG-OS-000480-GPOS-00227
+
+ocil_clause: 'the package is not installed'
+
+ocil: '{{{ ocil_package(package="policycoreutils-python-utils") }}}'
+
+fixtext: '{{{ fixtext_package_installed("policycoreutils-python-utils") }}}'
+
+srg_requirement: '{{{ srg_requirement_package_installed("policycoreutils-python-utils") }}}'
+
+
+template:
+    name: package_installed
+    vars:
+        pkgname: policycoreutils-python-utils

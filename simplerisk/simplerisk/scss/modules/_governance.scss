@@ -1,0 +1,304 @@
+//***************************** GOVERNANCE > DEFINE CONTROL FRAMEWORKS BEGIN *******************************//
+#active-controls {
+    .sorting_1{
+        padding: 0px;
+    }
+    
+    .control-content {
+        .control-longname,
+        .control-description,
+        .control-supplemental-guidance {
+            word-break: break-word;
+        }
+    }
+    
+    td{
+        vertical-align: top;
+    }
+}
+
+#framework-create-form,
+#framework-update-form,
+#add-control-form,
+#update-control-form {
+    .form-group {
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+        
+        .multiselect-native-select {
+            display: inline-block;
+            width: 100%;
+    
+            &>.btn-group {
+                width: 100% !important;
+            }
+        }
+    }
+}
+
+#frameworks-tab-content {
+    .datagrid-htable {
+        td[field='actions'] {
+            text-align: center;
+        }
+    }
+}
+//****************************** GOVERNANCE > DEFINE CONTROL FRAMEWORKS END ********************************//
+
+//********************************* GOVERNANCE > DOCUMENT PROGRAM BEGIN ************************************//
+#documents-tab-content {
+    .datagrid-editable-input {
+        border-color: var(--bs-border-color) !important;
+    }
+    
+    .document--edit, 
+    .document--delete{
+        cursor: pointer;
+    }
+
+    #procedures-content {
+        .datagrid-htable {
+            td[field='actions'] {
+                text-align: center;
+            }
+        }
+
+        .datagrid-btable {
+            td[field='actions'] {
+                .datagrid-cell {
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+        }
+    }
+
+    #standards-content {
+        .datagrid-htable {
+            td[field='actions'] {
+                text-align: center;
+            }
+        }
+
+        .datagrid-btable {
+            td[field='actions'] {
+                .datagrid-cell {
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+        }
+    }
+
+    #guidelines-content {
+        .datagrid-htable {
+            td[field='actions'] {
+                text-align: center;
+            }
+        }
+
+        .datagrid-btable {
+            td[field='actions'] {
+                .datagrid-cell {
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+        }
+    }
+}
+//********************************** GOVERNANCE > DOCUMENT PROGRAM END *************************************//
+
+//********************************* GOVERNANCE > DEFINE EXCEPTIONS BEGIN ***********************************//
+#exceptions-tab-content {
+    .exception--edit, 
+    .exception--delete, 
+    .exception-batch--delete, 
+    .exception--approve {
+        cursor: pointer;
+    }
+
+    #control-exceptions {
+        .datagrid-htable {
+            td[field='actions'] {
+                text-align: center;
+            }
+        }
+
+        .datagrid-btable {
+            td[field='actions'] {
+                .datagrid-cell {
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+        }
+    }
+
+    #policy-exceptions {
+        .datagrid-htable {
+            td[field='actions'] {
+                text-align: center;
+            }
+        }
+
+        .datagrid-btable {
+            td[field='actions'] {
+                .datagrid-cell {
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+        }
+    }
+
+    #unapproved-exceptions {
+        .datagrid-htable {
+            td[field='actions'] {
+                text-align: center;
+            }
+        }
+
+        .datagrid-btable {
+            td[field='actions'] {
+                .datagrid-cell {
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+        }
+    }
+}
+
+#exception--view {
+    color: #000000;
+
+    .modal-body {
+        label {
+            text-decoration: underline;
+        }
+        
+        .exception-data {
+            padding-left: 10px;
+        }
+    }
+}
+//********************************** GOVERNANCE > DEFINE EXCEPTIONS END ************************************//
+
+
+
+.custom-treegrid-container {
+
+    .framework-block--delete {
+		margin-left: 5px;
+	}
+}
+
+/*Leaving the old one in place in case we need something from there*/
+
+.control-block,
+.control-block-unassined {
+
+  &--header{
+    background-color: var(--bs-body-bg);
+    border: var(--bs-border-width) solid var(--bs-border-color);
+//    height: 45px;
+	padding: 15px;
+
+	.checkbox-in-div {
+		span {
+		  	display: none;
+		}
+
+		input[type=checkbox]:checked ~ span {
+		  	display: unset;
+		  	margin-left: 1rem;
+		  	font-size: 1rem;
+		  	color: var(--sr-important);
+		}
+	}
+	
+	
+	
+	
+  }
+  
+  &--row{
+      padding-bottom: 15px;
+      
+      > table{
+          td{
+              padding: 4px 10px;
+          }
+      }
+    
+  }
+
+        
+
+  &--name,
+  &--description,
+  &--other{
+    border-right: var(--bs-border-width) solid var(--bs-border-color);
+    height: 45px;
+    line-height: 45px;
+    font-size: 14px;
+    float: left;
+    font-weight: 600;
+    padding-left: 10px;
+  }
+
+  &--name{ width: 30%; }
+  &--description{ width: calc(70% - 90px); }
+  &--other{ width: 90px; }
+  
+  &--edit,
+  &--clone,
+  &--edit-mapping
+  {
+    padding-left: 15px;      
+  }
+}
+
+
+
+/*
+.framework-block,
+.framework-block-unassined {
+
+  &:after{
+    clear: both;
+    content: "";
+    display: block;
+  }
+
+  &--header{
+    background-color: var(--bs-body-bg);
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-right: none;
+    height: 45px;
+  }
+
+  &--delete{
+//    display: block;
+    text-align: center;
+  }
+
+  &--name,
+  &--description,
+  &--other{
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    height: 45px;
+    line-height: 45px;
+    font-size: 14px;
+    float: left;
+    font-weight: 600;
+    padding-left: 10px;
+  }
+
+  &--name{ width: 30%; }
+  &--description{ width: calc(70% - 45px); }
+  &--other{ width: 45px; }
+}*/
+

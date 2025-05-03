@@ -1,0 +1,1167 @@
+{% extends "task-base.html" %}
+{% load static %}
+{% load q %}
+
+{% block title %}
+Next Question: {{q.spec.title}} | {{task.title}}
+{% endblock %}
+
+{% block head %}
+
+<link href="{% static "vendor/emojione/emojione-sprite-24.min.css" %}" rel="stylesheet">
+{% if q.spec.type == "longtext" %}
+  <link href="{% static "vendor/quill/quill.snow.css" %}" rel="stylesheet">
+{% endif %}
+
+{{block.super}}
+
+<style>
+
+  h1 {
+    margin: 4px 0 18px 0;
+    font-size: 22px;
+    font-weight: bold;
+  }
+
+  .form-control {
+    font-size: 14pt;
+    height: 34pt;
+  }
+
+  #question {
+    font-size: 14pt;
+  }
+    #question form.disabled label {
+      color: #777;
+      cursor: not-allowed;
+    }
+
+  #question-prompt blockquote {
+    font-size: inherit;
+  }
+
+  /* since prompts will likely use Markdown ##'s to delimit sections,
+      which we render as h3 because we demote all levels, re-adjust
+      styles */
+  #question-prompt h3 {
+    font-size: 110%;
+    font-weight: bold;
+  }
+
+  {% if q.spec.type == "module" %}
+  #question .radio label {
+    margin: .25em 0;
+  }
+  {% endif %}
+
+  {% if q.spec.type == "interstitial" %}
+    #question img {
+      display: block; /* so that horizontal auto margin centers */
+      margin: 30px auto;
+    }
+  {% endif %}
+
+  {% if q.spec.type == "longtext" %}
+  #question .ql-container {
+    font-size: 10pt !important; /* override default quill style */
+    /*font-family: trebuchet ms;*/
+  }
+  #question .ql-container p {
+    margin-bottom: .75em;
+  }
+    #question .ql-container p:last-child {
+      margin-bottom: 0;
+    }
+  {% endif %}
+
+  label .onhover { display: none; }
+  label:hover .onhover { display: inline; }
+
+  #confidence-buttons {
+    margin: 12px 0 0 0;
+  }
+
+  #confidence-buttons button {
+      border: 1px solid rgba(255,255,255,0); /* same width as .active but no color */
+      border-radius: 4px;
+      padding: 6px 6px 4px 4px;
+      font-size: 80%;
+      background: none;
+      opacity: .6;
+  }
+
+  #confidence-buttons button img {
+      height: 1.25em;
+      margin-right: .25em;
+  }
+
+  #confidence-buttons button.active {
+      border: 1px solid #AAA;
+      color: black;
+      background: #EEE;
+      opacity: 1;
+  }
+
+  #no-idea-button:hover, #not-applicable-button:hover, #start-a-discussion:hover, #transfer-editorship:hover {
+    border: 1px solid #AAA;
+    opacity: 1;
+  }
+
+  #action-buttons {
+    margin: 12px 0 0 12px;
+  }
+
+  #reference-text-wrapper *:first-child { margin-top: 0; }
+
+  #discussion {
+    margin-top: 1em;
+    /*border-top: 1px solid #DDD;*/
+    padding-top: 1em;
+  }
+
+  #back-button a {color: white; text-decoration: none;}
+
+  /* Legacy background and focus area styling for question pages */
+  body { /*background-color: rgb(247,247,247);*/ }
+  #focus-area-wrapper {
+    border-radius: 3px;
+    border: 3px solid rgb(204, 204, 204);
+    padding: 2em 2em 3em 2em;
+    background-color: white;
+    /*background-color: rgba(253,253,253,1);*/
+    /* on mobile, space between columns */
+    margin-bottom: 30px;
+  }
+
+  .datagrid-text {
+    font-size: 0.8em;
+  }
+  .datagrid-text-select {
+    font-size: 1.0em;
+  }
+
+</style>
+{% endblock %}
+
+{% block body %}
+{{block.super}}
+
+<div class="row" style="padding-left: 22px;">
+  <div id="focus-area-wrapper" class="col-xs-12 col-sm-9 col-md-7 col-lg-7 col-xl-6"
+       style="background-color: rgb(250, 250, 250); border: 0px solid gray; border-top: 4px solid #419641;">
+    {% if source_invitation %}
+      <div class="question-source-invitation">
+        <div id="source-invitation-show" class="question-source-invitation-show" style="{% if not task.is_started %}display: none;{% endif %}">
+          <a href="#" onclick="$('#source-invitation').fadeIn(); $('#source-invitation-show').hide(); return false;" class="question-source-invitation-link">
+            Show Invitation from {{source_invitation.from_user}}
+          </a>
+        </div>
+        <div id="source-invitation" class="alert alert-warning alert-dismissible" {% if task.is_started %}style="display: none"{% endif %} role="alert">
+          <button type="button" class="close" aria-label="Close" onclick="$('#source-invitation').hide(); $('#source-invitation-show').show();"><span aria-hidden="true">&times;</span></button>
+          <strong>Invitation from {{source_invitation.from_user}}:</strong>
+          {{source_invitation.text}}
+        </div>
+      </div>
+    {% endif %}
+
+    <h1>{{title|safe}}</h1>
+
+    <div id="question">
+        <form {% if not write_priv %}class="disabled"{% endif %} autocomplete="off">
+            <input type="hidden" name="question" value="{{q.id}}">
+            <input type="hidden" name="method" value="save">
+            <input type="hidden" name="skipped_reason" value="">
+            <input type="hidden" name="unsure" value="">
+
+            <div id="question-prompt">
+              {{prompt|safe}}
+            </div>
+
+            {# ADDITIONAL INFORMATION BELOW THE PROMPT #}
+
+            {% if example_answers %}
+              <div id="example-answers" class="expandable question-example-answer">
+                <div class="expandy question-example-answer-expand">
+                  <div>
+                    {% for ex in example_answers %}
+                      <div>
+                        <div><small class="question-example-small">Example{% if example_answers|length > 1 %} {{forloop.counter}}{% endif %}</small></div>
+                        {{ex|safe}}
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+                <div class="toggler question-toggle">
+                  <a
+                     href="#more"
+                     onclick="$(this).parents('.expandable').find('.expandy').data('original-height', $(this).parents('.expandable').find('.expandy').height()); $(this).parents('.expandable').find('.expandy').animate({ minHeight: $(this).parents('.expandable').find('.expandy>div').outerHeight() + $(this).parents('.expandable').find('.toggler').outerHeight() }); $(this).parents('.expandable').find('a[href=&quot;#more&quot;]').hide(); $(this).parents('.expandable').find('a[href=&quot;#less&quot;]').show(); return false;">Show more</a>
+                  <a href="#less"
+                     style="display: none;"
+                     onclick="$(this).parents('.expandable').find('.expandy').animate({ minHeight: $(this).parents('.expandable').find('.expandy').data('original-height') }); $(this).parents('.expandable').find('a[href=&quot;#less&quot;]').hide(); $(this).parents('.expandable').find('a[href=&quot;#more&quot;]').show(); return false;">Show less</a>
+                </div>
+              </div>
+            {% endif %}
+
+            {% if reference_text %}
+              <p class="question-reference-text">
+                <a href="#" onclick="$(this).hide(); $('#reference-text').slideDown(); return false;">
+                  Additional information...
+                </a>
+              </p>
+              <div id="reference-text" class="well question-reference-well">
+                <p><strong><small>Additional Information</small></strong></p>
+                {{reference_text|safe}}
+              </div>
+            {% endif %}
+
+            {# THE QUESTION FORM WIDGETS #}
+
+            {% if q.spec.type == "text" or q.spec.type == "email-address" or q.spec.type == "url" %}
+              <div class="form-group">
+                <input
+                  id="inputctrl"
+                  name="value"
+                  class="form-control"
+                  {% if q.spec.type == "email-address" %}
+                  type="email"
+                  {% elif q.spec.type == "url" %}
+                  type="url"
+                  {% else %}
+                  type="text"
+                  {% endif %}
+                  placeholder="{{placeholder_answer}}"
+                  {% if answer %}
+                    value="{{answer}}"
+                  {% elif default_answer %}
+                    value="{{default_answer}}"
+                  {% endif %}>
+                <p class="help-block">
+                  {% if q.spec.help %}
+                    {{q.spec.help}}
+                  {% elif q.spec.type == "email-address" %}
+                    Enter an email address.
+                  {% elif q.spec.type == "url" %}
+                    Paste a web address.
+                  {% endif %}
+                </p>
+              </div>
+
+            {% elif q.spec.type == "password" %}
+              <div class="form-group">
+                <input name="value" type="password" class="form-control" id="inputctrl" placeholder="password">
+                {# we don't provide the old value as a default to protect secrets #}
+                <p class="help-block">{{q.spec.help}}</p>
+              </div>
+
+            {% elif q.spec.type == "longtext" %}
+              <div class="form-group">
+                <div id="inputctrl">
+                  <div style="display: none"> {# dont flicker content before widget is added #}
+                    {% if answer %}{{answer|safe}}
+                    {% elif default_answer %}{{default_answer|safe}}{% endif %}
+                  </div>
+                </div>
+                <div id="inputctrl-quill-toolbar">
+                  <span class="ql-formats">
+                    <select class="ql-header">
+                      <option value="1"></option>
+                      <option value="2"></option>
+                      <option value="3"></option>
+                      <option selected></option>
+                    </select>
+                  </span>
+                  <span class="ql-formats">
+                    <button class="ql-bold"></button>
+                    <button class="ql-italic"></button>
+                    <button class="ql-link"></button>
+                    <button class="ql-code"></button>
+                  </span>
+                  <span class="ql-formats">
+                    <button class="ql-blockquote"></button>
+                    <button class="ql-list" value="bullet"></button>
+                    <button class="ql-list" value="ordered"></button>
+                    <button class="ql-code-block"></button>
+                  </span>
+                  <span class="ql-formats">
+                    <button class="ql-clean"></button>
+                  </span>
+                </div>
+                <p class="help-block">{{q.spec.help}}</p>
+              </div>
+
+            {% elif q.spec.type == "date" %}
+              {# The HTML5 date input type is only properly supported on Chrome, so we don't use it yet. Other browsers just show a text box, and we expect YYYY-MM-DD format, which is hard for users to enter manually. #}
+              <div class="form-group">
+                <select name="value_month" class="form-control question-form-style">
+                  <option value="" disabled="1">(month)</option>
+                  {% for month_str, value in date_l8n.months %}
+                  <option value="{{value}}">{{month_str}}</option>
+                  {% endfor %}
+                </select>
+
+                <select name="value_day" class="form-control question-form-style">
+                  <option value="" disabled="1">(day)</option>
+                  {% for value in date_l8n.days %}
+                  <option value="{{value}}">{{value}}</option>
+                  {% endfor %}
+                </select>
+
+                <select name="value_year" class="form-control question-form-style">
+                  <option value="" disabled="1">(year)</option>
+                  {% for value in date_l8n.years %}
+                  <option value="{{value}}">{{value}}</option>
+                  {% endfor %}
+                </select>
+
+                <input name="value" type="hidden"> {# filled in by script, actual value submitted #}
+                <p class="help-block">{{q.spec.help}}</p>
+              </div>
+
+            {% elif q.spec.type == "choice" or q.spec.type == "choice-from-data" %}
+              <div class="question-choice">
+              {% if q.spec.choices|length > 0 %}
+                {% for choice in q.spec.choices %}
+                <div class="radio">
+                  <label class="left-text">
+                    <input name="value" value="{{choice.key}}" type="radio" {% if answer == choice.key %}checked{% endif %}> {{choice.text}}
+                    <p class="help-block">{{choice.help}}</p>
+                  </label>
+                </div>
+                {% endfor %}
+              {% else %}
+                <div class="text-danger">(No choices are available. Please report this issue to you system administrator.)</div>
+              {% endif %}
+              </div>
+
+            {% elif q.spec.type == "yesno" %}
+              <div class="question-yesno">
+              <div class="radio">
+                <label>
+                  <input name="value" value="no"  type="radio" {% if answer == "no" %}checked{% endif %}> No
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input name="value" value="yes" type="radio" {% if answer == "yes" %}checked{% endif %}> Yes
+                </label>
+              </div>
+              <p class="help-block">{{q.spec.help}}</p>
+              </div>
+
+            {% elif q.spec.type == "multiple-choice" or q.spec.type == "multiple-choice-from-data" %}
+              <div class="question-multiple-choice">
+              {% if q.spec.choices|length > 0 %}
+                {% for choice in q.spec.choices %}
+                <div class="checkbox">
+                  <label class="left-text">
+                    <input name="value" value="{{choice.key}}" type="checkbox" {% if choice.key in answer %}checked{% endif %}> {{choice.text}}
+                    <p class="help-block">{{choice.help}}</p>
+                  </label>
+                </div>
+                {% endfor %}
+              {% else %}
+                <div class="text-danger">(No choices are available. Please report this issue to you system administrator.)</div>
+              {% endif %}
+
+              {% if q.spec.min > 0 and q.spec.min == q.spec.max %}
+                  <p class="help-block">You must choose exactly {{q.spec.min}} option{{q.spec.min|pluralize}}.</p>
+              {% elif q.spec.min > 0 %}
+                  <p class="help-block">You must choose at least {{q.spec.min}} {% if q.spec.max %}and at most {{q.spec.max}}{% endif %} option{{q.spec.max|pluralize}}.</p>
+              {% elif q.spec.max %}
+                  <p class="help-block">You may choose at most {{q.spec.max}} option{{q.spec.max|pluralize}}.</p>
+              {% endif %}
+              </div>
+
+            {% elif q.spec.type == "datagrid" %}
+              <div id="jsGrid"></div>
+              <div class="question-datagrid">
+              {% if q.spec.min > 0 and q.spec.min == q.spec.max %}
+                  <p class="help-block">You must choose exactly {{q.spec.min}} option{{q.spec.min|pluralize}}.</p>
+              {% elif q.spec.min > 0 %}
+                  <p class="help-block">You must add at least {{q.spec.min}} {% if q.spec.max %}and at most {{q.spec.max}}{% endif %} row{{q.spec.max|pluralize}}.</p>
+              {% elif q.spec.max %}
+                  <p class="help-block">You may add at most {{q.spec.max}} row{{q.spec.max|pluralize}}.</p>
+              {% endif %}
+              </div>
+
+            {% elif q.spec.type == "integer" or q.spec.type == "real" %}
+              <div class="form-group">
+                {% comment %}
+                  The HTML5 number input is a bit confusing in how it handles periods and commas.
+                  Browsers seem to currently only support a period or comma as a decimal separator,
+                  depending on the lang attribute on the input or HTML. They do not allow
+                  thousands-commas. But we should let users type that in.
+                {% endcomment %}
+                {% if q.spec.min > -1000 and q.spec.max < 1000 %}
+                  {# the range doesn't admit thousands, so we don't need to worry about thousands-commmas #}
+                  <input name="value" type="number" {% if q.spec.type == "integer" %}step="1"{% else %}step="any"{% endif %} class="form-control" id="inputctrl" placeholder="{{placeholder_answer}}" {% if answer %}value="{{answer}}"{% endif %}>
+                {% else %}
+                  {# to let users enter thousands-commas by using a plain text field #}
+                  <input name="value" type="text" pattern="[0-9,\.]+" class="form-control" id="inputctrl" placeholder="{{placeholder_answer}}" {% if answer %}value="{{answer}}"{% endif %}>
+                {% endif %}
+                <p class="help-block">{{q.spec.help}}</p>
+                {% if q.spec.min|default_if_none:"NONE" != "NONE" and q.spec.max|default_if_none:"NONE" != "NONE" %}
+                    <p class="help-block">Enter a number from {{q.spec.min}} to {{q.spec.max}}.</p>
+                {% elif q.spec.min|default_if_none:"NONE" != "NONE" %}
+                    <p class="help-block">Enter a number at least {{q.spec.min}}.</p>
+                {% elif q.spec.max|default_if_none:"NONE" != "NONE" %}
+                    <p class="help-block">Enter a number at most {{q.spec.max}}.</p>
+                {% endif %}
+              </div>
+
+            {% elif q.spec.type == "file" %}
+              {# When there is an existing answer, the UI shows a thumbnail of it. If the user doesn't choose a new file, the existing value is kept. #}
+              {% if answer %}
+              <div class="question-file">
+                <p>The following file is uploaded:</p>
+                {{answer_rendered|safe}}
+                <p>Select a new file if you would like to replace it:</p>
+              </div>
+              {% endif %}
+
+              <div class="form-group">
+                <input name="value" type="file" id="inputctrl" class="form-control question-form-group"/>
+                <input type="reset" value="x" class="question-input-font">
+                <p class="help-block">{{q.spec.help}}</p>
+              </div>
+
+            {% elif q.spec.type == "module" and answer_tasks|length == 0 %}
+              {# The user must choose or start a module, but there is nothing to choose from, so show a simplified interface. #}
+
+              <p>You will next begin the module {{answer_module.title}}.</p>
+
+              {# must be a radio so the client-side validation passes, but we hide it #}
+              <input type="radio" name="value" value="__new" checked style="display: none"/>
+
+            {% elif q.spec.type == "module" %}
+              {% with current_answer=answer_obj.answered_by_task.first %}
+
+              {% for m in answer_tasks %}
+                <div class="radio">
+                  <label>
+                    <input name="value" value="{{m.id}}" type="radio" {% if m == current_answer %}checked{% endif %}>
+                      {% with m.title as title %}
+                      {{title}}
+                      <div class="small question-current-answer">
+                        {% if m == current_answer %}
+                          <strong>Current Answer</strong>.
+                        {% endif %}
+
+                        {% if m.project != task.project and m.project.title != title %}
+                        {{ m.project.title }}.
+                        {% endif %}
+
+                        {% if answer_tasks_show_user %}Edited by {% if m.editor == request.user %}you{% else %}{{m.editor}}{% endif %}; {% endif %}{{m.get_status_display}}.
+
+                        <a href="{{m.get_absolute_url}}" class="onhover question-absolute-url"><span class="glyphicon glyphicon-pencil"> </span></a>
+                      </div>
+                      {% endwith %}
+                  </label>
+                </div>
+              {% endfor %}
+
+              <div class="radio question-radio">
+                <label>
+                  <input name="value" value="__new" type="radio">
+                  {% if current_answer %}
+                    Start over and create
+                  {% else %}
+                    Create
+                  {% endif %}
+                  a new {{answer_module.title}}
+                </label>
+              </div>
+
+              <p class="help-block">{{q.spec.help}}</p>
+              {% endwith %}
+
+            {% elif q.spec.type == "interstitial" %}
+              {# no other content but an empty value #}
+              <input type="hidden" name="value" value=""/>
+
+            {% else %}
+              <p class="text-danger">QUESTION TYPE NOT IMPLEMENTED: {{q.spec.type}}</p>
+
+            {% endif %}
+
+            {% if not is_answerable %}
+              <p class="text-danger">This question cannot currently be answered or skipped because its value is currently being imputed or it is dependent on questions that have not yet been answered.</p>
+
+            {% elif write_priv %}
+
+              {% if q.spec.type != "interstitial" %}
+                {# Interstitial questions do not offer these options because the user is just acknowledging the page and not providing an answer. #}
+                <div id="confidence-buttons">
+                    {% if not hidden_button_ids or "no-idea" not in hidden_button_ids %}
+                    <button id="no-idea-button" type=button {# type=button prevents button from causing form submit #}>
+                        <span class="emoji" data-sprite="people" data-code="1f937-2642" data-name="man shrugging"></span>
+                        I don&rsquo;t know
+                    </button>
+                    {% endif %}
+                    {% if not hidden_button_ids or "not-applicable" not in hidden_button_ids %}
+                    <button id="not-applicable-button" type=button>
+                        <span class="emoji" data-sprite="people" data-code="1f645" data-name="person gesturing no"></span>
+                        It doesn&rsquo;t apply
+                    </button>
+                    {% endif %}
+
+                    {# Meta-options like starting a discussion or changing the editor of this question. Interstitial questions do not offer these and individuals here as a discussion guest dont get it either. #}
+                    {% if not is_discussion_guest and q.spec.type != "interstitial" %}
+                      {% if not task.project.is_account_project %} {# discussions can't be tied to answers of tasks that aren't in a project #}
+                        <button id="start-a-discussion" onclick="start_a_discussion();" type=button data-toggleable=false>
+                            {# if you can see this page, you can start a conversation #}
+                            <span class="glyphicon glyphicon-comment question-glyphicon-comment"></span> Discuss
+                        </button>
+                      {% endif %}
+                      {% if task.can_transfer_owner and write_priv %}
+                        <button id="transfer-editorship" onclick="invite_to_transfer_editor();" type=button data-toggleable=false>
+                            <span class="emoji" data-sprite="people" data-code="1f449" data-name="person raising hand"></span> Assign
+                        </button>
+                      {% endif %}
+                    {% endif %}
+
+                </div>
+              {% endif %}
+
+              <div id="action-buttons" class="clearfix">
+
+                {# Buttons to save or skip this question #}
+                <div class="pull-left">
+                  {% if back_url %}
+                    <button id="back-button" class="btn btn-normal"><a href="{{back_url}}">
+                    &laquo; Back</a></button>
+                  {% endif %}
+
+                  <button id="save-button"
+                    type="submit" class="btn btn-success"
+                    onclick="$('#question > form input[name=method]').val('save')">
+                    {% if q.spec.type == "interstitial" %}
+                      Got it
+                    {% elif not request.GET.q %}
+                      {# user is proceeding through the questions in order #}
+                      Next
+                    {% else %}
+                      {# user is visiting a specific question #}
+                      Update
+                    {% endif %}
+                    &raquo;
+                  </button>
+                </div>
+                <div>
+                  {# This is DEBUG functionality for reverting a question to an un-answered state, which differs from being answered but with null via the Skip/Clear button. #}
+                  {% if answer_obj and DEBUG %}
+                    <button id="clear-button"
+                      type="submit" class="btn btn-link question-button"
+                      onclick="$('#question > form input[name=method]').val('clear')">
+                        Mark as Unanswered
+                      </button>
+                  {% endif %}
+                </div> {# /.pull-left #}
+
+                <div class="pull-right question-can-review">
+                  {% if answer_obj and can_review %}
+                  <select class="question-select-review" onchange="update_review_status(this)">
+                    {% for key, label in review_choices %}
+                      <option value="{{key}}" {% if answer_obj.reviewed == key %}selected{% endif %}>
+                        {{label}}
+                      </option>
+                    {% endfor %}
+                  </select>
+                {% endif %}
+                </div>
+              </div> <!-- /action-buttons -->
+
+          {% else %} {# write_priv #}
+            {# User does not have write permission so cannot answer the question, start a discussion, or change the editor. But we instead still want to show the review state. #}
+
+            {% if answer_obj %}
+              {% for key, label in review_choices %}
+                {% if answer_obj.reviewed == key %}
+                  <p class="question-review-status">This question&rsquo;s review status is {{label}}.</p>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+
+          {% endif %} {# write_priv #}
+        </form>
+    </div> <!-- /question -->
+
+    <div>
+      {% include "discussion/discussion.html" %}
+    </div>
+  </div> <!-- /focus-area-wrapper -->
+
+  <div id="col-spacer" class="col-spacer hidden-xs col-sm-1 col-md-1 col-lg-2 col-xl-1">
+    &nbsp;
+  </div>
+
+  <div id="progress-project-area-wrapper" class="col-xs-8 col-sm-6 col-md-3 col-lg-3 col-xl-2 question-progress-project">
+    {% include "task-progress-project-list.html" with previous="question" %}
+  </div>
+
+</div> <!-- /row -->
+
+{% include "task-question-debug-links.html" %}
+
+{% if authoring_tool_enabled %}
+{# should be in body so that it comes before the global error modal so that ajax errors show on top of this #}
+{% include "authoring-tool-modal.html" %}
+{% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+
+{% if q.spec.type == "longtext" %}
+  <script src="{% static "vendor/quill/quill.min.js" %}"></script>
+  <script src="{% static "js/quill_commonmark.js" %}"></script>
+{% endif %}
+
+<script>
+$(function() {
+    var form = $("#question > form");
+
+    // CONTROL INITIALIZATION
+
+    {% if q.spec.type == "longtext" %}
+      window.inputctrl_quill = CommonMarkQuill("#inputctrl", {
+        "modules": {
+          "toolbar": {
+            "container": "#inputctrl-quill-toolbar",
+          }
+        }
+      });
+    {% endif %}
+
+    // DEFAULT VALUE
+
+    {% if q.spec.type == "date" %}
+      {% if answer %}
+        {# If there is a current answer, set it into the date drop-downs. #}
+        var date = [parseInt({{answer|slice:"0:4"|json}}), parseInt({{answer|slice:"5:7"|json}}), parseInt({{answer|slice:"8:10"|json}})];
+      {% else %}
+        {# Set the default to the current date in local time. #}
+        var d = new Date();
+        var date = [d.getFullYear(), d.getMonth()+1, d.getDate()];
+      {% endif %}
+      $("#question select[name='value_year']").val(date[0]);
+      $("#question select[name='value_month']").val(date[1]);
+      $("#question select[name='value_day']").val(date[2]);
+    {% endif %}
+
+    // DISCUSSION
+
+    {% if discussion %}
+    {# a discussion already exists, so show it #}
+    start_a_discussion(true); // is idempotent
+    {% elif history %}
+    show_static_history({{history|json}});
+    {% endif %}
+
+    // BUTTON STATE
+
+    function update_save_button_enabled() {
+      // The save button is enabled just when the input is valid
+      // and Don't Know/Doesn't Apply aren't active (if they
+      // are, the answer inputs aren't used).
+      var ok = (typeof validate_answer()) == "undefined";
+      if ($('#no-idea-button').hasClass('active') || $('#not-applicable-button').hasClass('active'))
+        ok = true;
+      $('#save-button').prop('disabled', !ok);
+    }
+
+    on_input_changed(update_save_button_enabled); // register event handler
+    update_save_button_enabled(); // run initially
+
+    // INSTRUMENTATION
+
+    // register event handler
+    on_input_changed(record_interaction);
+
+    // VALIDATION
+
+    {% if q.spec.type == "text" or q.spec.type == "password" or q.spec.type == "email-address" or q.spec.type == "integer" or q.spec.type == "real" or q.spec.type == "url" %}
+
+    function validate_answer() {
+        var val = $('#inputctrl').val();
+        if (/^ *$/.exec(val))
+            return "You must enter something."
+        return undefined;
+    }
+    function on_input_changed(handler) {
+      $('#inputctrl').change(handler);
+      $('#inputctrl').on('keyup', handler);
+    }
+    function disable_input_controls(disabled) {
+      $('#inputctrl').prop('disabled', disabled);
+    }
+    function user_has_entered_clearable_answer() {
+      // any non-whitespace character
+      return /\S/.test($('#inputctrl').val());
+    }
+
+    {% elif q.spec.type == "longtext" %}
+
+    function validate_answer() {
+        var val = window.inputctrl_quill.getContentsAsCommonMark();
+        if (/^ *$/.exec(val))
+            return "You must enter something."
+        return undefined;
+    }
+    function on_input_changed(handler) {
+      window.inputctrl_quill.on('text-change', function(delta, oldDelta, source) {
+        if (source == 'user')
+          handler();
+      });
+    }
+    function disable_input_controls(disabled) {
+      window.inputctrl_quill.enable(!disabled);
+    }
+    function user_has_entered_clearable_answer() {
+      // any non-whitespace character
+      var val = window.inputctrl_quill.getContentsAsCommonMark();
+      return /\S/.test(val);
+    }
+
+    {% elif q.spec.type == "date" %}
+
+    function validate_answer() {
+      // Copy the values of the selects into the hidden submission field in YYYY-MM-DD format.
+      function zeropad(value, length) { value = ""+value; while (value.length < length) value = "0" + value; return value; }
+      $("#question input[name='value']").val(
+        zeropad($("#question select[name='value_year']").val(), 4)
+        + "-" +
+        zeropad($("#question select[name='value_month']").val(), 2)
+        + "-" +
+        zeropad($("#question select[name='value_day']").val(), 2)
+      );
+
+      // The value is always valid, unless the user chooses February 31st,
+      // but we'll let the server handle that.
+      return undefined;
+    }
+    function on_input_changed(handler) {
+      $('#question select').change(handler);
+    }
+    function disable_input_controls(disabled) {
+      $("#question select").prop('disabled', disabled);
+    }
+    function user_has_entered_clearable_answer() {
+      // there's no UI to clear their answer
+      return false;
+    }
+
+    {% elif q.spec.type == "choice" or q.spec.type == "yesno" or q.spec.type == "module" %}
+
+    function validate_answer() {
+        var val = $('#question input[type="radio"]:checked').val();
+        if (!val)
+            return "You must make a selection."
+        return undefined;
+    }
+    function on_input_changed(handler) {
+      form.find('input').click(handler);
+    }
+    function disable_input_controls(disabled) {
+      $("#question input[type=\"radio\"]").prop('disabled', disabled);
+    }
+    function user_has_entered_clearable_answer() {
+      // there's no UI to clear their answer
+      return false;
+    }
+
+    {% elif q.spec.type == "multiple-choice" %}
+
+    function validate_answer() {
+        // Collect the checked values.
+        var vals = [];
+        form.find('input[type="checkbox"]:checked').each(function() {
+            vals.push($(this).val());
+        });
+        if (vals.length < {{q.spec.min}})
+            return "You must choose at least {{q.spec.min}} options.";
+        {% if q.spec.max %}
+        if (vals.length > {{q.spec.max}})
+            return "You must choose at most {{q.spec.max}} options.";
+        {% endif %}
+        return undefined;
+    }
+    function on_input_changed(handler) {
+      form.find('input').click(handler);
+    }
+    function disable_input_controls(disabled) {
+      $("#question input[type=\"checkbox\"]").prop('disabled', disabled);
+    }
+    function user_has_entered_clearable_answer() {
+      return form.find('input[type="checkbox"]:checked').length > 0;
+    }
+
+    {% elif q.spec.type == "datagrid" %}
+
+    function validate_answer() {
+        // Collect datagrid values
+        // var vals = [];
+        // alert($("#jsGrid").jsGrid("rowByItem", 1));
+        var vals = $("#jsGrid").jsGrid("option", "data");
+
+        // form.find('input[type="checkbox"]:checked').each(function() {
+        //     vals.push($(this).val());
+        // });
+        if (vals.length < {{q.spec.min}})
+            return "You must choose at least {{q.spec.min}} options.";
+        {% if q.spec.max %}
+        if (vals.length > {{q.spec.max}})
+            return "You must choose at most {{q.spec.max}} options.";
+        {% endif %}
+        return undefined;
+    }
+    function on_input_changed(handler) {
+      form.find('input').click(handler);
+    }
+    function disable_input_controls(disabled) {
+      $("#question input[type=\"checkbox\"]").prop('disabled', disabled);
+    }
+    function user_has_entered_clearable_answer() {
+      return form.find('input[type="checkbox"]:checked').length > 0;
+    }
+
+
+    {% elif q.spec.type == "file" %}
+
+    function validate_answer() {
+      {% if answer %}
+      // There is an existing uploaded file. If the user doesn't
+      // choose a new file, then Submit just keeps the old value.
+      return undefined;
+      {% endif %}
+      var ctrl = $('#inputctrl')[0];
+      if (ctrl.files.length == 0)
+        return "Select a file to upload.";
+      return undefined;
+    }
+    function on_input_changed(handler) {
+      // Add the handler to the file input control.
+      $('#inputctrl').change(handler);
+
+      // Add the handler to the reset button, but it has to be
+      // run after this event is finished to occur after the
+      // form state is reset.
+      form.find('input[type=reset]').click(function() { setTimeout(handler, 0); });
+    }
+    function disable_input_controls(disabled) {
+      $("#inputctrl").prop('disabled', disabled);
+    }
+    function user_has_entered_clearable_answer() {
+      var ctrl = $('#inputctrl')[0];
+      return (ctrl.files.length > 0);
+    }
+
+    {% else %}
+
+    // other question types are considered always valid
+    function validate_answer() { }
+    function on_input_changed(handler) { }
+    function disable_input_controls(disabled) { }
+    function user_has_entered_clearable_answer() { return false; }
+
+    {% endif %}
+
+    // DEFAULT STATE
+
+    function disable_form(disabled) {
+      form.toggleClass('disabled', disabled);
+      disable_input_controls(disabled);
+    }
+
+    {% if write_priv %}
+      {# If the control is editable, give it focus. #}
+      $('#inputctrl').focus();
+      {% if q.spec.type == "longtext" %}
+        window.inputctrl_quill.focus();
+      {% endif %}
+
+      {# If the question was skipped, set the right skip button state, but if there is something in the database we dont recognize here just fall back to dont-know. #}
+      {% if answer_obj.skipped_reason %}
+        {% if answer_obj.skipped_reason == "dont-know" %}
+          $('#no-idea-button').addClass('active');
+        {% elif answer_obj.skipped_reason == "doesnt-apply" %}
+          $('#not-applicable-button').addClass('active');
+        {% else %}
+          $('#no-idea-button').addClass('active');
+        {% endif %}
+        disable_form(true);
+      {% endif %}
+
+      update_save_button_enabled();
+
+    {% else %}
+      {# If the control is not editable, make it disabled. #}
+      disable_form(true);
+    {% endif %}
+
+    // SKIP / CONFIDENCE LEVEL BUTTONS
+
+    $('#confidence-buttons .emoji').each(function() {
+        $(this)
+          .addClass("emojione-24-" + $(this).attr('data-sprite'))
+          .addClass("_" + $(this).attr('data-code'));
+      });
+    $('#confidence-buttons button:not([data-toggleable=false])')
+      .click(function() {
+        // Don't Know/Doesn't Apply
+        // are mutually exclusive with the user
+        // also providing an answer. If they typed
+        // anything into a text field, or any field
+        // that is resettable (e.g. radios aren't)
+        // then show a message and stop.
+        if (($(this).attr('id') == "no-idea-button"
+              || $(this).attr('id') == "not-applicable-button")
+            && user_has_entered_clearable_answer()) {
+          show_modal_error(
+            "",
+            "Please clear your answer before selecting "
+            + "“" + $(this).text().replace(/^\s+|\s+$/g, '') + ".” "
+            + "Click “Not sure” to save an answer you will return to later.")
+          return;
+        }
+
+        $(this).toggleClass('active');
+        if ($(this).hasClass('active')) {
+            // Don't Know/Doesn't Apply are mutually exclusive.
+            if ( $(this).attr('id') == "no-idea-button"
+              || $(this).attr('id') == "not-applicable-button")
+                $('#no-idea-button, #not-applicable-button')
+                  .filter(":not([id=" + $(this).attr('id') + "])")
+                  .removeClass('active');
+        }
+
+        // Controls are disabled when Don't KnowDoesn't Apply are selected.
+        disable_form($('#no-idea-button').hasClass('active') || $('#not-applicable-button').hasClass('active'));
+        update_save_button_enabled();
+      });
+
+    // SUBMIT
+
+    form.on("submit", function() {
+        // Which submit button was pressed? In normal usage there is
+        // only a Save button. When debugging, we have a Mark as Cleared
+        // button that resets a question to a state of not even having
+        // ever been answered.
+        var method = form.find('input[name=method]').val();
+        if (method == "save") {
+          if ($('#no-idea-button').hasClass('active')) {
+            // Skipping this question because the user doesn't know
+            // the answer.
+            form.find('input[name=method]').val('skip');
+            form.find('input[name=skipped_reason]').val('dont-know');
+
+          } else if ($('#not-applicable-button').hasClass('active')) {
+            // Skipping this question because the question doesn't
+            // apply to the user's circumstances.
+            form.find('input[name=method]').val('skip');
+            form.find('input[name=skipped_reason]').val('doesnt-apply');
+
+          } else {
+            // Saving the answer. Run client-side validation, and block
+            // submit form if not valid.
+              var problem = validate_answer();
+              if (problem) {
+                  alert(problem);
+                  return false;
+              }
+          }
+        }
+
+        // Assemble the form submission data.
+        //
+        // While this would normally work:
+        //
+        // var data = form.serialize();
+        //
+        // it does not handle file uploads or the rich text editor.
+        // For file uploads we must use a FormData object. We could assemble
+        // the FormData instance by hand:
+        //
+        // var form_fields = form.serializeArray();
+        // for (var i in form_fields)
+        //  data.append(form_fields[i].name, form_fields[i].value);
+        // ...and for a file field...
+        // data.append('value', $('#inputctrl')[0].files[0]);
+        //
+        // But web browsers provide a constructor called 'FormData' to
+        // help developers manipulate form data prior to submission:
+        var data = new FormData(form[0]);
+
+        {% if q.spec.type == "datagrid" %}
+        datagrid_data = $("#jsGrid").jsGrid("option", "data");
+        // console.log('data jsGrid '+ JSON.stringify(datagrid_data));
+        data.append('value', JSON.stringify(datagrid_data));
+        {% endif %}
+
+        {% if q.spec.type == "longtext" %}
+        // Add the rich text.
+        data.append("value", window.inputctrl_quill.getContentsAsCommonMark());
+        {% endif %}
+
+        ajax_with_indicator({
+            url: "{{task.get_absolute_url|escapejs}}/_save",
+            method: "POST",
+            data: data,
+            indicator_parent: $('#question'),
+            keep_indicator_forever: true, // keep the ajax indicator up forever --- it'll go away when we issue the redirect
+            success: function(res) {
+              window.location = res.redirect;
+            }
+        });
+
+        // don't do an actual <form> submit
+        return false;
+    });
+})
+
+{% if answer_obj and can_review %}
+function update_review_status(elem) {
+  var reviewed = $(elem).val();
+  $(elem).blur();
+  ajax_with_indicator({
+      url: "{{task.get_absolute_url|escapejs}}/_save",
+      method: "POST",
+      data: {
+        question: "{{q.id|escapejs}}",
+        answer: {{answer_obj.id}},
+        method: "review",
+        reviewed: reviewed
+      }
+  });
+}
+{% endif %}
+
+function start_a_discussion(is_page_load) {
+    $.ajax({
+        url: "{% url 'start_a_discussion' %}",
+        method: "POST",
+        data: {
+            task: {{task.id}},
+            question: "{{q.id|escapejs}}"
+        },
+        success: function(res) {
+          // load the discussion
+          display_discussion(res, is_page_load);
+
+          // scroll to it if this is from a user action
+          if (!is_page_load)
+            smooth_scroll_to($("#discussion"));
+        }
+    })
+}
+
+function show_static_history(history) {
+  // There's no discussion yet, but we do have activity.
+  $('#discussion').show();
+  history.forEach(function(item) {
+      render_event(item)
+    });
+}
+
+{% if send_invitation %}
+function invite_user_to_discussion() {
+  show_invite_modal(
+    'Invite to Discussion',
+    'Invite a colleague to join the discussion. They will be a guest of this discussion if they are not added to the project team.',
+    {{send_invitation|json}},
+    'Please join our discussion about ' + discussion_info.title + ' in ' + discussion_info.project.title + '.',
+    {
+      project: discussion_info.project.id,
+      into_discussion: discussion_info.id
+    }
+  );
+  return false;
+}
+{% endif %}
+
+var sent_first_interaction = false;
+function record_interaction() {
+  if (sent_first_interaction)
+    return;
+  $.ajax({
+    url: "{% url 'task_instrumentation_record_interaction' %}",
+    method: "POST",
+    data: {
+      task: {{task.id}},
+      question: {{q.id}}
+    }
+  })
+  sent_first_interaction = true;
+}
+</script>
+
+{% if q.spec.type == "datagrid" %}
+<script>
+  // Render datagrid question type
+  // Make focus-area-wrapper wider when question type is datagrid
+  $("#col-spacer").removeClass("col-spacer hidden-xs col-sm-1 col-md-1 col-lg-2 col-xl-1");
+  $("#col-spacer").addClass("hidden-xs hidden-sm hidden-md hidden-lg hidden-xl");
+  $("#focus-area-wrapper").removeClass("col-xs-12 col-sm-9 col-md-7 col-lg-7 col-xl-6");
+  $("#focus-area-wrapper").addClass("col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xl-10");
+
+  // Prepare data for jsGrid data grid
+  var entries = [
+  {% for row in answer %}
+    {{row|safe}},
+  {% endfor %}
+  ];
+
+  var datagrid_fields = [
+    {% for field in q.spec.fields %}
+      {% if field.type == 'select' %}
+      { name: "{{field.key}}", type: "select", items: [""{% for item in field.choices %},"{{ item.key }}"{% endfor %}], width: 100, validate: "required", headercss: "datagrid-text", insertcss: "datagrid-text-select" },
+      {% else %}
+      { name: "{{field.key}}", type: "text", width: 100, validate: "required", css: "datagrid-text" },
+      {% endif %}
+
+    {% endfor %}
+    { type: "control" }
+  ];
+
+  $("#jsGrid").jsGrid({
+      width: "98%",
+      inserting: true,
+      editing: true,
+      sorting: true,
+      paging: true,
+      data: entries,
+      noDataContent: "Click the '+' button to add new row of data.<br>Click the row's '+' to add row of data to answer.",
+      fields: datagrid_fields
+  });
+</script>
+{% endif %}
+
+{% if authoring_tool_enabled %}
+<script src="{% static 'vendor/js-yaml.min.js' %}"></script>
+<script src="{% static 'js/authoring_tool.js' %}"></script>
+<style>.dropdown-menu.textcomplete-dropdown { z-index: 99999 !important; }</style> {# show over modal #}
+<script>
+$(function() {
+  init_authoring_tool({
+    task: {{task.id}},
+    module: {{task.module.spec|json}},
+    questions: {
+      {{q.key}}: {
+        spec: {{q.spec|json}},
+        choices: "{{q.choices_as_csv|escapejs}}",
+        answer_type_module_id: {% if q.answer_type_module %}{{q.answer_type_module.id}}{% else %}null{% endif %}
+      }
+    },
+    answer_type_modules: [{% for m in q.module.get_referenceable_modules %}
+      { id: "{{m.id}}", title: "{{m.title|escapejs}} ({{m.module_name}})" }{% if not forloop.last %},{% endif %}
+      {% endfor %}],
+    autocomplete_questions: { {% for q in q.module.get_questions %}
+      "{{q.key|escapejs}}": "{{q.value_explanation|truncatechars:50|escapejs}}"{% if not forloop.last %}, {% endif %}{% endfor %}
+    }
+  });
+});
+</script>
+-
+{% endif %}
+{% endblock %}
