@@ -1,0 +1,37 @@
+C4Component
+    title Component diagram for AI-Enhanced GRC Platform - AI Engine
+
+    Container(web_ui, "Web Interface", "React.js", "User interface")
+    Container(api_gateway, "API Gateway", "FastAPI", "API management")
+    ContainerDb(main_db, "Main Database", "PostgreSQL", "Primary data store")
+    ContainerDb(doc_store, "Document Store", "MongoDB", "Document storage")
+
+    Container_Boundary(ai_engine, "AI Engine") {
+        Component(nlp_processor, "NLP Processor", "Python, Transformers", "Natural language processing for documents")
+        Component(risk_analyzer, "Risk Analyzer", "Python, scikit-learn", "Risk assessment and prediction")
+        Component(insight_generator, "Insight Generator", "Python, Custom ML", "Generates GRC insights")
+        Component(doc_classifier, "Document Classifier", "Python, Transformers", "Classifies and routes documents")
+        Component(control_mapper, "Control Mapper", "Python, Custom ML", "Maps controls across frameworks")
+        
+        Component(model_manager, "Model Manager", "MLflow", "Manages ML models")
+        Component(data_pipeline, "Data Pipeline", "Apache Beam", "Data processing pipeline")
+        Component(queue_manager, "Queue Manager", "Redis Streams", "Manages async processing")
+    }
+
+    Rel(api_gateway, nlp_processor, "Sends documents", "async")
+    Rel(api_gateway, risk_analyzer, "Requests analysis", "sync")
+    Rel(api_gateway, insight_generator, "Requests insights", "sync")
+
+    Rel(nlp_processor, doc_classifier, "Routes documents")
+    Rel(doc_classifier, control_mapper, "Maps requirements")
+    
+    Rel(risk_analyzer, model_manager, "Uses models")
+    Rel(insight_generator, model_manager, "Uses models")
+    
+    Rel(data_pipeline, main_db, "Reads data")
+    Rel(data_pipeline, doc_store, "Reads documents")
+    
+    Rel_Back(queue_manager, nlp_processor, "Processes tasks")
+    Rel_Back(queue_manager, risk_analyzer, "Processes tasks")
+    
+    UpdateLayoutConfig($c4ShapeInRow="4", $c4BoundaryInRow="1")

@@ -1,0 +1,50 @@
+C4Container
+    title Container diagram for AI-Enhanced GRC Platform
+
+    Person(compliance_officer, "Compliance Officer", "Manages compliance programs")
+    Person(risk_manager, "Risk Manager", "Assesses risks")
+    Person(auditor, "Auditor", "Reviews compliance")
+
+    System_Ext(external_systems, "External Systems", "Cloud Services, Security Tools, etc.")
+
+    Container_Boundary(c1, "AI-Enhanced GRC Platform") {
+        Container(web_ui, "Web Interface", "React.js, TypeScript", "Modern web interface for GRC management")
+        
+        Container(api_gateway, "API Gateway", "Python FastAPI", "Handles API routing and authentication")
+        
+        Container(ai_engine, "AI Engine", "Python, TensorFlow", "Processes data and generates insights")
+        
+        Container(compliance_service, "Compliance Service", "Python", "Manages compliance frameworks and assessments")
+        Container(risk_service, "Risk Service", "Python", "Handles risk assessments and analysis")
+        Container(evidence_service, "Evidence Collection Service", "Python", "Automated evidence gathering and processing")
+        
+        ContainerDb(main_db, "Main Database", "PostgreSQL", "Stores GRC data")
+        ContainerDb(document_store, "Document Store", "MongoDB", "Stores unstructured data and documents")
+        ContainerQueue(event_bus, "Event Bus", "Redis", "Handles async communication between services")
+        
+        Container(ml_pipeline, "ML Pipeline", "Python, Apache Airflow", "Manages ML model training and updates")
+    }
+
+    Rel(compliance_officer, web_ui, "Uses", "HTTPS")
+    Rel(risk_manager, web_ui, "Uses", "HTTPS")
+    Rel(auditor, web_ui, "Uses", "HTTPS")
+
+    Rel(web_ui, api_gateway, "Makes API calls to", "JSON/HTTPS")
+    Rel(api_gateway, compliance_service, "Routes compliance requests")
+    Rel(api_gateway, risk_service, "Routes risk management requests")
+    Rel(api_gateway, evidence_service, "Routes evidence collection requests")
+
+    Rel(compliance_service, ai_engine, "Requests analysis")
+    Rel(risk_service, ai_engine, "Requests predictions")
+    Rel(evidence_service, ai_engine, "Requests document processing")
+
+    Rel_Back(main_db, compliance_service, "Reads/Writes")
+    Rel_Back(main_db, risk_service, "Reads/Writes")
+    Rel_Back(document_store, evidence_service, "Reads/Writes")
+    
+    Rel(evidence_service, external_systems, "Collects data", "API")
+    
+    BiRel(ai_engine, ml_pipeline, "Model updates")
+    BiRel(event_bus, ai_engine, "Events")
+
+    UpdateLayoutConfig($c4ShapeInRow="4", $c4BoundaryInRow="1")

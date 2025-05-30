@@ -1,0 +1,35 @@
+C4Context
+    title System Context diagram for AI-Enhanced GRC Platform
+
+    Enterprise_Boundary(b0, "Organization Boundary") {
+        Person(compliance_officer, "Compliance Officer", "Manages compliance programs and oversees risk assessments")
+        Person(risk_manager, "Risk Manager", "Identifies and assesses organizational risks")
+        Person(auditor, "Auditor", "Internal/External auditor reviewing compliance")
+        
+        System(grc_system, "AI-Enhanced GRC Platform", "Provides automated compliance management, risk assessment, and AI-driven insights")
+
+        Enterprise_Boundary(b1, "Systems Landscape") {
+            System_Ext(cloud_services, "Cloud Services", "AWS, Azure, GCP resources and configurations")
+            System_Ext(identity_system, "Identity Systems", "AD, LDAP, SSO providers")
+            System_Ext(security_tools, "Security Tools", "SIEM, EDR, Vulnerability Scanners")
+            SystemDb_Ext(doc_storage, "Document Storage", "SharePoint, Google Workspace, etc.")
+            
+            Boundary(b2, "External Sources") {
+                System_Ext(regulatory_feeds, "Regulatory Feeds", "Updates from regulatory bodies")
+                System_Ext(threat_feeds, "Threat Intelligence", "External threat and vulnerability feeds")
+            }
+        }
+    }
+
+    BiRel(compliance_officer, grc_system, "Manages compliance programs")
+    BiRel(risk_manager, grc_system, "Performs risk assessments")
+    BiRel(auditor, grc_system, "Reviews evidence and reports")
+    
+    Rel(grc_system, cloud_services, "Monitors and collects configuration data")
+    Rel(grc_system, identity_system, "Authenticates users and collects access data")
+    Rel(grc_system, security_tools, "Collects security metrics and alerts")
+    Rel(grc_system, doc_storage, "Retrieves and analyzes documents")
+    Rel(grc_system, regulatory_feeds, "Monitors regulatory changes")
+    Rel(grc_system, threat_feeds, "Receives threat updates")
+
+    UpdateLayoutConfig($c4ShapeInRow="3", $c4BoundaryInRow="1")
