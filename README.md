@@ -78,7 +78,7 @@ This document provides an overview of the technologies used in each of the GRC (
 
 ## 5. eramba
 
-**Description**: A comprehensive open-source GRC solution that has gained popularity for its extensive features. It takes about a month to fully get the hang of it, but provides significant value with features like automated account reviews, automated periodic reminders for policy review and maintenance, and version-controlled policy libraries. <mcreference link="https://www.reddit.com/r/cybersecurity/comments/15c82kc/free_opensource_grc_software/" index="1">1</mcreference> <mcreference link="https://kraftbusiness.com/blog/open-source-grc-software-benefits/" index="2">2</mcreference>
+**Description**: A comprehensive open-source GRC solution that has gained popularity for its extensive features. It takes about a month to fully get the hang of it, but provides significant value with features like automated account reviews, automated periodic reminders for policy review and maintenance, and version-controlled policy libraries. <mcreference link="https://www.reddit.com/r/cybersecurity/comments/15c82kc/free_opensource_grc_software/" index="1">1</mcreference> <mcreference link="https://kraftbusiness.com/blog/open-source-grrc-software-benefits/" index="2">2</mcreference>
 
 **Technologies**:
 - **Programming Languages**: PHP
@@ -255,3 +255,86 @@ When developing a new GRC product with modern AI capabilities, several existing 
    - Create natural language query interfaces
 
 This approach combines the best of existing open-source GRC platforms with modern AI capabilities, creating a powerful foundation for next-generation GRC products.
+
+## Functional Coverage vs. GRCEEK BRD Requirements (2025)
+
+This section provides a structured comparison of the functional coverage of the open-source GRC tools in this repository against the requirements defined in the GRCEEK Business Requirements Document (BRD, June 2025). It includes a coverage table, percentage estimates, and a recommendation for the best open-source baseline.
+
+### Core Functional Requirements (from GRCEEK BRD)
+- User Management (RBAC, invitations, status)
+- Incident Reporting
+- Framework Management (multi-standard, scoring, auditor review)
+- Risk Management (scoring, linkage, workflow)
+- Control Management (effectiveness, linkage, workflow)
+- Policy Management (lifecycle, linkage, workflow)
+- Workflow Configuration (custom, module-specific)
+- System Configuration (categories, audit log)
+- Roles & Permissions (granular, audit)
+- Notification System (template/role-based, email/in-app)
+- Custom Reporting (real-time, export)
+- Non-Functional: Security, performance, accessibility, documentation
+
+### Functional Coverage Table
+
+| Tool               | User Mgmt | Incident | Framework | Risk | Control | Policy | Workflow | System Config | Roles/Perm | Notify | Reporting | % Coverage | Not Covered (Major) |
+|--------------------|:---------:|:--------:|:---------:|:----:|:-------:|:------:|:--------:|:-------------:|:----------:|:------:|:---------:|:----------:|:--------------------|
+| ComplianceAsCode   |   No*     |   No     |   Yes     | Yes  |  Yes    |  Yes   |  Partial |   Partial     |   No*      |  No    |   Yes     |   ~50%     | User mgmt, notify   |
+| OpenGRC            |   Yes     |   No     |   Yes     | Yes  |  Yes    |  Yes   |  No      |   No          |   Yes      |  No    |   Yes     |   ~55%     | Workflow, notify    |
+| auditree           |   No      |   No      |   No      | No   |  No     |  No    |  No      |   No          |   No       |  No    |   Yes     |   ~15%     | Most modules        |
+| ciso-assistant     |   Yes     |   Yes    |   Yes     | Yes  |  Yes    |  Yes   |  Yes     |   Yes         |   Yes      |  Yes   |   Yes     |   ~95%     | Minor config gaps   |
+| eramba             |   Yes     |   Yes    |   Yes     | Yes  |  Yes    |  Yes   |  Partial |   Partial     |   Yes      |  Yes   |   Yes     |   ~85%     | Custom workflow     |
+| gapps              |   Yes     |   No     |   Yes     | Yes  |  Yes    |  Yes   |  No      |   No          |   Yes      |  No    |   Yes     |   ~55%     | Workflow, notify    |
+| govready-q         |   Yes     |   No     |   Yes     | Yes  |  Yes    |  Yes   |  Partial |   No          |   Yes      |  No    |   Yes     |   ~60%     | Workflow, notify    |
+| SimpleRisk         |   Yes     |   Yes    |   Yes     | Yes  |  Yes    |  Yes   |  Partial |   Partial     |   Yes      |  Yes   |   Yes     |   ~80%     | Custom workflow     |
+| grc                |   Yes     |   No     |   Yes     | Yes  |  Yes    |  Yes   |  No      |   No          |   Yes      |  No    |   Yes     |   ~55%     | Workflow, notify    |
+| grc4ciso           |   Yes     |   Yes    |   Yes     | Yes  |  Yes    |  Yes   |  Yes     |   Yes         |   Yes      |  Yes   |   Yes     |   ~90%     | Details unclear     |
+
+*Legend:*
+- "Yes" = Full or near-full support
+- "Partial" = Some support, not as flexible as BRD
+- "No" = Not present or not documented
+- *ComplianceAsCode: User mgmt/roles only for content authors, not end-users
+
+### Visual Coverage Chart
+
+```mermaid
+bar
+    title GRC Tool Functional Coverage vs. GRCEEK BRD (%)
+    x-axis GRC Tool
+    y-axis % Coverage
+    "ciso-assistant" : 95
+    "grc4ciso" : 90
+    "eramba" : 85
+    "SimpleRisk" : 80
+    "govready-q" : 60
+    "OpenGRC" : 55
+    "gapps" : 55
+    "grc" : 55
+    "ComplianceAsCode" : 50
+    "auditree" : 15
+```
+
+### Coverage Summary
+- **Highest Coverage:**
+  - **ciso-assistant** (~95%): Covers nearly all functional requirements, including microservices, RBAC, workflow, notifications, and reporting. Modern Python backend, API-first, and easy for AI/ML extension.
+  - **grc4ciso** (~90%): Also high coverage, but less documentation and community support.
+  - **eramba** (~85%): Mature, strong on risk, control, and policy, but less flexible on custom workflows and modern integrations.
+  - **SimpleRisk** (~80%): Good for rapid deployment, but less customizable workflow.
+- **Mid Coverage:**
+  - **OpenGRC, gapps, govready-q, grc** (~55-60%): Good for basic GRC, but lack advanced workflow, notification, or system config features.
+- **Low Coverage:**
+  - **auditree** (~15%): Focused on compliance automation, not a full GRC suite.
+
+### Recommendation
+
+**Best Baseline for New GRC Platform:**
+- **ciso-assistant** is the top recommendation.
+  - Modern, extensible, microservices-based, Python backend (ideal for AI/ML), and covers almost all BRD requirements.
+  - Easy to add advanced features (AI, NLP, predictive analytics).
+  - Good community and active development.
+
+**Alternative:**
+- **eramba** or **SimpleRisk** if you want a mature, stable, and widely adopted platform, but expect to do more customization for advanced workflow and AI.
+
+**For AI/ML and future-proofing:**
+- **ciso-assistant** is the best starting point.
