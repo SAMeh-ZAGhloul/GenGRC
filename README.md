@@ -299,9 +299,9 @@ This section provides a structured comparison of the functional coverage of the 
 
 ```mermaid
 bar
-    title GRC Tool Functional Coverage vs. GRCEEK BRD (%)
-    x-axis GRC Tool
-    y-axis % Coverage
+    title "GRC Tool Functional Coverage vs. GRCEEK BRD (%)"
+    x-axis "GRC Tool"
+    y-axis "% Coverage"
     "ciso-assistant" : 95
     "grc4ciso" : 90
     "eramba" : 85
