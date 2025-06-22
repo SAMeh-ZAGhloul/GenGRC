@@ -298,20 +298,18 @@ This section provides a structured comparison of the functional coverage of the 
 ### Visual Coverage Chart
 
 ```mermaid
-bar
-    title "GRC Tool Functional Coverage vs. GRCEEK BRD (%)"
-    x-axis "GRC Tool"
-    y-axis "% Coverage"
-    "ciso-assistant" : 95
-    "grc4ciso" : 90
-    "eramba" : 85
-    "SimpleRisk" : 80
-    "govready-q" : 60
-    "OpenGRC" : 55
-    "gapps" : 55
-    "grc" : 55
-    "ComplianceAsCode" : 50
-    "auditree" : 15
+pie
+    title GRC Tool Functional Coverage vs. GRCEEK BRD (%)
+    "ciso-assistant (95%)" : 95
+    "grc4ciso (90%)" : 90
+    "eramba (85%)" : 85
+    "SimpleRisk (80%)" : 80
+    "govready-q (60%)" : 60
+    "OpenGRC (55%)" : 55
+    "gapps (55%)" : 55
+    "grc (55%)" : 55
+    "ComplianceAsCode (50%)" : 50
+    "auditree (15%)" : 15
 ```
 
 ### Coverage Summary
