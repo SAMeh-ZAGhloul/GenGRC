@@ -98,7 +98,7 @@ graph TD
 - **Email Service:** Used by the Notification Service to send alerts, password resets, and communications.
 - **SSO/External Auth:** Integrates with enterprise SSO providers or external authentication systems for secure, seamless user login.
 
-## Data Model Summary
+## Data Model 
 
 - **Entity-Relationship Structure:** The model is organized around clear relationships between core entities such as users, groups, roles, assets, requirements, controls (reference and applied), assessments (compliance, risk, entity), vulnerabilities, incidents, findings, and security exceptions.
 - **Folder-Based RBAC:** Access control is managed through a folder-based Role-Based Access Control (RBAC) system, supporting both global and domain-specific permissions, with roles and assignments mapped to Django conventions (add, view, change, delete).
@@ -131,7 +131,7 @@ graph TD
 - **Translations:** All referential objects can be translated, supporting multi-lingual deployments.
 - **Custom Scoring and Workflows:** Score scales, requirement mappings, and workflow states are configurable to match organizational needs.
 
-# GRC Frameworks
+## GRC Frameworks
 
 GRCeek provides comprehensive support for GRC frameworks and standards, enabling organizations to manage compliance with regulations and best practices such as ISO 27001, NIST, CIS, CMMC, and others. Key features include:
 
