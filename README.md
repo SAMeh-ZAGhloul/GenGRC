@@ -336,3 +336,56 @@ flowchart LR
 
 **For AI/ML and future-proofing:**
 - **ciso-assistant** is the best starting point.
+
+## ciso-assistant Backend API Overview
+
+The `ciso-assistant` backend is a modern, API-first Python application using Django and Django REST Framework. It exposes a comprehensive set of RESTful endpoints for GRC (Governance, Risk, and Compliance) management.
+
+### Key Features
+
+- **Modular REST API:** Covers assets, risks, controls, policies, incidents, evidence, frameworks, users, roles, and more.
+- **Authentication:** Supports JWT, session, and SSO via `/iam/` and `/accounts/`.
+- **Extensible:** Designed for microservices and AI/ML integration.
+- **Interactive API Docs:** Swagger UI available at `/api/schema/swagger/` when the backend is running.
+
+### Main API Endpoints
+
+| Resource                | Endpoint                        |
+|-------------------------|---------------------------------|
+| Assets                  | `/api/assets/`                  |
+| Risks                   | `/api/risk-assessments/`        |
+| Controls                | `/api/applied-controls/`        |
+| Policies                | `/api/policies/`                |
+| Incidents               | `/api/incidents/`               |
+| Evidence                | `/api/evidences/`               |
+| Frameworks              | `/api/frameworks/`              |
+| Users & Roles           | `/api/users/`, `/api/roles/`    |
+| IAM & Auth              | `/api/iam/`, `/api/accounts/`   |
+| Findings                | `/api/findings/`                |
+| Tasks                   | `/api/task-nodes/`              |
+| ...and many more        |                                 |
+
+For a full list, see the [backend/urls.py](ciso-assistant/backend/ciso_assistant/urls.py) and explore the Swagger UI.
+
+### How to Access Swagger UI
+
+1. Start the backend server:
+    ```sh
+    cd ciso-assistant/backend
+    python manage.py runserver
+    ```
+2. Open your browser and go to:
+    ```
+    http://localhost:8000/api/schema/swagger/
+    ```
+
+### Developer Notes
+
+- All endpoints follow REST conventions.
+- Most endpoints support standard CRUD operations.
+- Authentication is required for most API calls.
+- The backend is designed for easy extension and integration with AI/ML modules.
+
+---
+
+*For more details, see the backend source code and the Swagger UI documentation.*
