@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise GRC Platform | Governance, Risk & Compliance Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+        }
+        
+        .sidebar {
+            background-color: var(--primary-color);
+            color: white;
+            height: 100vh;
+            position: fixed;
+            padding-top: 20px;
+        }
+        
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 5px;
+            border-radius: 5px;
+            padding: 10px 15px;
+        }
+        
+        .sidebar .nav-link:hover, .sidebar .nav-link.active {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .sidebar .nav-link i {
+            margin-right: 10px;
+        }
+        
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        
+        .dashboard-card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            margin-bottom: 20px;
+            border: none;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        
+        .risk-high {
+            border-left: 5px solid var(--accent-color);
+        }
+        
+        .risk-medium {
+            border-left: 5px solid #f39c12;
+        }
+        
+        .risk-low {
+            border-left: 5px solid #2ecc71;
+        }
+        
+        .navbar-custom {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .risk-matrix {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            height: 400px;
+            gap: 5px;
+        }
+        
+        .matrix-cell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            border-radius: 5px;
+        }
+        
+        .grc-table th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .tab-content {
+            padding: 20px;
+            background-color: white;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-tabs .nav-link.active {
+            font-weight: bold;
+            border-bottom: 3px solid var(--secondary-color);
+        }
+        
+        .user-role-badge {
+            font-size: 0.7rem;
+            padding: 3px 8px;
+            border-radius: 10px;
+        }
+        
+        .admin-badge {
+            background-color: #8e44ad;
+        }
+        
+        .auditor-badge {
+            background-color: #16a085;
+        }
+        
+        .compliance-badge {
+            background-color: #3498db;
+        }
+        
+        .risk-badge {
+            background-color: #e67e22;
+        }
+        
+        .user-badge {
+            background-color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar col-md-2 d-none d-md-block">
+        <div class="text-center mb-4">
+            <h4><i class="fas fa-shield-alt"></i> Enterprise GRC</h4>
+        </div>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" href="#dashboard" data-bs-toggle="tab">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#risk-management" data-bs-toggle="tab">
+                    <i class="fas fa-exclamation-triangle"></i> Risk Management
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#compliance" data-bs-toggle="tab">
+                    <i class="fas fa-check-circle"></i> Compliance
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#controls" data-bs-toggle="tab">
+                    <i class="fas fa-cogs"></i> Controls
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#policies" data-bs-toggle="tab">
+                    <i class="fas fa-file-contract"></i> Policies
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#audits" data-bs-toggle="tab">
+                    <i class="fas fa-clipboard-check"></i> Audits
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#incidents" data-bs-toggle="tab">
+                    <i class="fas fa-bug"></i> Incidents
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#reports" data-bs-toggle="tab">
+                    <i class="fas fa-chart-bar"></i> Reports
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#admin" data-bs-toggle="tab">
+                    <i class="fas fa-user-cog"></i> Administration
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Navigation Bar -->
+        <nav class="navbar navbar-expand-lg navbar-custom mb-4">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <span class="nav-link"><i class="fas fa-bell"></i></span>
+                        </li>
+                        <li class="nav-item">
+                            <span class="nav-link"><i class="fas fa-envelope"></i></span>
+                        </li>
+                        <li class="nav-item">
+                            <span class="nav-link"><i class="fas fa-search"></i></span>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                                <i class="fas fa-user-circle me-2"></i>Admin User
+                                <span class="user-role-badge admin-badge text-white ms-2">Admin</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Tab Content -->
+        <div class="tab-content">
+            <!-- Dashboard Tab -->
+            <div class="tab-pane fade show active" id="dashboard">
+                <h2><i class="fas fa-tachometer-alt me-2"></i>GRC Dashboard</h2>
+                <p class="text-muted">Overview of governance, risk and compliance status</p>
+                <hr>
+                
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card dashboard-card">
+                            <div class="card-body text-center">
+                                <div class="card-icon text-danger">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                <h5 class="card-title">Open Risks</h5>
+                                <h2 class="mb-0">42</h2>
+                                <p class="text-muted">5 critical</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card dashboard-card">
+                            <div class="card-body text-center">
+                                <div class="card-icon text-warning">
+                                    <i class="fas fa-clipboard-check"></i>
+                                </div>
+                                <h5 class="card-title">Audits Due</h5>
+                                <h2 class="mb-0">8</h2>
+                                <p class="text-muted">3 overdue</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card dashboard-card">
+                            <div class="card-body text-center">
+                                <div class="card-icon text-info">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <h5 class="card-title">Controls</h5>
+                                <h2 class="mb-0">156</h2>
+                                <p class="text-muted">92% effective</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card dashboard-card">
+                            <div class="card-body text-center">
+                                <div class="card-icon text-success">
+                                    <i class="fas fa-file-contract"></i>
+                                </div>
+                                <h5 class="card-title">Policies</h5>
+                                <h2 class="mb-0">27</h2>
+                                <p class="text-muted">3 need review</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Risk Heat Map</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="risk-matrix">
+                                    <div class="matrix-cell" style="background-color: #e74c3c; grid-column: 4; grid-row: 1;">Critical</div>
+                                    <div class="matrix-cell" style="background-color: #e67e22; grid-column: 3; grid-row: 2;">High</div>
+                                    <div class="matrix-cell" style="background-color: #f1c40f; grid-column: 2; grid-row: 3;">Medium</div>
+                                    <div class="matrix-cell" style="background-color: #2ecc71; grid-column: 1; grid-row: 4;">Low</div>
+                                    <div class="matrix-cell" style="background-color: #3498db; grid-column: 5; grid-row: 5;">Very Low</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Compliance Status</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <h6>GDPR <span class="badge bg-success float-end">95%</span></h6>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-success" style="width: 95%"></div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <h6>ISO 27001 <span class="badge bg-warning text-dark float-end">78%</span></h6>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-warning" style="width: 78%"></div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <h6>SOX <span class="badge bg-danger float-end">62%</span></h6>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-danger" style="width: 62%"></div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <h6>HIPAA <span class="badge bg-info float-end">88%</span></h6>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-info" style="width: 88%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Recent Activities</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Activity</th>
+                                                <th>User</th>
+                                                <th>Details</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>2023-06-15</td>
+                                                <td>Risk Updated</td>
+                                                <td>John Smith</td>
+                                                <td>Changed risk R-1023 from Medium to High</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2023-06-14</td>
+                                                <td>Control Test</td>
+                                                <td>Sarah Johnson</td>
+                                                <td>Completed test for control CT-456</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2023-06-13</td>
+                                                <td>Policy Published</td>
+                                                <td>Michael Brown</td>
+                                                <td>New Acceptable Use Policy v2.0</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2023-06-12</td>
+                                                <td>Audit Started</td>
+                                                <td>Lisa Wilson</td>
+                                                <td>ISO 27001 Internal Audit initiated</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2023-06-11</td>
+                                                <td>Incident Reported</td>
+                                                <td>David Lee</td>
+                                                <td>Security incident INC-789 logged</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Risk Management Tab -->
+            <div class="tab-pane fade" id="risk-management">
+                <h2><i class="fas fa-exclamation-triangle me-2"></i>Risk Management</h2>
+                <p class="text-muted">Identify, assess, and mitigate organizational risks</p>
+                <hr>
+                
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Risk Register</h5>
+                                <button class="btn btn-primary btn-sm"><i class="fas fa-plus me-2"></i>Add Risk</button>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover grc-table">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Risk Name</th>
+                                                <th>Category</th>
+                                                <th>Likelihood</th>
+                                                <th>Impact</th>
+                                                <th>Level</th>
+                                                <th>Owner</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="risk-high">
+                                                <td>R-1023</td>
+                                                <td>Data Breach</td>
+                                                <td>Security</td>
+                                                <td><span class="badge bg-warning text-dark">Medium</span></td>
+                                                <td><span class="badge bg-danger">High</span></td>
+                                                <td><span class="badge bg-danger">High</span></td>
+                                                <td>John Smith</td>
+                                                <td><span class="badge bg-warning text-dark">Mitigating</span></td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                                    <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-edit"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr class="risk-medium">
+                                                <td>R-1024</td>
+                                                <td>Regulatory Non-compliance</td>
+                                                <td>Compliance</td>
+                                                <td><span class="badge bg-warning text-dark">Medium</span></td>
+                                                <td><span class="badge bg-warning text-dark">Medium</span></td>
+                                                <td><span class="badge bg-warning text-dark">Medium</span></td>
+                                                <td>Sarah Johnson</td>
+                                                <td><span class="badge bg-info">Planned</span></td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                                    <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-edit"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr class="risk-low">
+                                                <td>R-1025</td>
+                                                <td>Vendor Failure</td>
+                                                <td>Operational</td>
+                                                <td><span class="badge bg-success">Low</span></td>
+                                                <td><span class="badge bg-warning text-dark">Medium</span></td>
+                                                <td><span class="badge bg-success">Low</span></td>
+                                                <td>Michael Brown</td>
+                                                <td><span class="badge bg-success">Accepted</span></td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                                    <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-edit"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Risk by Category</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="riskCategoryChart" height="250"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Risk Treatment Status</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="riskTreatmentChart" height="250"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Compliance Tab -->
+            <div class="tab-pane fade" id="compliance">
+                <h2><i class="fas fa-check-circle me-2"></i>Compliance Management</h2>
+                <p class="text-muted">Track and manage compliance with regulations and standards</p>
+                <hr>
+                
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-bs-toggle="tab" href="#frameworks">Frameworks</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#requirements">Requirements</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#assessments">Assessments</a>
+                            </li>
+                        </ul>
+                        
+                        <div class="tab-content mt-3">
+                            <div class="tab-pane fade show active" id="frameworks">
+                                <div class="card">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h5 class="mb-0">Compliance Frameworks</h5>
+                                        <button class="btn btn-primary btn-sm"><i class="fas fa-plus me-2"></i>Add Framework</button>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover grc-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Framework</th>
+                                                        <th>Type</th>
+                                                        <th>Status</th>
+                                                        <th>Coverage</th>
+                                                        <th>Last Assessment</th>
+                                                        <th>Next Assessment</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>GDPR</td>
+                                                        <td>Regulation</td>
+                                                        <td><span class="badge bg-success">Compliant</span></td>
+                                                        <td>
+                                                            <div class="progress" style="height: 20px;">
+                                                                <div class="progress-bar bg-success" style="width: 95%">95%</div>
+                                                            </div>
+                                                        </td>
+                                                        <td>2023-05-15</td>
+                                                        <td>2023-11-15</td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                                            <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-edit"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>ISO 27001:2022</td>
+                                                        <td>Standard</td>
+                                                        <td><span class="badge bg-warning text-dark">Partial</span></td>
+                                                        <td>
+                                                            <div class="progress" style="height: 20px;">
+                                                                <div class="progress-bar bg-warning" style="width: 78%">78%</div>
+                                                            </div>
+                                                        </td>
+                                                        <td>2023-04-20</td>
+                                                        <td>2023-10-20</td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                                            <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-edit"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tab-pane fade" id="requirements">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Compliance Requirements</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover grc-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Requirement</th>
+                                                        <th>Framework</th>
+                                                        <th>Status</th>
+                                                        <th>Owner</th>
+                                                        <th>Due Date</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>CR-1001</td>
+                                                        <td>Data Protection Impact Assessment</td>
+                                                        <td>GDPR</td>
+                                                        <td><span class="badge bg-success">Implemented</span></td>
+                                                        <td>John Smith</td>
+                                                        <td>2023-07-15</td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                                            <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-edit"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>CR-1002</td>
+                                                        <td>Access Control Policy</td>
+                                                        <td>ISO 27001</td>
+                                                        <td><span class="badge bg-warning text-dark">In Progress</span></td>
+                                                        <td>Sarah Johnson</td>
+                                                        <td>2023-08-20</td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                                            <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-edit"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tab-pane fade" id="assessments">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Compliance Assessments</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Assessment records and evidence collection will be displayed here.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Controls Tab -->
+            <div class="tab-pane fade" id="controls">
+                <h2><i class="fas fa-cogs me-2"></i>Control Management</h2>
+                <p class="text-muted">Design, implement, and monitor security and compliance controls</p>
+                <hr>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Control Library</h5>
+                                <div>
+                                    <button class="btn btn-primary btn-sm me-2"><i class="fas fa-plus me-2"></i>Add Control</button>
+                                    <button class="btn btn-outline-secondary btn-sm"><i class="fas fa-download me-2"></i>Export</button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover grc-table">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Control Name</th>
+                                                <th>Category</th>
+                                                <th>Type</th>
+                                                <th>Framework</th>
+                                                <th>Effectiveness</th>
+                                                <th>Owner</th>
+                                                <th>Next Test</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>CT-1001</td>
+                                                <td>Password Policy Enforcement</td>
+                                                <td>Access Control</td>
+                                                <td>Preventive</td>
+                                                <td>ISO 27001, NIST</td>
+                                                <td>
+                                                    <div class="progress" style="height: 20px;">
+                                                        <div class="progress-bar bg-success" style="width: 92%">92%</div>
+                                                    </div>
+                                                </td>
+                                                <td>John Smith</td>
+                                                <td>2023-08-15</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                                    <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-edit"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>CT-1002</td>
+                                                <td>Vulnerability Scanning</td>
+                                                <td>Security Operations</td>
+                                                <td>Detective</td>
+                                                <td>PCI DSS, ISO 27001</td>
+                                                <td>
+                                                    <div class="progress" style="height: 20px;">
+                                                        <div class="progress-bar bg-success" style="width: 88%">88%</div>
+                                                    </div>
+                                                </td>
+                                                <td>Sarah Johnson</td>
+                                                <td>2023-07-30</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                                    <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-edit"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Control Testing Schedule</h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="controlTestingCalendar"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Control Effectiveness</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="controlEffectivenessChart" height="250"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Policies Tab -->
+            <div class="tab-pane fade" id="policies">
+                <h2><i class="fas fa-file-contract me-2"></i>Policy Management</h2>
+                <p class="text-muted">Create, approve, distribute and track organizational policies</p>
+                <hr>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Policy Library</h5>
+                                <button class="btn btn-primary btn-sm"><i class="fas fa-plus me-2"></i>New Policy</button>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover grc-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Policy ID</th>
+                                                <th>Policy Name</th>
+                                                <th>Category</th>
+                                                <th>Version</th>
+                                                <th>Status</th>
+                                                <th>Owner</th>
+                                                <th>Effective Date</th>
+                                                <th>Review Date</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>POL-1001</td>
+                                                <td>Information Security Policy</td>
+                                                <td>Security</td>
+                                                <td>3.2</td>
+                                                <td><span class="badge bg-success">Active</span></td>
+                                                <td>John Smith</td>
+                                                <td>2023-01-15</td>
+                                                <td>2024-01-15</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                                    <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-edit"></i></button>
+                                                    <button class="btn btn-sm btn-outline-info"><i class="fas fa-download"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>POL-1002</td>
+                                                <td>Acceptable Use Policy</td>
+                                                <td>HR</td>
+                                                <td>2.0</td>
+                                                <td><span class="badge bg-success">Active</span></td>
+                                                <td>Sarah Johnson</td>
+                                                <td>2023-03-10</td>
+                                                <td>2024-03-10</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                                    <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-edit"></i></button>
+                                                    <button class="btn btn-sm btn-outline-info"><i class="fas fa-download"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Policy Approval Workflow</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <img src="https://via.placeholder.com/500x300?text=Policy+Approval+Workflow" alt="Policy Approval Workflow" class="img-fluid">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Policy Acknowledgment Status</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="policyAckChart" height="250"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Audits Tab -->
+            <div class="tab-pane fade" id="audits">
+                <h2><i class="fas fa-clipboard-check me-2"></i>Audit Management</h2>
+                <p class="text-muted">Plan, execute and track internal and external audits</p>
+                <hr>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Audit Schedule</h5>
+                                <button class="btn btn-primary btn-sm"><i class="fas fa-plus me-2"></i>Schedule Audit</button>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover grc-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Audit ID</th>
+                                                <th>Audit Name</th>
+                                                <th>Type</th>
+                                                <th>Framework</th>
+                                                <th>Status</th>
+                                                <th>Start Date</th>
+                                                <th>End Date</th>
+                                                <th>Lead Auditor</th>
+                                                <th>Findings</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>AUD-2023-001</td>
+                                                <td>ISO 27001 Internal Audit</td>
+                                                <td>Internal</td>
+                                                <td>ISO 27001:2022</td>
+                                                <td><span class="badge bg-info">In Progress</span></td>
+                                                <td>2023-06-12</td>
+                                                <td>2023-06-30</td>
+                                                <td>Lisa Wilson</td>
+                                                <td>12</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                                    <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-edit"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>AUD-2023-002</td>
+                                                <td>PCI DSS Compliance Audit</td>
+                                                <td>External</td>
+                                                <td>PCI DSS v4.0</td>
+                                                <td><span class="badge bg-warning text-dark">Scheduled</span></td>
+                                                <td>2023-07-15</td>
+                                                <td>2023-07-20</td>
+                                                <td>External QSA</td>
+                                                <td>-</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                                    <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-edit"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Audit Findings by Severity</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="auditFindingsChart" height="250"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Audit Remediation Status</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="auditRemediationChart" height="250"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Incidents Tab -->
+            <div class="tab-pane fade" id="incidents">
+                <h2><i class="fas fa-bug me-2"></i>Incident Management</h2>
+                <p class="text-muted">Track and manage security and compliance incidents</p>
+                <hr>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Incident Register</h5>
+                                <button class="btn btn-primary btn-sm"><i class="fas fa-plus me-2"></i>Report Incident</button>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover grc-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Incident ID</th>
+                                                <th>Title</th>
+                                                <th>Type</th>
+                                                <th>Severity</th>
+                                                <th>Status</th>
+                                                <th>Reported Date</th>
+                                                <th>Reported By</th>
+                                                <th>Assigned To</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>INC-2023-045</td>
+                                                <td>Phishing Email Campaign</td>
+                                                <td>Security</td>
+                                                <td><span class="badge bg-warning text-dark">Medium</span></td>
+                                                <td><span class="badge bg-info">Under Investigation</span></td>
+                                                <td>2023-06-10</td>
+                                                <td>David Lee</td>
+                                                <td>Security Team</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                                    <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-edit"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>INC-2023-044</td>
+                                                <td>Unauthorized Data Access</td>
+                                                <td>Privacy</td>
+                                                <td><span class="badge bg-danger">High</span></td>
+                                                <td><span class="badge bg-warning text-dark">Remediating</span></td>
+                                                <td>2023-06-05</td>
+                                                <td>System Alert</td>
+                                                <td>John Smith</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                                    <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-edit"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Incidents by Type</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="incidentTypeChart" height="250"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Incident Resolution Time</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="incidentResolutionChart" height="250"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Reports Tab -->
+            <div class="tab-pane fade" id="reports">
+                <h2><i class="fas fa-chart-bar me-2"></i>Reports & Analytics</h2>
+                <p class="text-muted">Generate and view GRC reports and analytics</p>
+                <hr>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Standard Reports</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4 mb-4">
+                                        <div class="card dashboard-card h-100">
+                                            <div class="card-body">
+                                                <div class="card-icon text-primary">
+                                                    <i class="fas fa-exclamation-triangle"></i>
+                                                </div>
+                                                <h5 class="card-title">Risk Assessment Report</h5>
+                                                <p class="card-text">Detailed analysis of organizational risks with treatment plans.</p>
+                                                <button class="btn btn-outline-primary btn-sm"><i class="fas fa-download me-2"></i>Download</button>
+                                                <button class="btn btn-outline-secondary btn-sm ms-2"><i class="fas fa-eye me-2"></i>View</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-4">
+                                        <div class="card dashboard-card h-100">
+                                            <div class="card-body">
+                                                <div class="card-icon text-success">
+                                                    <i class="fas fa-check-circle"></i>
+                                                </div>
+                                                <h5 class="card-title">Compliance Status Report</h5>
+                                                <p class="card-text">Overview of compliance with regulations and standards.</p>
+                                                <button class="btn btn-outline-primary btn-sm"><i class="fas fa-download me-2"></i>Download</button>
+                                                <button class="btn btn-outline-secondary btn-sm ms-2"><i class="fas fa-eye me-2"></i>View</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-4">
+                                        <div class="card dashboard-card h-100">
+                                            <div class="card-body">
+                                                <div class="card-icon text-info">
+                                                    <i class="fas fa-clipboard-check"></i>
+                                                </div>
+                                                <h5 class="card-title">Audit Findings Report</h5>
+                                                <p class="card-text">Summary of audit findings and remediation status.</p>
+                                                <button class="btn btn-outline-primary btn-sm"><i class="fas fa-download me-2"></i>Download</button>
+                                                <button class="btn btn-outline-secondary btn-sm ms-2"><i class="fas fa-eye me-2"></i>View</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Custom Report Builder</h5>
+                            </div>
+                            <div class="card-body">
+                                <form>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label class="form-label">Report Type</label>
+                                                <select class="form-select">
+                                                    <option>Risk Report</option>
+                                                    <option>Compliance Report</option>
+                                                    <option>Control Effectiveness</option>
+                                                    <option>Policy Compliance</option>
+                                                    <option>Audit Summary</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label class="form-label">Time Period</label>
+                                                <select class="form-select">
+                                                    <option>Last 30 days</option>
+                                                    <option>Last quarter</option>
+                                                    <option>Last 6 months</option>
+                                                    <option>Last year</option>
+                                                    <option>Custom range</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label class="form-label">Format</label>
+                                                <select class="form-select">
+                                                    <option>PDF</option>
+                                                    <option>Excel</option>
+                                                    <option>HTML</option>
+                                                    <option>Word</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="mb-3">
+                                                <label class="form-label">Filters (optional)</label>
+                                                <input type="text" class="form-control" placeholder="Add filters to narrow your report">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary"><i class="fas fa-file-export me-2"></i>Generate Report</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Admin Tab -->
+            <div class="tab-pane fade" id="admin">
+                <h2><i class="fas fa-user-cog me-2"></i>Administration</h2>
+                <p class="text-muted">System configuration and user management</p>
+                <hr>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-bs-toggle="tab" href="#users">Users</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#roles">Roles</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#settings">Settings</a>
+                            </li>
+                        </ul>
+                        
+                        <div class="tab-content mt-3">
+                            <div class="tab-pane fade show active" id="users">
+                                <div class="card">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h5 class="mb-0">User Management</h5>
+                                        <button class="btn btn-primary btn-sm"><i class="fas fa-plus me-2"></i>Add User</button>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover grc-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Email</th>
+                                                        <th>Role</th>
+                                                        <th>Department</th>
+                                                        <th>Last Login</th>
+                                                        <th>Status</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>John Smith</td>
+                                                        <td>john.smith@company.com</td>
+                                                        <td><span class="user-role-badge admin-badge">Admin</span></td>
+                                                        <td>IT Security</td>
+                                                        <td>2023-06-15 09:42</td>
+                                                        <td><span class="badge bg-success">Active</span></td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                                            <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-edit"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sarah Johnson</td>
+                                                        <td>sarah.j@company.com</td>
+                                                        <td><span class="user-role-badge compliance-badge">Compliance</span></td>
+                                                        <td>Legal</td>
+                                                        <td>2023-06-14 14:30</td>
+                                                        <td><span class="badge bg-success">Active</span></td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                                            <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-edit"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tab-pane fade" id="roles">
+                                <div class="card">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h5 class="mb-0">Role Management</h5>
+                                        <button class="btn btn-primary btn-sm"><i class="fas fa-plus me-2"></i>Add Role</button>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover grc-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Role Name</th>
+                                                        <th>Description</th>
+                                                        <th>Users</th>
+                                                        <th>Permissions</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Administrator</td>
+                                                        <td>Full system access</td>
+                                                        <td>5</td>
+                                                        <td>All permissions</td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                                            <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-edit"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Compliance Officer</td>
+                                                        <td>Manage compliance activities</td>
+                                                        <td>12</td>
+                                                        <td>Compliance modules</td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                                            <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-edit"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tab-pane fade" id="settings">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>System Settings</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">System Name</label>
+                                                        <input type="text" class="form-control" value="Enterprise GRC Platform">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Default Timezone</label>
+                                                        <select class="form-select">
+                                                            <option>(UTC-05:00) Eastern Time</option>
+                                                            <option selected>(UTC-00:00) Greenwich Mean Time</option>
+                                                            <option>(UTC+01:00) Central European Time</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Password Policy</label>
+                                                        <select class="form-select">
+                                                            <option>Basic (8 characters)</option>
+                                                            <option selected>Standard (10 characters with complexity)</option>
+                                                            <option>Strict (12 characters with complexity and history)</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Session Timeout</label>
+                                                        <select class="form-select">
+                                                            <option>15 minutes</option>
+                                                            <option selected>30 minutes</option>
+                                                            <option>1 hour</option>
+                                                            <option>4 hours</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-check form-switch mb-3">
+                                                        <input class="form-check-input" type="checkbox" id="auditLogging" checked>
+                                                        <label class="form-check-label" for="auditLogging">Enable Audit Logging</label>
+                                                    </div>
+                                                    <div class="form-check form-switch mb-3">
+                                                        <input class="form-check-input" type="checkbox" id="mfa" checked>
+                                                        <label class="form-check-label" for="mfa">Require Multi-Factor Authentication</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Save Settings</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initCharts();
+        });
+
+        function initCharts() {
+            // Risk by Category Chart
+            const riskCategoryCtx = document.getElementById('riskCategoryChart');
+            if (riskCategoryCtx) {
+                new Chart(riskCategoryCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Security', 'Compliance', 'Operational', 'Financial', 'Strategic'],
+                        datasets: [{
+                            data: [35, 25, 20, 12, 8],
+                            backgroundColor: [
+                                '#e74c3c',
+                                '#3498db',
+                                '#f39c12',
+                                '#2ecc71',
+                                '#9b59b6'
+                            ]
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+            
+            // Risk Treatment Chart
+            const riskTreatmentCtx = document.getElementById('riskTreatmentChart');
+            if (riskTreatmentCtx) {
+                new Chart(riskTreatmentCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Accepted', 'Mitigated', 'Transferred', 'Avoided'],
+                        datasets: [{
+                            label: 'Risk Treatment',
+                            data: [15, 25, 10, 5],
+                            backgroundColor: [
+                                '#3498db',
+                                '#2ecc71',
+                                '#f39c12',
+                                '#e74c3c'
+                            ]
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Initialize other charts as needed
+            const charts = [
+                { id: 'controlEffectivenessChart', type: 'bar' },
+                { id: 'policyAckChart', type: 'doughnut' },
+                { id: 'auditFindingsChart', type: 'pie' },
+                { id: 'auditRemediationChart', type: 'bar' },
+                { id: 'incidentTypeChart', type: 'pie' },
+                { id: 'incidentResolutionChart', type: 'line' }
+            ];
+            
+            charts.forEach(chartConfig => {
+                const ctx = document.getElementById(chartConfig.id);
+                if (ctx) {
+                    new Chart(ctx, {
+                        type: chartConfig.type,
+                        data: getSampleChartData(chartConfig.type),
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false
+                        }
+                    });
+                }
+            });
+        }
+        
+        function getSampleChartData(type) {
+            // Sample data for different chart types
+            if (type === 'doughnut' || type === 'pie') {
+                return {
+                    labels: ['Completed', 'In Progress', 'Not Started'],
+                    datasets: [{
+                        data: [65, 25, 10],
+                        backgroundColor: [
+                            '#2ecc71',
+                            '#f39c12',
+                            '#e74c3c'
+                        ]
+                    }]
+                };
+            } else if (type === 'bar') {
+                return {
+                    labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+                    datasets: [{
+                        label: 'Performance',
+                        data: [85, 72, 91, 88],
+                        backgroundColor: '#3498db'
+                    }]
+                };
+            } else { // line
+                return {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Resolution Time (days)',
+                        data: [14, 12, 8, 10, 7, 5],
+                        borderColor: '#3498db',
+                        fill: false
+                    }]
+                };
+            }
+        }
+    </script>
+</body>
+</html>

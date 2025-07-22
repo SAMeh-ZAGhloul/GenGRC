@@ -491,7 +491,7 @@ code {
 <li><strong>Features</strong>: Built-in standards, security controls, threat libraries, risk assessment, remediation tracking, import/export capabilities</li>
 </ul>
 <h2 id="5-eramba">5. eramba</h2>
-<p><strong>Description</strong>: A comprehensive open-source GRC solution that has gained popularity for its extensive features. It takes about a month to fully get the hang of it, but provides significant value with features like automated account reviews, automated periodic reminders for policy review and maintenance, and version-controlled policy libraries. <mcreference link="https://www.reddit.com/r/cybersecurity/comments/15c82kc/free_opensource_grc_software/" index="1">1</mcreference> <mcreference link="https://kraftbusiness.com/blog/open-source-grc-software-benefits/" index="2">2</mcreference></p>
+<p><strong>Description</strong>: A comprehensive open-source GRC solution that has gained popularity for its extensive features. It takes about a month to fully get the hang of it, but provides significant value with features like automated account reviews, automated periodic reminders for policy review and maintenance, and version-controlled policy libraries. <mcreference link="https://www.reddit.com/r/cybersecurity/comments/15c82kc/free_opensource_grc_software/" index="1">1</mcreference> <mcreference link="https://kraftbusiness.com/blog/open-source-grrc-software-benefits/" index="2">2</mcreference></p>
 <p><strong>Technologies</strong>:</p>
 <ul>
 <li><strong>Programming Languages</strong>: PHP</li>
@@ -768,6 +768,267 @@ code {
 </li>
 </ol>
 <p>This approach combines the best of existing open-source GRC platforms with modern AI capabilities, creating a powerful foundation for next-generation GRC products.</p>
+<h2 id="functional-coverage-vs-grceek-brd-requirements-2025">Functional Coverage vs. GRCEEK BRD Requirements (2025)</h2>
+<p>This section provides a structured comparison of the functional coverage of the open-source GRC tools in this repository against the requirements defined in the GRCEEK Business Requirements Document (BRD, June 2025). It includes a coverage table, percentage estimates, and a recommendation for the best open-source baseline.</p>
+<h3 id="core-functional-requirements-from-grceek-brd">Core Functional Requirements (from GRCEEK BRD)</h3>
+<ul>
+<li>User Management (RBAC, invitations, status)</li>
+<li>Incident Reporting</li>
+<li>Framework Management (multi-standard, scoring, auditor review)</li>
+<li>Risk Management (scoring, linkage, workflow)</li>
+<li>Control Management (effectiveness, linkage, workflow)</li>
+<li>Policy Management (lifecycle, linkage, workflow)</li>
+<li>Workflow Configuration (custom, module-specific)</li>
+<li>System Configuration (categories, audit log)</li>
+<li>Roles &amp; Permissions (granular, audit)</li>
+<li>Notification System (template/role-based, email/in-app)</li>
+<li>Custom Reporting (real-time, export)</li>
+<li>Non-Functional: Security, performance, accessibility, documentation</li>
+</ul>
+<h3 id="functional-coverage-table">Functional Coverage Table</h3>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th style="text-align:center">User Mgmt</th>
+<th style="text-align:center">Incident</th>
+<th style="text-align:center">Framework</th>
+<th style="text-align:center">Risk</th>
+<th style="text-align:center">Control</th>
+<th style="text-align:center">Policy</th>
+<th style="text-align:center">Workflow</th>
+<th style="text-align:center">System Config</th>
+<th style="text-align:center">Roles/Perm</th>
+<th style="text-align:center">Notify</th>
+<th style="text-align:center">Reporting</th>
+<th style="text-align:center">% Coverage</th>
+<th style="text-align:left">Not Covered (Major)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ComplianceAsCode</td>
+<td style="text-align:center">No*</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Partial</td>
+<td style="text-align:center">Partial</td>
+<td style="text-align:center">No*</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">~50%</td>
+<td style="text-align:left">User mgmt, notify</td>
+</tr>
+<tr>
+<td>OpenGRC</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">~55%</td>
+<td style="text-align:left">Workflow, notify</td>
+</tr>
+<tr>
+<td>auditree</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">~15%</td>
+<td style="text-align:left">Most modules</td>
+</tr>
+<tr>
+<td>ciso-assistant</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">~95%</td>
+<td style="text-align:left">Minor config gaps</td>
+</tr>
+<tr>
+<td>eramba</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Partial</td>
+<td style="text-align:center">Partial</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">~85%</td>
+<td style="text-align:left">Custom workflow</td>
+</tr>
+<tr>
+<td>gapps</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">~55%</td>
+<td style="text-align:left">Workflow, notify</td>
+</tr>
+<tr>
+<td>govready-q</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Partial</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">~60%</td>
+<td style="text-align:left">Workflow, notify</td>
+</tr>
+<tr>
+<td>SimpleRisk</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Partial</td>
+<td style="text-align:center">Partial</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">~80%</td>
+<td style="text-align:left">Custom workflow</td>
+</tr>
+<tr>
+<td>grc</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">~55%</td>
+<td style="text-align:left">Workflow, notify</td>
+</tr>
+<tr>
+<td>grc4ciso</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">~90%</td>
+<td style="text-align:left">Details unclear</td>
+</tr>
+</tbody>
+</table>
+<p><em>Legend:</em></p>
+<ul>
+<li>&quot;Yes&quot; = Full or near-full support</li>
+<li>&quot;Partial&quot; = Some support, not as flexible as BRD</li>
+<li>&quot;No&quot; = Not present or not documented</li>
+<li>*ComplianceAsCode: User mgmt/roles only for content authors, not end-users</li>
+</ul>
+<h3 id="visual-coverage-chart">Visual Coverage Chart</h3>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart LR
+    A[ciso-assistant] ---|95%| Z
+    B[grc4ciso] ---|90%| Z
+    C[eramba] ---|85%| Z
+    D[SimpleRisk] ---|80%| Z
+    E[govready-q] ---|60%| Z
+    F[OpenGRC] ---|55%| Z
+    G[gapps] ---|55%| Z
+    H[grc] ---|55%| Z
+    I[ComplianceAsCode] ---|50%| Z
+    J[auditree] ---|15%| Z
+    style Z fill:#fff,stroke:#fff
+</div></code></pre>
+<h3 id="coverage-summary">Coverage Summary</h3>
+<ul>
+<li><strong>Highest Coverage:</strong>
+<ul>
+<li><strong>ciso-assistant</strong> (~95%): Covers nearly all functional requirements, including microservices, RBAC, workflow, notifications, and reporting. Modern Python backend, API-first, and easy for AI/ML extension.</li>
+<li><strong>grc4ciso</strong> (~90%): Also high coverage, but less documentation and community support.</li>
+<li><strong>eramba</strong> (~85%): Mature, strong on risk, control, and policy, but less flexible on custom workflows and modern integrations.</li>
+<li><strong>SimpleRisk</strong> (~80%): Good for rapid deployment, but less customizable workflow.</li>
+</ul>
+</li>
+<li><strong>Mid Coverage:</strong>
+<ul>
+<li><strong>OpenGRC, gapps, govready-q, grc</strong> (~55-60%): Good for basic GRC, but lack advanced workflow, notification, or system config features.</li>
+</ul>
+</li>
+<li><strong>Low Coverage:</strong>
+<ul>
+<li><strong>auditree</strong> (~15%): Focused on compliance automation, not a full GRC suite.</li>
+</ul>
+</li>
+</ul>
+<h3 id="recommendation">Recommendation</h3>
+<p><strong>Best Baseline for New GRC Platform:</strong></p>
+<ul>
+<li><strong>ciso-assistant</strong> is the top recommendation.
+<ul>
+<li>Modern, extensible, microservices-based, Python backend (ideal for AI/ML), and covers almost all BRD requirements.</li>
+<li>Easy to add advanced features (AI, NLP, predictive analytics).</li>
+<li>Good community and active development.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Alternative:</strong></p>
+<ul>
+<li><strong>eramba</strong> or <strong>SimpleRisk</strong> if you want a mature, stable, and widely adopted platform, but expect to do more customization for advanced workflow and AI.</li>
+</ul>
+<p><strong>For AI/ML and future-proofing:</strong></p>
+<ul>
+<li><strong>ciso-assistant</strong> is the best starting point.</li>
+</ul>
 
 </body>
 </html>
