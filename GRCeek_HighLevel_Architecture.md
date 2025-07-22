@@ -131,3 +131,28 @@ graph TD
 - **Translations:** All referential objects can be translated, supporting multi-lingual deployments.
 - **Custom Scoring and Workflows:** Score scales, requirement mappings, and workflow states are configurable to match organizational needs.
 
+# GRC Frameworks
+
+GRCeek provides comprehensive support for GRC frameworks and standards, enabling organizations to manage compliance with regulations and best practices such as ISO 27001, NIST, CIS, CMMC, and others. Key features include:
+
+- **Frameworks as Core Objects:** Each framework represents a standard (e.g., ISO 27001:2013, NIST) and is composed of a tree of requirement nodes (requirements), which can be assessable or informational.
+- **Implementation Groups:** Support for grouping requirements (e.g., CMMC, CIS) to tailor assessments and reporting.
+- **Customizable Scoring:** Each framework has a score scale (default 0-100, customizable per framework or assessment). Custom score definitions (e.g., TISAX levels) are supported.
+- **Requirement Mapping:** Requirement nodes can be linked to reference controls and threats, providing traceability and mapping between frameworks, controls, and risks.
+- **Reference Controls:** Templates for applied controls, categorized (Policy, Process, Technical, Physical) and mapped to NIST CSF functions (Govern, Identify, Protect, Detect, Respond, Recover).
+- **Requirement Mapping Sets:** Support for mapping requirements between source and target frameworks (e.g., NIST to ISO), enabling crosswalks and automated compliance inference.
+- **Library Import:** Frameworks, controls, threats, and mappings can be imported as libraries, with versioning and dependency management.
+- **Extensibility:** The data model allows importing new frameworks and defining custom requirements, controls, and mappings.
+
+**Standards explicitly mentioned or supported:**
+- ISO 27001:2013
+- NIST (including CSF functions)
+- CIS (implementation groups)
+- CMMC (implementation groups)
+- TISAX (custom score definitions)
+- FIPS-199 (risk/impact scale)
+
+
+
+
+
