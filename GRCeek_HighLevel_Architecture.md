@@ -100,10 +100,6 @@ graph TD
 
 ## Data Model Summary
 
-The CISO Assistant data model is a comprehensive, modular, and extensible structure designed to support a wide range of Governance, Risk, and Compliance (GRC) and Integrated Risk Management (IRM) use cases. It provides a unified foundation for managing users, roles, assets, controls, risks, compliance, incidents, and third-party relationships, ensuring flexibility and scalability for organizations of all sizes.
-
-### Key Features
-
 - **Entity-Relationship Structure:** The model is organized around clear relationships between core entities such as users, groups, roles, assets, requirements, controls (reference and applied), assessments (compliance, risk, entity), vulnerabilities, incidents, findings, and security exceptions.
 - **Folder-Based RBAC:** Access control is managed through a folder-based Role-Based Access Control (RBAC) system, supporting both global and domain-specific permissions, with roles and assignments mapped to Django conventions (add, view, change, delete).
 - **Extensibility:** The model supports integration of external frameworks, libraries, and mappings, allowing organizations to import standards (e.g., ISO, NIST), risk matrices, and control catalogs, and to define custom requirements, controls, and mappings.
@@ -134,6 +130,4 @@ The CISO Assistant data model is a comprehensive, modular, and extensible struct
 
 - **Translations:** All referential objects can be translated, supporting multi-lingual deployments.
 - **Custom Scoring and Workflows:** Score scales, requirement mappings, and workflow states are configurable to match organizational needs.
-
-This data model underpins the GRCeek platform's ability to deliver robust, flexible, and scalable GRC/IRM solutions, supporting both standard and advanced use cases in compliance, risk, and third-party management.
 
