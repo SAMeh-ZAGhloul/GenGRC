@@ -1,6 +1,6 @@
 # GRCeek High-Level Architecture
 
-This document provides a high-level architecture overview for the GRCeek platform, detailing key business requirements and the proposed technical architecture. It aims to offer a foundational understanding of the system's structure and components.
+This document provides a high-level architecture overview for the GRCeek platform, detailing key business requirements and the proposed technical architecture. 
 
 ---
 
@@ -98,6 +98,42 @@ graph TD
 - **Email Service:** Used by the Notification Service to send alerts, password resets, and communications.
 - **SSO/External Auth:** Integrates with enterprise SSO providers or external authentication systems for secure, seamless user login.
 
----
+## Data Model Summary
 
-*This architecture is designed for extensibility, modularity, and secure, scalable GRC operations aligned with business requirements.*
+The CISO Assistant data model is a comprehensive, modular, and extensible structure designed to support a wide range of Governance, Risk, and Compliance (GRC) and Integrated Risk Management (IRM) use cases. It provides a unified foundation for managing users, roles, assets, controls, risks, compliance, incidents, and third-party relationships, ensuring flexibility and scalability for organizations of all sizes.
+
+### Key Features
+
+- **Entity-Relationship Structure:** The model is organized around clear relationships between core entities such as users, groups, roles, assets, requirements, controls (reference and applied), assessments (compliance, risk, entity), vulnerabilities, incidents, findings, and security exceptions.
+- **Folder-Based RBAC:** Access control is managed through a folder-based Role-Based Access Control (RBAC) system, supporting both global and domain-specific permissions, with roles and assignments mapped to Django conventions (add, view, change, delete).
+- **Extensibility:** The model supports integration of external frameworks, libraries, and mappings, allowing organizations to import standards (e.g., ISO, NIST), risk matrices, and control catalogs, and to define custom requirements, controls, and mappings.
+- **Internationalization:** Referential objects (frameworks, requirements, controls, threats) support multi-language translations, enabling global deployments and localized user experiences.
+- **Comprehensive Assessment Support:** The model enables detailed compliance, risk, and third-party (TPRM) assessments, including requirement mapping, scoring, evidence management, and review workflows.
+- **Advanced GRC Concepts:** Includes support for security objectives, disaster recovery metrics (RTO, RPO, MTD), risk matrices, qualifications, and mapping to methodologies like EBIOS-RM and Open FAIR.
+- **Third-Party Risk Management:** Entities, solutions, contracts, and entity assessments are modeled to support TPRM workflows, including provider evaluations and compliance reviews.
+- **Auditability and Traceability:** All objects include creation and modification timestamps, and the model supports audit logging and evidence attachment for compliance and incident management.
+- **Labeling and Analytics:** User-defined labels can be attached to most objects, enabling flexible filtering and analytics across the platform.
+
+### Core Entities and Relationships
+
+- **Users, Groups, Roles:** Manage access and permissions, supporting SSO and local authentication.
+- **Assets:** Represent primary and supporting assets, with hierarchical relationships and disaster recovery objectives.
+- **Requirements & Controls:** Frameworks define requirements (nodes), which are assessed and mapped to applied controls. Reference controls serve as templates for applied controls.
+- **Assessments:** Compliance, risk, and entity assessments are supported, each with their own review, scoring, and evidence mechanisms.
+- **Vulnerabilities & Incidents:** Track weaknesses, findings, and security events, with links to assets, controls, and risk scenarios.
+- **Security Exceptions:** Document and manage deviations from standard controls or requirements, with approval workflows.
+- **Libraries & Mappings:** Support for importing and managing external standards, mappings, and risk matrices, with versioning and dependency management.
+
+### Access Control and Security
+
+- **RBAC Model:** Fine-grained permissions at the object and folder/domain level, with built-in and custom roles.
+- **Published Objects:** Global referential objects can be published for read-only access across domains.
+- **Audit Logging:** All changes and actions are tracked for compliance and forensic purposes.
+
+### Internationalization and Customization
+
+- **Translations:** All referential objects can be translated, supporting multi-lingual deployments.
+- **Custom Scoring and Workflows:** Score scales, requirement mappings, and workflow states are configurable to match organizational needs.
+
+This data model underpins the GRCeek platform's ability to deliver robust, flexible, and scalable GRC/IRM solutions, supporting both standard and advanced use cases in compliance, risk, and third-party management.
+
