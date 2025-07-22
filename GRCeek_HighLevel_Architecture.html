@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>GRCeek_HighLevel_Architecture.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="grceek-high-level-architecture">GRCeek High-Level Architecture</h1>
+<p>This document provides a high-level architecture overview for the GRCeek platform, detailing key business requirements and the proposed technical architecture.</p>
+<hr>
+<h2 id="1-business-requirements">1. Business Requirements</h2>
+<p>The GRCeek platform is designed to meet a comprehensive set of business requirements, ensuring a robust, secure, and user-friendly experience for Governance, Risk, and Compliance (GRC) management.</p>
+<ul>
+<li><strong>User Management with RBAC and Invitation Flows:</strong> The system must support the creation, modification, and deletion of user accounts. It will incorporate Role-Based Access Control (RBAC) to define user permissions and facilitate secure invitation flows for new users to join the platform.</li>
+<li><strong>Framework, Control, Risk, Policy, and Asset Management (CRUD, Linking, Status Workflows):</strong> Core GRC entities will be managed within the system. This includes full Create, Read, Update, and Delete (CRUD) functionality for frameworks (e.g., ISO 27001, NIST), individual controls, identified risks, organizational policies, and critical assets. The system will enable linking these entities to demonstrate relationships and dependencies (e.g., a control mitigating a specific risk, a policy governing an asset). Furthermore, it will support customizable status workflows to track the lifecycle and approval processes of each entity.</li>
+<li><strong>Workflow Management (Customizable, Drag-and-Drop):</strong> A flexible workflow engine is required to define and automate business processes related to GRC activities. Users should be able to design and modify workflows using an intuitive drag-and-drop interface, adapting them to specific organizational needs.</li>
+<li><strong>Custom Reports and Real-time Dashboards:</strong> The platform will provide powerful reporting capabilities, allowing users to generate custom reports based on various GRC data points. Real-time dashboards will offer immediate insights into the organization's GRC posture, highlighting key metrics, compliance status, and risk exposure.</li>
+<li><strong>System Configurations (Categories, Settings):</strong> Administrators will have the ability to configure various system-wide settings, including the definition of categories for different GRC entities (e.g., risk types, control families) and other operational parameters to tailor the platform to their environment.</li>
+<li><strong>Roles &amp; Permissions (Granular, Per Module):</strong> Beyond basic RBAC, the system will offer granular control over permissions, allowing administrators to define specific actions users can perform within each module (e.g., view only policies, edit risks, approve controls).</li>
+<li><strong>Incident Reporting (Lifecycle, Evidence Upload):</strong> A dedicated module for incident management will support the full lifecycle of an incident, from initial reporting and categorization to investigation, resolution, and post-mortem analysis. It will facilitate the upload and attachment of evidence related to incidents.</li>
+<li><strong>Page Builder (Custom UI/Pages):</strong> To enhance flexibility, a page builder feature will enable users to create custom user interfaces or pages within the platform, allowing for tailored views and data presentation without requiring code changes.</li>
+<li><strong>Notifications (Template-based, Role-based, Email/In-app):</strong> The system will provide a robust notification mechanism to alert users about important events, workflow changes, or upcoming tasks. Notifications will be template-based for consistency and can be configured to be role-based, delivered via email, or as in-app messages.</li>
+<li><strong>Security (Encryption, RBAC, Audit Logging):</strong> Security is paramount. The platform will implement data encryption at rest and in transit, enforce RBAC for access control, and maintain comprehensive audit logs of all user activities and system changes to ensure accountability and compliance.</li>
+<li><strong>Performance (&lt;4s Response, 1,000 Users):</strong> The system must be highly performant, with a target response time of less than 4 seconds for typical operations, even under a load of up to 1,000 concurrent users.</li>
+<li><strong>Usability (Responsive UI, Accessibility):</strong> The user interface will be designed for optimal usability, featuring a responsive layout that adapts seamlessly to various devices (desktop, tablet, mobile) and adhering to accessibility standards to ensure inclusivity.</li>
+<li><strong>Availability (95% Uptime, DR):</strong> The platform is expected to maintain a high level of availability, targeting 95% uptime. A disaster recovery (DR) strategy will be in place to ensure business continuity in the event of major disruptions.</li>
+<li><strong>Maintainability (Clean Code, Docs):</strong> The codebase will be developed with maintainability in mind, following best practices for clean code, modular design, and comprehensive documentation to facilitate future enhancements and troubleshooting.</li>
+</ul>
+<hr>
+<h2 id="2-high-level-technical-architecture">2. High-Level Technical Architecture</h2>
+<p>The GRCeek platform adopts a modular, service-oriented architecture, separating concerns between the frontend, backend, storage, and external integrations to ensure scalability, flexibility, and maintainability.</p>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    subgraph Frontend
+        A["Web App: React"]
+        B["Dashboards & Page Builder"]
+    end
+
+    subgraph Backend
+        C["API: Python/Django or Node.js"]
+        D["RBAC & Auth"]
+        E["GRC Modules: User, Framework, Control, Risk, Policy, Asset, Incident"]
+        F["Workflow Engine"]
+        G["Notification Service"]
+        H["Reporting Engine"]
+        I["Audit Logging"]
+        J["System Config"]
+
+        subgraph Storage
+            K[("Relational DB: PostgreSQL")]
+            L[("Object Storage: min.io")]
+        end
+
+        subgraph Integrations
+            M["Email Service"]
+            N["SSO/External Auth"]
+        end
+    end
+
+    A -- "REST/GraphQL" --> C
+    B -- "REST/GraphQL" --> C
+    C -- "DB ORM" --> K
+    C -- "File Upload" --> L
+    C -- "Email" --> M
+    D -- "Auth" --> N
+    G -- "Email" --> M
+    F -- "Status/Workflow" --> E
+    H -- "Data" --> K
+    I -- "Logs" --> K
+    J -- "Settings" --> K
+</div></code></pre>
+<hr>
+<h3 id="21-frontend">2.1. Frontend</h3>
+<ul>
+<li><strong>Web App (React):</strong> The primary user interface, built with React for modularity, reusability, and efficient rendering. Provides a responsive, interactive experience for all user roles.</li>
+<li><strong>Dashboards &amp; Page Builder:</strong> Integrated within the React app. Dashboards use data visualization for real-time insights. The Page Builder offers a drag-and-drop interface for custom UI/pages, allowing users to tailor their experience.</li>
+</ul>
+<h3 id="22-backend">2.2. Backend</h3>
+<ul>
+<li><strong>API (Python/Django or Node.js):</strong> Exposes a robust REST/GraphQL API for all frontend interactions. Central hub for business logic, data validation, and orchestration.</li>
+<li><strong>RBAC &amp; Auth:</strong> Manages user authentication (login, SSO) and authorization (RBAC), enforcing permissions and session management.</li>
+<li><strong>GRC Modules:</strong> Core business logic for User, Framework, Control, Risk, Policy, Asset, and Incident management. Handles CRUD, linking, and workflows.</li>
+<li><strong>Workflow Engine:</strong> Manages creation, execution, and monitoring of custom workflows. Updates entity statuses as they progress through defined processes.</li>
+<li><strong>Notification Service:</strong> Generates and dispatches notifications (email/in-app), integrating with the Email Service and supporting template/role-based configs.</li>
+<li><strong>Reporting Engine:</strong> Aggregates and transforms data for custom reports and dashboards, providing actionable GRC insights.</li>
+<li><strong>Audit Logging:</strong> Records all significant user actions and system events for compliance, security, and forensic analysis.</li>
+<li><strong>System Config:</strong> Manages system-wide settings, categories, and operational parameters for platform customization.</li>
+</ul>
+<h3 id="23-storage">2.3. Storage</h3>
+<ul>
+<li><strong>Relational DB (PostgreSQL):</strong> Primary database for structured data. Chosen for robustness, ACID compliance, and support for complex relational GRC data. Accessed via ORM.</li>
+<li><strong>Object Storage (min.io):</strong> S3-compatible storage for unstructured data (e.g., evidence files). Scalable and cost-effective for large file volumes.</li>
+</ul>
+<h3 id="24-integrations">2.4. Integrations</h3>
+<ul>
+<li><strong>Email Service:</strong> Used by the Notification Service to send alerts, password resets, and communications.</li>
+<li><strong>SSO/External Auth:</strong> Integrates with enterprise SSO providers or external authentication systems for secure, seamless user login.</li>
+</ul>
+<h2 id="data-model">Data Model</h2>
+<ul>
+<li><strong>Entity-Relationship Structure:</strong> The model is organized around clear relationships between core entities such as users, groups, roles, assets, requirements, controls (reference and applied), assessments (compliance, risk, entity), vulnerabilities, incidents, findings, and security exceptions.</li>
+<li><strong>Folder-Based RBAC:</strong> Access control is managed through a folder-based Role-Based Access Control (RBAC) system, supporting both global and domain-specific permissions, with roles and assignments mapped to Django conventions (add, view, change, delete).</li>
+<li><strong>Extensibility:</strong> The model supports integration of external frameworks, libraries, and mappings, allowing organizations to import standards (e.g., ISO, NIST), risk matrices, and control catalogs, and to define custom requirements, controls, and mappings.</li>
+<li><strong>Internationalization:</strong> Referential objects (frameworks, requirements, controls, threats) support multi-language translations, enabling global deployments and localized user experiences.</li>
+<li><strong>Comprehensive Assessment Support:</strong> The model enables detailed compliance, risk, and third-party (TPRM) assessments, including requirement mapping, scoring, evidence management, and review workflows.</li>
+<li><strong>Advanced GRC Concepts:</strong> Includes support for security objectives, disaster recovery metrics (RTO, RPO, MTD), risk matrices, qualifications, and mapping to methodologies like EBIOS-RM and Open FAIR.</li>
+<li><strong>Third-Party Risk Management:</strong> Entities, solutions, contracts, and entity assessments are modeled to support TPRM workflows, including provider evaluations and compliance reviews.</li>
+<li><strong>Auditability and Traceability:</strong> All objects include creation and modification timestamps, and the model supports audit logging and evidence attachment for compliance and incident management.</li>
+<li><strong>Labeling and Analytics:</strong> User-defined labels can be attached to most objects, enabling flexible filtering and analytics across the platform.</li>
+</ul>
+<h3 id="core-entities-and-relationships">Core Entities and Relationships</h3>
+<ul>
+<li><strong>Users, Groups, Roles:</strong> Manage access and permissions, supporting SSO and local authentication.</li>
+<li><strong>Assets:</strong> Represent primary and supporting assets, with hierarchical relationships and disaster recovery objectives.</li>
+<li><strong>Requirements &amp; Controls:</strong> Frameworks define requirements (nodes), which are assessed and mapped to applied controls. Reference controls serve as templates for applied controls.</li>
+<li><strong>Assessments:</strong> Compliance, risk, and entity assessments are supported, each with their own review, scoring, and evidence mechanisms.</li>
+<li><strong>Vulnerabilities &amp; Incidents:</strong> Track weaknesses, findings, and security events, with links to assets, controls, and risk scenarios.</li>
+<li><strong>Security Exceptions:</strong> Document and manage deviations from standard controls or requirements, with approval workflows.</li>
+<li><strong>Libraries &amp; Mappings:</strong> Support for importing and managing external standards, mappings, and risk matrices, with versioning and dependency management.</li>
+</ul>
+<h3 id="access-control-and-security">Access Control and Security</h3>
+<ul>
+<li><strong>RBAC Model:</strong> Fine-grained permissions at the object and folder/domain level, with built-in and custom roles.</li>
+<li><strong>Published Objects:</strong> Global referential objects can be published for read-only access across domains.</li>
+<li><strong>Audit Logging:</strong> All changes and actions are tracked for compliance and forensic purposes.</li>
+</ul>
+<h3 id="internationalization-and-customization">Internationalization and Customization</h3>
+<ul>
+<li><strong>Translations:</strong> All referential objects can be translated, supporting multi-lingual deployments.</li>
+<li><strong>Custom Scoring and Workflows:</strong> Score scales, requirement mappings, and workflow states are configurable to match organizational needs.</li>
+</ul>
+<h2 id="grc-frameworks">GRC Frameworks</h2>
+<p>GRCeek provides comprehensive support for GRC frameworks and standards, enabling organizations to manage compliance with regulations and best practices such as ISO 27001, NIST, CIS, CMMC, and others. Key features include:</p>
+<ul>
+<li><strong>Frameworks as Core Objects:</strong> Each framework represents a standard (e.g., ISO 27001:2013, NIST) and is composed of a tree of requirement nodes (requirements), which can be assessable or informational.</li>
+<li><strong>Implementation Groups:</strong> Support for grouping requirements (e.g., CMMC, CIS) to tailor assessments and reporting.</li>
+<li><strong>Customizable Scoring:</strong> Each framework has a score scale (default 0-100, customizable per framework or assessment). Custom score definitions (e.g., TISAX levels) are supported.</li>
+<li><strong>Requirement Mapping:</strong> Requirement nodes can be linked to reference controls and threats, providing traceability and mapping between frameworks, controls, and risks.</li>
+<li><strong>Reference Controls:</strong> Templates for applied controls, categorized (Policy, Process, Technical, Physical) and mapped to NIST CSF functions (Govern, Identify, Protect, Detect, Respond, Recover).</li>
+<li><strong>Requirement Mapping Sets:</strong> Support for mapping requirements between source and target frameworks (e.g., NIST to ISO), enabling crosswalks and automated compliance inference.</li>
+<li><strong>Library Import:</strong> Frameworks, controls, threats, and mappings can be imported as libraries, with versioning and dependency management.</li>
+<li><strong>Extensibility:</strong> The data model allows importing new frameworks and defining custom requirements, controls, and mappings.</li>
+</ul>
+<p><strong>Standards explicitly mentioned or supported:</strong></p>
+<ul>
+<li>ISO 27001:2013</li>
+<li>NIST (including CSF functions)</li>
+<li>CIS (implementation groups)</li>
+<li>CMMC (implementation groups)</li>
+<li>TISAX (custom score definitions)</li>
+<li>FIPS-199 (risk/impact scale)</li>
+</ul>
+
+</body>
+</html>
