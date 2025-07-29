@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>GRCEEK_BRD.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="grceek---business-requirements-document">GRCEEK - Business Requirements Document</h1>
+<p><strong>Document Control</strong></p>
+<ul>
+<li><strong>Title</strong>: Business Requirements Document</li>
+<li><strong>Project Name</strong>: GRCEEK</li>
+<li><strong>Date</strong>: 3 June 2023</li>
+<li><strong>Author</strong>: Ahmed Alaa</li>
+<li><strong>Version</strong>: V1.0</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Version No</th>
+<th>Date</th>
+<th>Modification Description</th>
+<th>Prepared By</th>
+<th>Verified By</th>
+<th>Approved By</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.0</td>
+<td>3 June 2023</td>
+<td>Create the document</td>
+<td>Ahmed Alaa</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Confidentiality Notice</strong>: This document contains confidential and proprietary information belonging to Fixed Solution. Unauthorized disclosure, copying, or distribution is strictly prohibited.</p>
+</blockquote>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#executive-summary">Executive Summary</a></li>
+<li><a href="#project-overview">Project Overview</a></li>
+<li><a href="#mission-vision-goals-and-business-needs">Mission, Vision, Goals, and Business Needs</a></li>
+<li><a href="#scope-of-the-document">Scope of the Document</a></li>
+<li><a href="#functional-requirements">Functional Requirements</a>
+<ul>
+<li><a href="#user-management">User Management</a></li>
+<li><a href="#incident-reporting">Incident Reporting</a></li>
+<li><a href="#framework-management">Framework Management</a></li>
+<li><a href="#risk-management">Risk Management</a></li>
+<li><a href="#control-management">Control Management</a></li>
+<li><a href="#policy-management">Policy Management</a></li>
+<li><a href="#workflow-configuration">Workflow Configuration</a></li>
+<li><a href="#customer-reports">Customer Reports</a></li>
+<li><a href="#framework-score-calculation">Framework Score Calculation</a></li>
+<li><a href="#auditor-functionalities">Auditor Functionalities</a></li>
+<li><a href="#system-configuration">System Configuration</a></li>
+<li><a href="#roles-and-permissions">Roles and Permissions</a></li>
+<li><a href="#notification">Notification</a></li>
+</ul>
+</li>
+<li><a href="#list-of-actors">List of Actors</a></li>
+<li><a href="#non-functional-requirements">Non-Functional Requirements</a></li>
+<li><a href="#assumptions">Assumptions</a></li>
+<li><a href="#constraints">Constraints</a></li>
+<li><a href="#glossary-and-acronyms">Glossary and Acronyms</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#mvp-scope">MVP Scope</a></li>
+<li><a href="#need-for-further-investigation">Need for Further Investigation</a></li>
+<li><a href="#competitor-analysis">Competitor Analysis</a></li>
+<li><a href="#next-steps">Next Steps</a></li>
+</ol>
+<h2 id="executive-summary">Executive Summary</h2>
+<p>The Governance, Risk, and Compliance (GRC) system is a web-based platform to enhance organizational governance, risk management, policy enforcement, and compliance. It includes modules for User Management, Incident Reporting, Framework Management, Risk Management, Control Management, Policy Management, Workflow Configuration, and Reporting/Dashboards. Features include auditor roles, framework score calculations, and automated workflows for seamless, secure operations.</p>
+<h2 id="project-overview">Project Overview</h2>
+<h3 id="project-description">Project Description</h3>
+<p>The GRC system is a web-based platform for secure governance, risk management, policy enforcement, and compliance. It supports global users (Compliance Officers, Auditors, Admins) with features like secure user management, framework management (ISO 27001, NIST, GDPR), policy enforcement, auditor workflows, and compliance reporting.</p>
+<h2 id="mission-vision-goals-and-business-needs">Mission, Vision, Goals, and Business Needs</h2>
+<h3 id="mission">Mission</h3>
+<p>Transform organizational governance, risk management, and compliance with a secure, user-friendly platform for managing frameworks, policies, and compliance.</p>
+<h3 id="vision">Vision</h3>
+<p>Become the leading global GRC platform, enhancing compliance, risk, and policy management with advanced technology and exceptional user experience.</p>
+<h3 id="goals">Goals</h3>
+<ul>
+<li><strong>User-Centric Experience</strong>: Streamlined workflows for users (Compliance Officers, Auditors, Admins).</li>
+<li><strong>Operational Efficiency</strong>: Optimize framework, policy, control, and risk management with robust reporting.</li>
+<li><strong>Security and Compliance</strong>: Ensure data security, privacy, and adherence to standards (ISO 27001, NIST, GDPR, COSO).</li>
+<li><strong>Organizational Trust</strong>: Foster trust through auditor workflows, accurate scoring, and transparent reporting.</li>
+</ul>
+<h2 id="scope-of-the-document">Scope of the Document</h2>
+<ul>
+<li>User registration, authentication, and profile management with RBAC.</li>
+<li>Secure compliance via framework management (ISO 27001, NIST, GDPR, COSO) and policy enforcement.</li>
+<li>Incident Management: Track and resolve incidents with evidence uploads.</li>
+<li>Risk Management: Assess and mitigate risks with likelihood/impact scoring.</li>
+<li>Control Management: Implement and test controls with effectiveness ratings.</li>
+<li>Policy Management: Create, enforce, and review policies linked to frameworks/controls.</li>
+<li>Notifications: Template-based (e.g., incident submitted) and role-based (e.g., all Risk Management actions) via email or in-website.</li>
+<li>Reporting: Real-time reports and dashboards with filtering and export options (CSV).</li>
+</ul>
+<h2 id="functional-requirements">Functional Requirements</h2>
+<h3 id="user-management">User Management</h3>
+<p><strong>Purpose</strong>: Manage user accounts and roles with RBAC, enabling Admins to create accounts or send role-specific invitation links.</p>
+<p><strong>Features</strong>:</p>
+<ul>
+<li>Admins send invitation links via email or copied links.</li>
+<li>Enforce strong passwords (8+ characters, uppercase, lowercase, numbers, special characters).</li>
+<li>Track interactions for auditability; retain deactivated user names in records.</li>
+</ul>
+<p><strong>User Completion Form (Via Invitation Link or Admin Creation)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Validation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>User ID</td>
+<td>Unique alphanumeric ID (USER123)</td>
+<td>Auto-generated, non-editable</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>Full name</td>
+<td>Required, text, min 5, max 100 chars</td>
+</tr>
+<tr>
+<td>Email</td>
+<td>User email</td>
+<td>Required, valid email, unique</td>
+</tr>
+<tr>
+<td>Password</td>
+<td>Initial or user-entered password</td>
+<td>Required, 8+ chars, mixed types</td>
+</tr>
+<tr>
+<td>Confirm Password</td>
+<td>Password confirmation</td>
+<td>Required, must match Password</td>
+</tr>
+<tr>
+<td>Role</td>
+<td>Predefined/custom role</td>
+<td>Required, dropdown, Admin-editable only</td>
+</tr>
+<tr>
+<td>Department</td>
+<td>User department</td>
+<td>Optional, text, max 50 chars</td>
+</tr>
+<tr>
+<td>Status</td>
+<td>Account status</td>
+<td>Auto-set (Pending/Active/Inactive)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Admin Invitation Form</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Validation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Email</td>
+<td>User's email for invitation</td>
+<td>Required, valid email, unique</td>
+</tr>
+<tr>
+<td>Role</td>
+<td>Predefined role</td>
+<td>Required, dropdown</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Workflow</strong>:</p>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Admin selects Role, Email, Invitation Method] --> B[System generates link, 3-day expiry]
+    B --> C[User completes form: Name, Password, Department]
+    C --> D[Status: Pending]
+    A --> E[Admin creates account: Name, Email, Role, Temp Password]
+    E --> F[Status: Active]
+    F --> G[User logs in, prompted for new Password]
+    G --> H[User updates Password, login proceeds]
+    A --> I[Admin deactivates user]
+    I --> J{Interactions exist?}
+    J -->|Yes| K[Deletion blocked, Status: Inactive]
+    J -->|No| L[User deleted]
+    H --> M[User changes Password via profile]
+</div></code></pre>
+<h3 id="incident-reporting">Incident Reporting</h3>
+<p><strong>Purpose</strong>: Track and resolve compliance incidents with evidence and status tracking.</p>
+<p><strong>Features</strong>:</p>
+<ul>
+<li>CRUD incident reports.</li>
+<li>Incident Managers review, accept/reject incidents, assign Owners.</li>
+<li>Upload evidence (PDFs, images, MP4, max 10MB).</li>
+<li>Track status with admin approvals.</li>
+</ul>
+<p><strong>Create Form Fields</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Validation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Incident ID</td>
+<td>Unique ID (INC123)</td>
+<td>Auto-generated, non-editable</td>
+</tr>
+<tr>
+<td>Title</td>
+<td>Brief description</td>
+<td>Required, text, min 5, max 100 chars</td>
+</tr>
+<tr>
+<td>Description</td>
+<td>Detailed explanation</td>
+<td>Required, text, max 1000 chars</td>
+</tr>
+<tr>
+<td>Category</td>
+<td>Type (e.g., Security)</td>
+<td>Required, dropdown</td>
+</tr>
+<tr>
+<td>Date Identified</td>
+<td>Incident date</td>
+<td>Required, MM/DD/YYYY, not future</td>
+</tr>
+<tr>
+<td>Submitter</td>
+<td>Reporter's name</td>
+<td>Auto-filled, non-editable</td>
+</tr>
+<tr>
+<td>Evidence</td>
+<td>File uploads (PDF, JPG, PNG, MP4)</td>
+<td>Required, max 10MB</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Workflow</strong>:</p>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[User submits incident] --> B[Status: Submitted]
+    B --> C[Incident Manager reviews]
+    C --> D{Accept/Reject?}
+    D -->|Accept| E[Status: Open, assign Owner]
+    D -->|Reject| F[Status: Rejected, add comments]
+    E --> G[Owner updates: In Progress/Resolved]
+    G --> H[Admin finalizes: Closed]
+    F --> I[Notify Submitter]
+    E --> J[Notify Owner]
+</div></code></pre>
+<h3 id="framework-management">Framework Management</h3>
+<p><strong>Purpose</strong>: Define and manage compliance frameworks (e.g., ISO 27001) with scoring and auditor oversight.</p>
+<p><strong>Features</strong>:</p>
+<ul>
+<li>CRUD frameworks.</li>
+<li>Link controls, calculate scores (automatic/manual).</li>
+<li>Link policies, allow auditor comments.</li>
+<li>Track framework status.</li>
+</ul>
+<p><strong>Create Form Fields</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Validation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Framework ID</td>
+<td>Unique ID (FRM123)</td>
+<td>Auto-generated, non-editable</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>Framework name (e.g., ISO 27001)</td>
+<td>Required, text, min 5, max 100 chars, unique</td>
+</tr>
+<tr>
+<td>Description</td>
+<td>Overview</td>
+<td>Required, text, min 5, max 1000 chars</td>
+</tr>
+<tr>
+<td>Controls</td>
+<td>Associated controls</td>
+<td>Required, dropdown/search, min 1</td>
+</tr>
+<tr>
+<td>Policies</td>
+<td>Associated policies</td>
+<td>Required, dropdown/search, min 1</td>
+</tr>
+<tr>
+<td>Scoring Method</td>
+<td>Automatic/Manual</td>
+<td>Required, dropdown</td>
+</tr>
+<tr>
+<td>Framework Score</td>
+<td>Total score (0-100)</td>
+<td>0-100 only</td>
+</tr>
+<tr>
+<td>Owner</td>
+<td>Responsible user</td>
+<td>Required, dropdown/search</td>
+</tr>
+<tr>
+<td>Standard Reference</td>
+<td>Details (e.g., ISO 27001:2022)</td>
+<td>Optional, text, max 200 chars</td>
+</tr>
+<tr>
+<td>Compliance Deadline</td>
+<td>Compliance date</td>
+<td>Required, MM/DD/YYYY, not past</td>
+</tr>
+<tr>
+<td>Status</td>
+<td>Current status (Active)</td>
+<td>Required, dropdown, default Active</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Workflow</strong>:</p>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Compliance Officer creates framework] --> B[Status: Active]
+    B --> C[Link controls & policies]
+    C --> D{Scoring Method?}
+    D -->|Automatic| E[System calculates: 25 points/control]
+    D -->|Manual| F[Admin assigns custom scores]
+    E --> G[Auditors review, add comments]
+    F --> G
+    G --> H[Admin finalizes status]
+    H --> I{Obsolete?}
+    I -->|Yes| J[Status: Inactive, controls disabled]
+</div></code></pre>
+<h3 id="risk-management">Risk Management</h3>
+<p><strong>Purpose</strong>: Identify, assess, and mitigate risks with scoring and status tracking.</p>
+<p><strong>Features</strong>:</p>
+<ul>
+<li>CRUD risks.</li>
+<li>Calculate scores (Likelihood × Impact).</li>
+<li>Assign risks to owners.</li>
+<li>Track status with admin-approved workflows.</li>
+</ul>
+<p><strong>Create Form Fields</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Validation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Risk ID</td>
+<td>Unique ID (RISK123)</td>
+<td>Auto-generated, non-editable</td>
+</tr>
+<tr>
+<td>Title</td>
+<td>Risk description</td>
+<td>Required, text, min 5, max 200 chars</td>
+</tr>
+<tr>
+<td>Description</td>
+<td>Detailed explanation</td>
+<td>Required, text, min 5, max 1000 chars</td>
+</tr>
+<tr>
+<td>Category</td>
+<td>Type (e.g., Cybersecurity)</td>
+<td>Required, dropdown</td>
+</tr>
+<tr>
+<td>Likelihood</td>
+<td>Probability (Rare to Certain)</td>
+<td>Required, dropdown, maps to 1-5</td>
+</tr>
+<tr>
+<td>Impact</td>
+<td>Consequence (Minor to Catastrophic)</td>
+<td>Required, dropdown, maps to 1-4</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Workflow</strong>:</p>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Risk Manager creates risk] --> B[Status: Identified]
+    B --> C[Calculate score: Likelihood × Impact]
+    C --> D[Assign Owner]
+    D --> E[Owner updates: In Progress/Mitigated]
+    E --> F[Admin finalizes: Closed]
+</div></code></pre>
+<h3 id="control-management">Control Management</h3>
+<p><strong>Purpose</strong>: Implement and test controls to mitigate risks and ensure compliance.</p>
+<p><strong>Features</strong>:</p>
+<ul>
+<li>CRUD controls.</li>
+<li>Assign controls to owners.</li>
+<li>Rate effectiveness (High, Medium, Low).</li>
+<li>Allow auditor comments.</li>
+</ul>
+<p><strong>Create Form Fields</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Validation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Control ID</td>
+<td>Unique ID (CTRL123)</td>
+<td>Auto-generated, non-editable</td>
+</tr>
+<tr>
+<td>Title</td>
+<td>Control description</td>
+<td>Required, text, min 5, max 100 chars</td>
+</tr>
+<tr>
+<td>Description</td>
+<td>Detailed explanation</td>
+<td>Required, text, min 5, max 1000 chars</td>
+</tr>
+<tr>
+<td>Category</td>
+<td>Type (e.g., Preventive)</td>
+<td>Required, dropdown</td>
+</tr>
+<tr>
+<td>Assigned To</td>
+<td>Responsible user</td>
+<td>Required, dropdown/search</td>
+</tr>
+<tr>
+<td>Related Risk</td>
+<td>Linked risk</td>
+<td>Optional, dropdown/search</td>
+</tr>
+<tr>
+<td>Related Framework</td>
+<td>Associated framework</td>
+<td>Required, dropdown/search</td>
+</tr>
+<tr>
+<td>Status</td>
+<td>Current status (Draft)</td>
+<td>Auto-set, non-editable on creation</td>
+</tr>
+<tr>
+<td>Effectiveness</td>
+<td>Rating (High, Medium, Low)</td>
+<td>Optional, dropdown</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Workflow</strong>:</p>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Compliance Officer creates control] --> B[Status: Draft]
+    B --> C[Assign Owner]
+    C --> D[Owner updates: Implemented/Effective]
+    D --> E[Auditors add comments]
+    E --> F{Obsolete?}
+    F -->|Yes| G[Status: Retired, archived]
+    F -->|No| H[Admin finalizes]
+</div></code></pre>
+<h3 id="policy-management">Policy Management</h3>
+<p><strong>Purpose</strong>: Create, enforce, and review policies linked to frameworks/controls.</p>
+<p><strong>Features</strong>:</p>
+<ul>
+<li>CRUD policies.</li>
+<li>Link policies to frameworks/controls.</li>
+<li>Track lifecycle with status workflows.</li>
+<li>Allow auditor comments.</li>
+</ul>
+<p><strong>Create Form Fields</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Validation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Policy ID</td>
+<td>Unique ID (POL123)</td>
+<td>Auto-generated, non-editable</td>
+</tr>
+<tr>
+<td>Title</td>
+<td>Policy title (e.g., Data Protection)</td>
+<td>Required, text, min 5, max 100 chars</td>
+</tr>
+<tr>
+<td>Description</td>
+<td>Detailed explanation</td>
+<td>Optional, text, max 2000 chars</td>
+</tr>
+<tr>
+<td>Category</td>
+<td>Type (e.g., Security)</td>
+<td>Required, dropdown</td>
+</tr>
+<tr>
+<td>Owner</td>
+<td>Responsible user</td>
+<td>Required, dropdown/search</td>
+</tr>
+<tr>
+<td>Related Framework</td>
+<td>Linked framework</td>
+<td>Required, dropdown/search</td>
+</tr>
+<tr>
+<td>Related Controls</td>
+<td>Linked controls</td>
+<td>Optional, dropdown/search</td>
+</tr>
+<tr>
+<td>Policy Document</td>
+<td>File uploads (PDF, JPG, PNG)</td>
+<td>Required, max 10MB</td>
+</tr>
+<tr>
+<td>Effective Date</td>
+<td>Policy start date</td>
+<td>Required, MM/DD/YYYY, not past</td>
+</tr>
+<tr>
+<td>Status</td>
+<td>Current status (Draft)</td>
+<td>Auto-set, non-editable on creation</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Workflow</strong>:</p>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Compliance Officer creates policy] --> B[Status: Draft]
+    B --> C[Admin approves: Active]
+    C --> D[Owner updates: Under Review]
+    D --> E[Auditors add comments]
+    E --> F{Obsolete?}
+    F -->|Yes| G[Status: Retired, archived]
+    F -->|No| H[Admin finalizes]
+</div></code></pre>
+<h3 id="workflow-configuration">Workflow Configuration</h3>
+<p><strong>Purpose</strong>: Design automated workflows for status transitions across modules.</p>
+<p><strong>Features</strong>:</p>
+<ul>
+<li>CRUD workflows.</li>
+<li>Define steps, roles, status changes.</li>
+<li>Enable drag-and-drop configuration.</li>
+</ul>
+<p><strong>Create Form Fields</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Validation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Workflow ID</td>
+<td>Unique ID (WF123)</td>
+<td>Auto-generated, non-editable</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>Workflow name</td>
+<td>Required, text, min 5, max 100 chars</td>
+</tr>
+<tr>
+<td>Steps</td>
+<td>Workflow steps (e.g., Draft, Review)</td>
+<td>Required, min 1 step, text/drag-and-drop</td>
+</tr>
+<tr>
+<td>Assigned Roles</td>
+<td>Roles per step</td>
+<td>Required, dropdown/search (multi-select)</td>
+</tr>
+<tr>
+<td>Type</td>
+<td>Default or Custom</td>
+<td>Required, dropdown</td>
+</tr>
+<tr>
+<td>Linked Item</td>
+<td>Policy/Control/Framework/Risk</td>
+<td>Optional, required for Custom</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Workflow</strong>:</p>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Admin creates workflow] --> B{Type?}
+    B -->|Default| C[Define steps, statuses, roles]
+    B -->|Custom| D[Link to Policy/Control, define statuses]
+    D --> E[System applies workflow to status changes]
+    C --> E
+    E --> F[Actions logged]
+</div></code></pre>
+<h3 id="customer-reports">Customer Reports</h3>
+<p><strong>Purpose</strong>: Generate and visualize compliance reports and metrics.</p>
+<p><strong>Features</strong>:</p>
+<ul>
+<li>CRUD reports/dashboards.</li>
+<li>Export in PDF/CSV.</li>
+<li>Display real-time metrics (e.g., framework scores).</li>
+</ul>
+<p><strong>Create Form Fields</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Validation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Report ID</td>
+<td>Unique ID (RPT123)</td>
+<td>Auto-generated, non-editable</td>
+</tr>
+<tr>
+<td>Title</td>
+<td>Report title</td>
+<td>Required, text, min 5, max 100 chars</td>
+</tr>
+<tr>
+<td>Type</td>
+<td>Report type (e.g., Risk)</td>
+<td>Required, dropdown</td>
+</tr>
+<tr>
+<td>Filters</td>
+<td>Parameters (e.g., control status)</td>
+<td>Required, dropdown</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Workflow</strong>:</p>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[User selects type, filters] --> B[System generates report]
+    B --> C[Admins export report]
+</div></code></pre>
+<h3 id="framework-score-calculation">Framework Score Calculation</h3>
+<p><strong>Purpose</strong>: Calculate compliance scores for frameworks based on control effectiveness.</p>
+<p><strong>Features</strong>:</p>
+<ul>
+<li>Automatic Scoring: 100 points divided across controls (e.g., 4 controls = 25 points each; High: 100%, Medium: 50%, Low: 0).</li>
+<li>Manual Scoring: Admins assign custom scores, capped at 100.</li>
+<li>Validation: Requires at least one control.</li>
+</ul>
+<p><strong>Workflow</strong>:</p>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Control status updated: Effective] --> B[System calculates score]
+    B --> C[Compliance Officer reviews]
+    C --> D[Score displayed on dashboard]
+</div></code></pre>
+<h3 id="auditor-functionalities">Auditor Functionalities</h3>
+<p><strong>Purpose</strong>: Enable auditors to review and comment on frameworks, controls, and policies.</p>
+<p><strong>Features</strong>:</p>
+<ul>
+<li>Read-only access to frameworks, controls, policies, workflows.</li>
+<li>Add comments (max 1000 characters).</li>
+<li>View compliance reports and scores.</li>
+</ul>
+<p><strong>Workflow</strong>:</p>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Auditor accesses dashboards] --> B[Reviews details, adds comments]
+    B --> C[Comments saved, visible in reports]
+</div></code></pre>
+<h3 id="system-configuration">System Configuration</h3>
+<p><strong>Purpose</strong>: Manage system-wide settings, including categories for modules.</p>
+<p><strong>Features</strong>:</p>
+<ul>
+<li>CRUD categories (e.g., Risk: Operational).</li>
+<li>Enforce unique category names.</li>
+<li>Audit configuration changes.</li>
+<li>Notify Admins of updates.</li>
+</ul>
+<p><strong>Create Form Fields</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Validation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Category ID</td>
+<td>Unique ID (CAT123)</td>
+<td>Auto-generated, non-editable</td>
+</tr>
+<tr>
+<td>Category Name</td>
+<td>Category name</td>
+<td>Required, text, min 5, max 100 chars, unique</td>
+</tr>
+<tr>
+<td>Module</td>
+<td>Associated module (e.g., Risk)</td>
+<td>Required, dropdown</td>
+</tr>
+<tr>
+<td>Description</td>
+<td>Category details</td>
+<td>Optional, text, max 500 chars</td>
+</tr>
+<tr>
+<td>Status</td>
+<td>Active/Inactive</td>
+<td>Required, dropdown, default Active</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Workflow</strong>:</p>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Admin creates category] --> B[Status: Active]
+    B --> C[Validate uniqueness]
+    C --> D[Category available in forms]
+    D --> E[Admin updates/deactivates]
+    E --> F{Linked records?}
+    F -->|Yes| G[Prevent changes]
+    F -->|No| H[Actions logged, notify Admins]
+</div></code></pre>
+<h3 id="roles-and-permissions">Roles and Permissions</h3>
+<p><strong>Purpose</strong>: Define and manage roles with granular permissions for modules.</p>
+<p><strong>Features</strong>:</p>
+<ul>
+<li>CRUD roles (e.g., Admin, Auditor).</li>
+<li>Assign permissions per module (e.g., Risk: CRUD).</li>
+<li>Enforce permission validation.</li>
+<li>Audit role/permission changes.</li>
+<li>Notify Admins of updates.</li>
+</ul>
+<p><strong>Create Form Fields</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Validation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Role ID</td>
+<td>Unique ID (ROLE123)</td>
+<td>Auto-generated, non-editable</td>
+</tr>
+<tr>
+<td>Role Name</td>
+<td>Role name (e.g., Compliance Officer)</td>
+<td>Required, text, min 5, max 100 chars, unique</td>
+</tr>
+<tr>
+<td>Description</td>
+<td>Role details</td>
+<td>Optional, text, max 500 chars</td>
+</tr>
+<tr>
+<td>Permissions</td>
+<td>Module-specific access</td>
+<td>Required, checkbox list per module</td>
+</tr>
+<tr>
+<td>Notification Receive</td>
+<td>Notification settings</td>
+<td>Checkbox for modules</td>
+</tr>
+<tr>
+<td>Status</td>
+<td>Active/Inactive</td>
+<td>Required, dropdown, default Active</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Workflow</strong>:</p>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Admin creates role] --> B[Assign permissions, Status: Active]
+    B --> C[Role available in User Management]
+    C --> D[Admin updates/deactivates]
+    D --> E{Assigned to users?}
+    E -->|Yes| F[Prevent changes]
+    E -->|No| G[Actions logged, notify Admins]
+</div></code></pre>
+<h3 id="notification">Notification</h3>
+<p><strong>Purpose</strong>: Manage automated notifications (email/in-website) for events via template-based or role-based methods.</p>
+<p><strong>Features</strong>:</p>
+<ul>
+<li>Template-Based: CRUD templates for specific events (e.g., incident submitted).</li>
+<li>Role-Based: Notifications for all actions in configured modules.</li>
+<li>Support email and in-website delivery.</li>
+<li>Audit triggers and deliveries.</li>
+</ul>
+<p><strong>Create Form Fields (Notification Template)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Validation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Template ID</td>
+<td>Unique ID (NOTIF123)</td>
+<td>Auto-generated, non-editable</td>
+</tr>
+<tr>
+<td>Template Name</td>
+<td>Name (e.g., Incident Submitted)</td>
+<td>Required, text, min 5, max 100 chars</td>
+</tr>
+<tr>
+<td>Event Type</td>
+<td>Trigger event (e.g., Incident Status Change)</td>
+<td>Required, dropdown</td>
+</tr>
+<tr>
+<td>Delivery Method</td>
+<td>Email, In-App, or Both</td>
+<td>Required, dropdown</td>
+</tr>
+<tr>
+<td>Recipients</td>
+<td>Roles or users</td>
+<td>Required, dropdown/search</td>
+</tr>
+<tr>
+<td>Message Title</td>
+<td>Notification title</td>
+<td>Required, text, min 5, max 100 chars</td>
+</tr>
+<tr>
+<td>Message Body</td>
+<td>Notification content</td>
+<td>Required, text, min 5, max 1000 chars</td>
+</tr>
+<tr>
+<td>Status</td>
+<td>Active/Inactive</td>
+<td>Required, dropdown, default Active</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Workflow</strong>:</p>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Admin creates template] --> B[Link to event, Status: Active]
+    B --> C[System triggers notification]
+    C --> D[Delivery logged]
+    A --> E[Admin configures role-based notifications]
+    E --> F[System triggers for module actions]
+    F --> D
+</div></code></pre>
+<h2 id="list-of-actors">List of Actors</h2>
+<h3 id="end-users">End Users</h3>
+<ul>
+<li><strong>Compliance Officer</strong>: Manages policies, controls, frameworks; links controls to risks/frameworks; reviews scores.</li>
+<li><strong>Risk Manager</strong>: Identifies, assesses, mitigates risks; calculates scores; updates statuses.</li>
+<li><strong>Incident Submitter</strong>: Submits incident reports with evidence; receives notifications.</li>
+<li><strong>Control Owner</strong>: Implements/tests controls; rates effectiveness; updates statuses.</li>
+<li><strong>Policy Owner</strong>: Prepares/enforces/reviews policies; links to frameworks/controls.</li>
+<li><strong>Framework Owner</strong>: Creates/manages frameworks; links controls; reviews scores.</li>
+</ul>
+<h3 id="back-office-users">Back-Office Users</h3>
+<ul>
+<li><strong>Admin</strong>: Manages users, roles, configurations, workflows; approves status changes.</li>
+<li><strong>Incident Manager</strong>: Reviews/accepts/rejects incidents; assigns owners.</li>
+<li><strong>Internal Auditor</strong>: Reviews frameworks/controls/policies; adds comments; approves/rejects.</li>
+<li><strong>External Auditor</strong>: Independent reviews; adds comments; approves/rejects.</li>
+<li><strong>System Configurator</strong>: Manages categories for modules; configures notifications.</li>
+<li><strong>Role Manager</strong>: Creates/manages roles and permissions; configures notifications.</li>
+<li><strong>Notification Manager</strong>: Manages notification templates; monitors delivery logs.</li>
+<li><strong>Report Generator</strong>: Generates/exports reports/dashboards; filters by categories.</li>
+</ul>
+<h3 id="external-systems">External Systems</h3>
+<ul>
+<li><strong>Email Service Provider</strong>: Delivers email notifications for events and role-based actions.</li>
+</ul>
+<h2 id="non-functional-requirements">Non-Functional Requirements</h2>
+<h3 id="performance">Performance</h3>
+<ul>
+<li>Response Time: &lt;4 seconds for page loads.</li>
+<li>Throughput: Handle 1,000 concurrent sessions.</li>
+<li>Notification Delivery: &lt;10 seconds.</li>
+</ul>
+<h3 id="security">Security</h3>
+<ul>
+<li>Data Encryption: Encrypt all data at rest.</li>
+<li>Authentication: Strong passwords (8+ chars, mixed types).</li>
+<li>Authorization: RBAC for access control.</li>
+<li>Audit Logging: Log all user actions with timestamps.</li>
+</ul>
+<h3 id="usability">Usability</h3>
+<ul>
+<li>UI: Responsive, compatible with modern browsers/devices.</li>
+<li>Accessibility: WCAG 2.1 Level AA compliant.</li>
+<li>Localization: English primary language.</li>
+<li>Error Handling: Clear, user-friendly error messages.</li>
+</ul>
+<h3 id="availability">Availability</h3>
+<ul>
+<li>Uptime: 95% (excluding maintenance).</li>
+<li>Maintenance: Outside peak hours, 24-hour notice.</li>
+<li>Disaster Recovery: RTO ≤ 4 hours.</li>
+</ul>
+<h3 id="maintainability">Maintainability</h3>
+<ul>
+<li>Code Quality: Follow clean code principles.</li>
+<li>Documentation: Include API specs, architecture diagrams, user manuals.</li>
+</ul>
+<h2 id="assumptions">Assumptions</h2>
+<ul>
+<li>Users have modern browsers and reliable internet.</li>
+<li>Stakeholders (e.g., Compliance Officers) are available.</li>
+<li>Cloud or on-prem infrastructure provided.</li>
+<li>Third-party services (e.g., Email Provider) have 99.9% uptime.</li>
+</ul>
+<h2 id="constraints">Constraints</h2>
+<ul>
+<li>Budget: Align with allocated funds.</li>
+<li>Timeline: Deliver within agreed schedule.</li>
+<li>Technology: Use approved technologies; ensure legacy compatibility.</li>
+<li>User Adoption: Varying proficiency requires simple UI, training.</li>
+</ul>
+<h2 id="glossary-and-acronyms">Glossary and Acronyms</h2>
+<h3 id="acronyms">Acronyms</h3>
+<ul>
+<li><strong>BRD</strong>: Business Requirements Document</li>
+<li><strong>CRUD</strong>: Create, Read, Update, Delete</li>
+<li><strong>GRC</strong>: Governance, Risk, and Compliance</li>
+<li><strong>ISO 27001</strong>: Information security standard</li>
+<li><strong>ISO 31000</strong>: Risk management standard</li>
+<li><strong>KPI</strong>: Key Performance Indicator</li>
+<li><strong>MFA</strong>: Multi-Factor Authentication</li>
+<li><strong>MVP</strong>: Minimum Viable Product</li>
+<li><strong>RBAC</strong>: Role-Based Access Control</li>
+<li><strong>RTO</strong>: Recovery Time Objective</li>
+<li><strong>SSO</strong>: Single Sign-On</li>
+<li><strong>UI</strong>: User Interface</li>
+<li><strong>WCAG</strong>: Web Content Accessibility Guidelines</li>
+</ul>
+<h3 id="glossary">Glossary</h3>
+<ul>
+<li><strong>Audit Log</strong>: Record of all system actions.</li>
+<li><strong>Category</strong>: Configurable classification for modules.</li>
+<li><strong>Compliance Officer</strong>: Manages policies, controls, frameworks.</li>
+<li><strong>Control</strong>: Measure to mitigate risks, rated High/Medium/Low.</li>
+<li><strong>Framework</strong>: Compliance structure (e.g., ISO 27001), scored 0-100.</li>
+<li><strong>Incident</strong>: Reported event with status cycle.</li>
+<li><strong>Notification</strong>: Automated alerts (template-based or role-based).</li>
+<li><strong>Policy</strong>: Documented rule with lifecycle.</li>
+<li><strong>Risk</strong>: Potential issue scored as Likelihood × Impact.</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>The GRC system streamlines governance, risk management, policy enforcement, and compliance with modules supporting global standards (ISO 27001, NIST, GDPR). It provides a secure, scalable, user-friendly solution.</p>
+<h2 id="mvp-scope">MVP Scope</h2>
+<ul>
+<li>Secure user authentication with RBAC.</li>
+<li>Incident reporting with evidence upload.</li>
+<li>Risk assessment with control linkages.</li>
+<li>Policy/framework management with workflows.</li>
+<li>Automated notifications.</li>
+<li>Real-time reporting and audit trails.</li>
+</ul>
+<h2 id="need-for-further-investigation">Need for Further Investigation</h2>
+<ul>
+<li><strong>User Feedback</strong>: Test usability with stakeholders.</li>
+<li><strong>Performance Benchmarking</strong>: Stress test non-functional requirements.</li>
+<li><strong>Feature Expansion</strong>: Explore AI-driven risk prediction, compliance gap analysis.</li>
+</ul>
+<h2 id="competitor-analysis">Competitor Analysis</h2>
+<p>Analyze ServiceNow GRC, RSA Archer, MetricStream:</p>
+<ul>
+<li>Feature comparison.</li>
+<li>Pricing models.</li>
+<li>Market/customer needs.</li>
+<li>User reviews for pain points.</li>
+</ul>
+<h2 id="next-steps">Next Steps</h2>
+<ol>
+<li>Stakeholder Review: Distribute BRD for feedback.</li>
+<li>MVP Development: Initiate core module development.</li>
+<li>Competitor Analysis: Study ServiceNow, Archer, MetricStream.</li>
+</ol>
+<pre class="hljs"><code><div></div></code></pre>
+
+</body>
+</html>
